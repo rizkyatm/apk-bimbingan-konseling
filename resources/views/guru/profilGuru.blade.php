@@ -42,50 +42,57 @@
           <!-- isi start -->
           <div class="container-fluid py-4">
             <div class="row" >
-              <div class="col-12" >
-                <div class="card mb-4" style="height: 500px;">
+              <div class="col-4" >
+                <div class="card" style="height: 410px;">
+                <div class="profile-picture pt-6 pl-2 pr-5 d-block align-items-center text-center" style="margin: 0 auto;  ">
+                  <div class="foto-container" style="margin: 0 auto; width: 200px; height: 200px;">
+                    <img src="{{ asset('fotoguru/'.$user->guru->foto) }}" alt="Foto Pengguna" id="foto">
+                  </div>
+                  <h5 class="mt-2" style="font-weight: bold; font-size: 18px;">{{ $user->guru->namaguru }}</p>
+                  <p class="" style="font-size: 13px; margin-top: -10px;">Guru Bimbangan & Konseling</p>
+                </div>
+                </div>
+              </div>
+              <div class="col-8" >
+                <div class="card mb-4" style="height: auto;">
                   {{-- ////////// tampilan profil start ////////// --}}
                   <div class="card-body" id="profile-info">
                     <div class="profile-header">
-                      <div class="profile-picture">
-                        <div class="foto-container">
-                          <img src="{{ asset('fotoguru/'.$user->guru->foto) }}" alt="Foto Pengguna" id="foto">
-                        </div>
-                      </div>
                       <div class="profile-info">
-                        <h5 class="card-title">Profil Pengguna</h5>
+                        <h4 class="card-title" style="font-weight: bold;">Profil Pengguna</h4>
                       </div>
                     </div>
-                    <div class="card-text-container">
-                      <div class="card-text-row">
-                        <div class="card-text">
-                          <h6>Nama</h6>
+                    <div class="card-text-row">
+                        <div class="d-flex mb-1">
+                          <h6 class="" style="width: 30%;">Nama</h6>
+                          <h6 class="" style="width: 2%;">:</h6>
                           <p>{{ $user->guru->namaguru }}</p>
                         </div>
-                        <div class="card-text">
-                          <h6>NIP</h6>
+                        <div class="d-flex mb-1">
+                          <h6 style="width: 30%;">NIP</h6>
+                          <h6 class="" style="width: 2%;">:</h6>
                           <p>{{ $user->nisn_nip }}</p>
                         </div>
-                      </div>
-                      <div class="card-text-row">
-                        <div class="card-text">
-                          <h6>Tempat Lahir</h6>
+                        <div class="d-flex mb-1">
+                          <h6 style="width: 30%;">Tempat Lahir</h6>
+                          <h6 class="" style="width: 2%;">:</h6>
                           <p>{{ $user->guru->tempatlahir }}</p>
                         </div>
-                        <div class="card-text">
-                          <h6>Tanggal Lahir</h6>
+                        <div class="d-flex mb-1">
+                          <h6 style="width: 30%;">Tanggal Lahir</h6>
+                          <h6 class="" style="width: 2%;">:</h6>
                           <p>{{ $user->guru->tanggallahir }}</p>
                         </div>
-                      </div>
-                      <div class="card-text">
-                        <h6>Jenis Kelamin</h6>
+                      <div class="d-flex mb-1">
+                        <h6 style="width: 30%;">Jenis Kelamin</h6>
+                        <h6 class="" style="width: 2%;">:</h6>
                         <p>{{ $user->guru->jeniskelamin }}</p>
                       </div>
                     </div>
-                    <button class="btn" style="background-color: #515CED; color: white" onclick="editProfile()">Edit</button>
+                    <button class="btn" style="background-color: #515CED; color: white; padding: 10px 37px;" onclick="editProfile()">Edit</button>
                   </div>
                   {{-- ////////// tampilan profil End ////////// --}}
-                  <div id="edit-form" style="display: none; margin-top: 50px">
+                  <div id="edit-form" style="display: none;" class="pt-3">
                     <form class="mx-4" action="/updateprofilguru/{{$user->guru->id}}" method="POST" enctype="multipart/form-data">
                       @csrf
                       <div class="row">
@@ -135,7 +142,7 @@
                         </div>
                       </div>
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                           <div class="mb-3">
                             <label for="foto" class="form-label">Foto</label>
                             <input type="file" class="form-control" name="foto" id="foto">

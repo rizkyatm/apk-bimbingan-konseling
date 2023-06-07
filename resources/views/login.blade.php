@@ -1,98 +1,67 @@
-<!--
-=========================================================
-* Soft UI Dashboard - v1.0.7
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/soft-ui-dashboard
-* Copyright 2023 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
-  <title>
-    Soft UI Dashboard by Creative Tim
-  </title>
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <!-- Nucleo Icons -->
-  <link href="../assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="../assets/css/nucleo-svg.css" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
-  <!-- Nepcha Analytics (nepcha.com) -->
-  <!-- Nepcha is a easy-to-use web analytics. No cookies and fully compliant with GDPR, CCPA and PECR. -->
-  <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
-</head>
+	<title>Login Starbhak Counseling</title>
 
-<body class="">
-  <main class="main-content  mt-0">
-    <section>
-      <div class="page-header min-vh-100">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
-              <div class="card card-plain mt-4">
-                <div class="card-header pb-0 text-left bg-transparent">
-                  <h3 class="font-weight-bolder text-info" style="color: #515CED;">Access Your Account  </h3>
-                  <p class="mb-0">Access your account by logging in with your credentials.</p>
-                </div>
-                <div class="card-body">
-                  @if (session('error'))
-                      <div class="alert alert-danger" style="color: white; height: 30px; display: flex; align-items: center; justify-content: center;">
-                          @if (session('error') === 'Password salah.')
-                              Password SALAH
-                          @else
-                              NISN/NIP SALAH  
-                          @endif
-                      </div>
-                  @endif
-                  <form action="{{ route('postlogin') }}" method="POST" role="form">
-                    {{ csrf_field() }}
-                    <label>NISN  / NIP</label>
-                    <div class="mb-3">
-                        <input type="number" name="nisn_nip" class="form-control" placeholder="masukan nisn atau nip" aria-label="Email" aria-describedby="email-addon">
-                    </div>
-                    <label>Password</label>
-                    <div class="mb-3">
-                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon">
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="showPassword" name="showPassword">
-                        <label class="form-check-label" for="showPassword">Show Password</label>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn w-100 mt-4 mb-0" style="background-color: #515CED; color: white">Sign in</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
-                <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('../assets/img/curved-images/curved6.jpg')"></div>
-              </div>
+	<!-- Favicons -->
+	<link href="assets-login/img/logo.jpeg" rel="icon">
+
+	<link rel="stylesheet" type="text/css" href="assets-login/css/style.css">
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+	<script src="https://kit.fontawesome.com/a81368914c.js"></script>
+	<!-- CSS Files -->
+	<link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.0.7" rel="stylesheet" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<div class="container" style="margin-left: 65px;">
+		<div class="img">
+			<img src="assets-login/img/bg.png" class="img-fluid animated">
+		</div>
+		<div class="login-content">
+			<form action="{{route('postlogin')}}" method="POST">
+				{{ csrf_field() }}
+				<h1 class="title">Welcome!</h1>
+        <p>Unlock your path to success by entering your login details.</p>
+          <div class="input-div one">
+           	<div class="i">
+           		<i class="fas fa-user"></i>
+           	</div>
+           	<div class="div">
+           		<h5>Username</h5>
+           		<input type="text" class="input" name="nisn_nip" style="font-size: 14px; color: #2A32B4;">
+           	</div>
+          </div>
+          <div class="input-div pass">
+           	<div class="i"> 
+           	 	<i class="fas fa-lock"></i>
+           	</div>
+           	<div class="div">
+           	 	<h5>Password</h5>
+           	 	<input type="password" class="input" name="password" id="password" style="font-size: 14px; color: #2A32B4;">
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-  </main>
-  <!--   Show password   -->
-  <script>
+					<div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="showPassword" name="showPassword">
+            <label class="form-check-label" for="showPassword">Show Password</label>
+          </div>
+					@if (session('error'))
+            <div class="alert alert-danger" style="color: white; height: 30px; display: flex; align-items: center; justify-content: center;">
+              @if (session('error') === 'Password salah.')
+                Password Salah.
+              @else
+                NISN/NIP Salah.
+              @endif
+            </div>
+          @endif
+          <input type="submit" class="btn" value="Login" style="color: #fff;">
+      </form>
+    </div>
+  </div>
+	<script>
     const showPasswordCheckbox = document.getElementById('showPassword');
     const passwordInput = document.getElementById('password');
 
@@ -104,15 +73,6 @@
         }
     });
   </script>
-  <!--   Core JS Files   -->
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-  <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-  <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
-  <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/soft-ui-dashboard.min.js?v=1.0.7"></script>
+  <script type="text/javascript" src="assets-login/js/main.js"></script>
 </body>
-
 </html>
