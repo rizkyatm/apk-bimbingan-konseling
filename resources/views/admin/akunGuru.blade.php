@@ -47,6 +47,9 @@
                 <div class="card mb-4">
                   <div class="card-header pb-0 d-flex align-items-center">
                     <h6 class="flex-grow-1">Daftar Guru Pembimbing</h6>
+                    <div class="col-auto custom-buttom" style="margin-right: 10px;">
+                    <button class="btn btn-success custom-buttom" style="background-color: #515CED;"><a href="/exportguru" style="color:white;">Export Excel</a></button> 
+                    </div>
                     <a href="/tambahdataguru" class="btn" style="background-color: #515CED; color: white">Tambah Guru Pembimbing</a>
                   </div>
                   <div class="card-body px-0 pt-0 pb-2">

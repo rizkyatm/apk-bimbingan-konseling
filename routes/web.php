@@ -85,5 +85,12 @@ Route::group(['middleware' => ['auth']], function () {
    //////////////////////////////////////////akun siswa end////////////////////////////////////////////
 });
 
+     /////////////////////////////////////ExportExcel///////////////////////////////////////////
+     Route::get('/exportguru', [AdminController::class, 'exportguru'])->name('exportguru');
+     Route::get('/exportwalas', [AdminController::class, 'exportwalas'])->name('exportwalas');
+     Route::get('/exportkelas', [AdminController::class, 'exportkelas'])->name('exportkelas');
+     Route::get('/exportsiswa', [AdminController::class, 'exportsiswa'])->name('exportsiswa');
+     
+
     // Route::post('/postlogin', 'LoginController@postlogin')->name('postlogin');
     // Route::get('/siswa',[SiswaController::class, 'siswa'])->name('siswa');

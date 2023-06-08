@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GuruExport;
+use App\Exports\KelasExport;
+use App\Exports\SiswaExport;
+use App\Exports\WalasExport;
 use App\Models\Guru;
+use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
-use App\Models\User;
 use App\Models\WaliKelas;
-use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -381,4 +386,25 @@ class AdminController extends Controller
         return redirect()->route('akunGuru');
     }
     ///////////////////////////////////////guru end///////////////////////////////////////
+
+    /////////////////////////////////////ExportExcel////////////////////////////////
+    public function exportguru()
+    {
+        return Excel::download(new GuruExport, 'akunguru.xlsx');
+    }
+
+    public function exportwalas()
+    {
+        return Excel::download(new WalasExport, 'akunwalas.xlsx');
+    }
+    public function exportkelas()
+    {
+        return Excel::download(new KelasExport, 'Kelas.xlsx');
+    }
+    public function exportsiswa()
+    {
+        return Excel::download(new SiswaExport, 'akunsiswa.xlsx');
+    }
+
+    ////////////////////////endExport//////////////////////////////////
 }
