@@ -49,7 +49,7 @@
                     <img src="{{ asset('fotoguru/'.$user->guru->foto) }}" alt="Foto Pengguna" id="foto">
                   </div>
                   <h5 class="mt-2" style="font-weight: bold; font-size: 18px;">{{ $user->guru->namaguru }}</p>
-                  <p class="" style="font-size: 13px; margin-top: -10px;">Guru Bimbangan & Konseling</p>
+                  <p class="" style="font-size: 13px; margin-top: -10px;">Guru Bimbingan & Konseling</p>
                 </div>
                 </div>
               </div>
@@ -75,7 +75,7 @@
                         </div>
                         <div class="d-flex mb-1">
                           <h6 style="width: 30%;">Tempat Lahir</h6>
-                          <h6 class="" style="width: 2%;">:</h6>
+                          <h6  style="width: 2%;">:</h6>
                           <p>{{ $user->guru->tempatlahir }}</p>
                         </div>
                         <div class="d-flex mb-1">

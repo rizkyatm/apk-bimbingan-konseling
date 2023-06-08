@@ -61,11 +61,10 @@
                                 <tbody>
                                     @foreach ($siswa as $index => $dataMurid)
                                         <tr>
-                                            <td>{{ $index + 1 }}</td>
-                                            <td>{{ $dataMurid->namasiswa }}</td>
-                                            <td>{{ $dataMurid->user->nisn_nip }}</td>
-                                            <td>{{ $dataMurid->jeniskelamin }}</td>
-                                            <td>{{ $dataMurid->kelas->kelas }}</td>
+                                          <td style="padding-left: 23px;">{{ $index + 1 }}</td>
+                                          <td style="padding-left: 23px;">{{ $dataMurid->namasiswa }}</td>
+                                          <td style="padding-left: 23px;">{{ $dataMurid->user->nisn_nip }}</td>
+                                          <td style="padding-left: 23px;">{{ $dataMurid->jeniskelamin }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
