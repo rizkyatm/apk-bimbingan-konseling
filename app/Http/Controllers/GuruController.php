@@ -55,8 +55,9 @@ class GuruController extends Controller
         if ($user) {
             $user->name = $request->input('namaguru');
             $user->nisn_nip = $request->input('nip');
-            $user->password = Hash::make($request->input('password'));
-            $user->save();
+            if ($request->input('password')) {
+                $user->password = Hash::make($request->input('password'));
+            } $user->save();
         }
     
         return redirect()->route('guru');

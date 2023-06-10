@@ -102,7 +102,7 @@
                               </select>
                             </div>  
                         </div>
-                        <button type="submit" class="btn" style="background-color: #515CED; color: white">Simpan</button>
+                        <button type="submit" class="btn" style="background-color: #4BBBFA; color: white">Simpan</button>
                     </form>
                   </div>
                 </div>

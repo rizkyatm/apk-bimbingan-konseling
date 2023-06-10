@@ -49,9 +49,9 @@
               <div class="card-header pb-0 d-flex align-items-center">
                 <h6 class="flex-grow-1">Daftar kelas</h6>
                 <div class="col-auto custom-buttom" style="margin-right: 10px;">
-                    <button class="btn btn-success custom-buttom" style="background-color: #515CED;"><a href="/exportkelas" style="color:white;">Export Excel</a></button> 
+                    <button class="btn btn-success custom-buttom" style="background-color: #4BBBFA;"><a href="/exportkelas" style="color:white;">Export Excel</a></button> 
                     </div>
-                <a href="/tambahkelas" class="btn" style="background-color: #515CED; color: white">Tambah kelas</a>
+                <a href="/tambahkelas" class="btn" style="background-color: #4BBBFA; color: white">Tambah kelas</a>
               </div>
               <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">

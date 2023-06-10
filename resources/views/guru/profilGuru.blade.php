@@ -89,7 +89,7 @@
                         <p>{{ $user->guru->jeniskelamin }}</p>
                       </div>
                     </div>
-                    <button class="btn" style="background-color: #515CED; color: white; padding: 10px 37px;" onclick="editProfile()">Edit</button>
+                    <button class="btn" style="background-color: #4BBBFA; color: white; padding: 10px 37px;" onclick="editProfile()">Edit</button>
                   </div>
                   {{-- ////////// tampilan profil End ////////// --}}
                   <div id="edit-form" style="display: none;" class="pt-3">
@@ -151,7 +151,7 @@
                       </div>
                       <div class="row">
                         <div class="col-md-6">
-                          <button type="submit" class="btn" style="background-color: #515CED; color: white">Simpan</button>
+                          <button type="submit" class="btn" style="background-color: #4BBBFA; color: white">Simpan</button>
                           <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Batal</button>
                         </div>
                       </div>

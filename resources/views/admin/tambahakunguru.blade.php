@@ -86,12 +86,12 @@
                           </div>
                           
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                               <label for="tanggallahir" class="form-label">Tanggal Lahir</label>
                               <input type="date" class="form-control"  id="tanggallahir" name="tanggallahir">
                             </div>
                         </div>
-                        <button type="submit" class="btn" style="background-color: #515CED; color: white">Simpan</button>
+                        <button type="submit" class="btn" style="background-color: #4BBBFA; color: white">Simpan</button>
                     </form>
                   </div>
                 </div>

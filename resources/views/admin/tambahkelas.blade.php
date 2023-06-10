@@ -72,7 +72,7 @@
                             @endforeach
                           </select>
                         </div>
-                        <button type="submit" class="btn" style="background-color: #515CED; color: white">Tambah Data Kelas dan Guru</button>
+                        <button type="submit" class="btn" style="background-color: #4BBBFA; color: white">Tambah Data Kelas dan Guru</button>
                     </form>      
                   </div>
                 </div>

@@ -32,7 +32,7 @@
            	</div>
            	<div class="div">
            		<h5>Username</h5>
-           		<input type="text" class="input" name="nisn_nip" style="font-size: 14px; color: #2A32B4;">
+           		<input type="text" class="input" name="nisn_nip" style="font-size: 14px; color: #018CDA;">
            	</div>
           </div>
           <div class="input-div pass">
@@ -41,7 +41,7 @@
            	</div>
            	<div class="div">
            	 	<h5>Password</h5>
-           	 	<input type="password" class="input" name="password" id="password" style="font-size: 14px; color: #2A32B4;">
+           	 	<input type="password" class="input" name="password" id="password" style="font-size: 14px; color: #018CDA;">
             </div>
           </div>
 					<div class="form-check form-switch">

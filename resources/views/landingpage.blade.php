@@ -117,6 +117,35 @@
       </div>
     </section><!-- End About Section -->
 
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about">
+      <div class="container">
+
+        <div class="row justify-content-between">
+          <div class="col-lg-6 pt-5 pt-lg-0">
+            <h3 data-aos="fade-up">Visi dan Misi Layanan bimbingan dan konseling SMK Taruna Bhakti</h3>
+            <h4 data-aos="fade-up" data-aos-delay="100" style="margin-top: 20px;">Visi</h4>
+            <p data-aos="fade-up" data-aos-delay="100">
+              Menjadi pusat pengembangan potensi dan kesejahteraan siswa melalui pelayanan bimbingan dan konseling yang menyeluruh, holistik, dan terpadu.
+            </p>
+            <h4 data-aos="fade-up" data-aos-delay="100" style="margin-top: 20px;">Misi</h4>
+            <ul data-aos="fade-up" data-aos-delay="100">
+              <li>Meningkatkan perkembangan siswa secara menyeluruh.</li>
+              <li>Mengenali dan memahami potensi siswa.</li>
+              <li>Memberikan dukungan dan konseling individual atau kelompok.</li>
+              <li>Membantu siswa memilih jalur pendidikan dan karir.</li>
+              <li>Membangun keterampilan sosial dan komunikasi siswa..</li>
+            </ul>
+          </div>
+          <div class="col-lg-5 d-flex align-items-center justify-content-center about-img">
+            <img src="assets-landing/img/vision-img.svg" class="img-fluid" alt="" data-aos="zoom-in">
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">

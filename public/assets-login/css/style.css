@@ -63,13 +63,13 @@ body{
 }
 
 .login-content form h1 {
-	color: #2A32B4;
+	color: #018CDA;
 	font-weight: 700;
 	font-size: 30px;
 }
 
 .login-content form p {
-	color: #515CED;
+	color: #218ECB;
 	font-size: 13px;
 	letter-spacing: .8px;
 	padding: 5px 0 30px 0;
@@ -81,7 +81,7 @@ body{
     grid-template-columns: 7% 93%;
     margin: 25px 0;
     padding: 5px 0;
-    border-bottom: 1.5px solid #515CED;
+    border-bottom: 1.5px solid #218ECB;
 		font-size: 13ps;
 }
 
@@ -90,7 +90,7 @@ body{
 }
 
 .i{
-	color: #515CED;
+	color: #218ECB;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -111,7 +111,7 @@ body{
 	left: 10px;
 	top: 50%;
 	transform: translateY(-50%);
-	color: #515CED;
+	color: #218ECB;
 	font-size: 15px;
 	transition: .3s;
 }
@@ -122,7 +122,7 @@ body{
 	bottom: -2px;
 	width: 0%;
 	height: 2px;
-	background-color: #2A32B4;
+	background-color: #018CDA;
 	transition: .4s;
 }
 
@@ -144,7 +144,7 @@ body{
 }
 
 .input-div.focus > .i > i{
-	color: #2A32B4;
+	color: #018CDA;
 }
 
 .input-div > div > input{
@@ -173,7 +173,7 @@ body{
 	border-radius: 10px;
 	outline: none;
 	border: none;
-	background-image: linear-gradient(to right, #515CED, #2A32B4, #515CED);
+	background-image: linear-gradient(to right, #6cc9ff, #3eb1f4, #218ECB);
 	background-size: 200%;
 	font-size: 1.2rem;
 	/* color: #fff; */
