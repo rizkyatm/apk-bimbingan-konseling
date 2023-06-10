@@ -7,9 +7,9 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
               <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="javascript:;">Pages</a></li>
-              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">jadwal Panggilan</li>
+              <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Jadwal Panggilan</li>
             </ol>
-            <h6 class="font-weight-bolder mb-0">jadwal Panggilan</h6>
+            <h6 class="font-weight-bolder mb-0">Jadwal Panggilan</h6>
           </nav>
           <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
             <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -18,13 +18,15 @@
             <ul class="navbar-nav  justify-content-end">
               <li class="nav-item d-flex align-items-center position-relative">
                 <a href="javascript:;" class="nav-link text-body font-weight-bold px-0" id="signInDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-user me-sm-1"></i>
                   @if (Auth::check())
-                    <span class="d-sm-inline d-none">
-                        Selamat datang,{{ Auth::user()->name }}
-                    </span>
+                    @if ($user->guru)
+                      <img src="{{ asset('fotoguru/'.$user->guru->foto) }}" alt="Profile Picture" class="me-sm-1 rounded-circle" style="width: 32px; height: 32px; object-fit: cover; vertical-align: middle;">
+                    @else
+                      <i class="fa fa-user me-sm-1"></i>
+                    @endif
+                    <span class="d-sm-inline d-none">{{ $user->name }}</span>
                   @endif
-                </a>
+                </a> 
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="signInDropdown" style="top: 15px;">
                   <li>
                     <a class="dropdown-item" href="{{route('logout')}}">Log Out</a>
@@ -120,51 +122,67 @@
                 <h6 class="mb-0">Tambah Jadwal</h6>
               </div>
               <div class="p-3">
-                  <form action="/tambahjadwal" method="POST">
-                    @csrf
-                    <!-- Form Jadwal -->
-                    <div class="mb-3">
-                      <label for="kelas" class="form-label">Pilih Kelas</label>
-                      <select class="form-select" id="kelas" name="kelas_id">
-                        <option value="">-- Pilih Kelas --</option>
-                        <!-- Tambahkan opsi kelas di sini -->
-                        @foreach ($kelas as $data)
-                          <option value="{{$data->id}}">{{$data->kelas}}</option>
-                        @endforeach
-                      </select>
+                <form action="/tambahjadwal" method="POST">
+                  @csrf
+                  <!-- Form Jadwal -->
+                  <div class="mb-3">
+                    <label for="layanan" class="form-label">Pilih layanan</label>
+                    <select class="form-select" id="layanan" name="layanan_id">
+                      <option value="">-- Pilih Layanan --</option>
+                      @foreach ($layanan as $layanan)
+                        <option value="{{ $layanan->id }}">{{ $layanan->jenis_layanan }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="kelas" class="form-label">Pilih Kelas</label>
+                    <select class="form-select" id="kelas" name="kelas_id">
+                      <option value="">-- Pilih Kelas --</option>
+                      <!-- Tambahkan opsi kelas di sini -->
+                      @foreach ($kelas as $data)
+                        <option value="{{ $data->id }}">{{ $data->kelas }}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div id="siswaInputContainer" style="display: none;">
+                    <div id="siswaMultipleInput" style="display: none;">
+                        <div class="mb-3">
+                            <label for="siswa" class="form-label">Pilih Siswa</label>
+                            <div class="form-check">
+                                @foreach ($siswa as $data)
+                                    <input class="form-check-input" type="checkbox" name="siswa_id[]" value="{{ $data->id }}">
+                                    <label class="form-check-label">{{ $data->namasiswa }}</label>
+                                    <br>
+                                @endforeach
+                            </div>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                      <label for="siswa" class="form-label">Pilih Siswa</label>
-                      <select class="form-select" id="siswa" name="siswa_id">
-                        <option value="">-- Pilih Siswa --</option>
-                      </select>
+                    <div id="siswaSingleInput" style="display: block;">
+                        <div class="mb-3">
+                            <label for="siswa" class="form-label">Pilih Siswa</label>
+                            <select class="form-select" id="siswa" name="siswa_id">
+                                <option value="">-- Pilih Siswa --</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                      <label for="layanan" class="form-label">Pilih layanan</label>
-                      <select class="form-select" id="layanan" name="layanan_id">
-                        <option value="">-- Pilih Layanan --</option>
-                        @foreach ($layanan as $layanan)
-                          <option value="{{$layanan->id}}">{{$layanan->jenis_layanan}}</option>
-                        @endforeach
-                      </select>
-                    </div>
-                    <div class="mb-3">
-                      <label for="tanggal" class="form-label">Tanggal</label>
-                      <input type="date" class="form-control" id="tanggal" name="tanggal">
-                    </div>
-                    <div class="mb-3">
-                      <label for="waktu" class="form-label">Waktu</label>
-                      <input type="time" class="form-control" id="waktu" name="waktu">
-                    </div>
-                    <div class="mb-3">
-                      <label for="tempat" class="form-label">Tempat</label>
-                      <input type="text" class="form-control" id="tempat" name="tempat">
-                    </div>
-                    <div class="">
-                      <button type="submit" class="btn btn-primary">Buat Jadwal</button>
-                      <button type="button" class="btn btn-secondary" id="kembali">Kembali</button>
-                    </div>
-                  </form>
+                </div>
+                  <div class="mb-3">
+                    <label for="tanggal" class="form-label">Tanggal</label>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal">
+                  </div>
+                  <div class="mb-3">
+                    <label for="waktu" class="form-label">Waktu</label>
+                    <input type="time" class="form-control" id="waktu" name="waktu">
+                  </div>
+                  <div class="mb-3">
+                    <label for="tempat" class="form-label">Tempat</label>
+                    <input type="text" class="form-control" id="tempat" name="tempat">
+                  </div>
+                  <div class="">
+                    <button type="submit" class="btn btn-primary">Buat Jadwal</button>
+                    <button type="button" class="btn btn-secondary" id="kembali">Kembali</button>
+                  </div>
+              </form>
               </div>        
             </div>
         </div>
@@ -223,6 +241,36 @@
           });
         }
       </script>
+
+<script>
+  // Fungsi untuk menampilkan atau menyembunyikan input siswa berdasarkan pilihan layanan
+  function toggleSiswaInput() {
+    var layananSelect = document.getElementById('layanan');
+    var siswaInputContainer = document.getElementById('siswaInputContainer');
+    var siswaMultipleInput = document.getElementById('siswaMultipleInput');
+    var siswaSingleInput = document.getElementById('siswaSingleInput');
+    var selectedLayanan = layananSelect.value;
+
+    if (selectedLayanan === '2') { // Ubah '2' sesuai dengan value yang sesuai dengan Bimbingan Sosial
+      siswaInputContainer.style.display = 'block';
+      siswaMultipleInput.style.display = 'block';
+      siswaSingleInput.style.display = 'none';
+    } else {
+      siswaInputContainer.style.display = 'block';
+      siswaMultipleInput.style.display = 'none';
+      siswaSingleInput.style.display = 'block';
+    }
+  }
+
+  // Panggil fungsi toggleSiswaInput saat halaman dimuat ulang
+  window.addEventListener('load', toggleSiswaInput);
+
+  // Panggil fungsi toggleSiswaInput saat pilihan layanan berubah
+  var layananSelect = document.getElementById('layanan');
+  layananSelect.addEventListener('change', toggleSiswaInput);
+</script>
+
+
 
       {{-- UNDUR JADWAL --}}
       <script>

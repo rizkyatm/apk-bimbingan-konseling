@@ -18,13 +18,15 @@
             <ul class="navbar-nav  justify-content-end">
               <li class="nav-item d-flex align-items-center position-relative">
                 <a href="javascript:;" class="nav-link text-body font-weight-bold px-0" id="signInDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <i class="fa fa-user me-sm-1"></i>
                   @if (Auth::check())
-                    <span class="d-sm-inline d-none">
-                        Selamat datang,{{ Auth::user()->name }}
-                    </span>
+                    @if ($user->siswa)
+                      <img src="{{ asset('fotosiswa/'.$user->siswa->foto) }}" alt="Profile Picture" class="me-sm-1 rounded-circle" style="width: 32px; height: 32px; object-fit: cover; vertical-align: middle;">
+                    @else
+                      <i class="fa fa-user me-sm-1"></i>
+                    @endif
+                    <span class="d-sm-inline d-none">{{ $user->name }}</span>
                   @endif
-                </a>
+                </a> 
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="signInDropdown" style="top: 15px;">
                   <li>
                     <a class="dropdown-item" href="{{route('logout')}}">Log Out</a>
@@ -75,7 +77,7 @@
                     <input type="text" class="form-control" id="tempat" name="tempat">
                   </div>
                   <button type="submit" class="btn btn-primary">Simpan</button>
-                  <button type="button" onclick="kembali()" class="btn btn-primary">kembali</button>
+                  <button type="button"  onclick="kembali()" class="btn btn-secondary">kembali</button>
                 </form>
                 <ul class="list-group" id="list-jadwal">
                   @foreach ($jadwalbk as $item)

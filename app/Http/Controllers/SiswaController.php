@@ -5,18 +5,63 @@ namespace App\Http\Controllers;
 use App\Models\Kelas;
 use App\Models\Konseling_bk;
 use App\Models\Layanan_bk;
+use App\Models\Siswa;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\File;
 
 class SiswaController extends Controller
 {
     public function profilsiswa(){
-        return view('siswa.profilsiswa');
+        $user = User::find(Auth::id()); // Ambil data pengguna yang sedang login
+        $user->load('siswa'); // Muat relasi 'siswa' dari pengguna
+        return view('siswa.profilsiswa', compact('user'));
     }
-    // public function jadwal(){
-    //     return view('siswa.jadwal');
-    // }
+
+    public function updateprofilsiswa(Request $request, $id){
+        $data = Siswa::find($id);
+        $previousFoto = $data->foto; // Simpan nama foto sebelumnya
+    
+        // Update data siswa
+        $data->namasiswa = $request->input('namasiswa');
+        $data->jeniskelamin = $request->input('jeniskelamin');
+        $data->tempatlahir = $request->input('tempatlahir');
+        $data->tanggallahir = $request->input('tanggallahir');
+        $data->save();
+    
+        if ($request->hasFile('foto')) {
+            if ($previousFoto) {
+                $filePath = public_path('fotosiswa/' . $previousFoto);
+                if (File::exists($filePath)) {
+                    File::delete($filePath);
+                }
+            }
+    
+            $foto = $request->file('foto');
+            $fotoName = $foto->getClientOriginalName();
+            $foto->move('fotosiswa/', $fotoName);
+    
+            // Update foto siswa
+            $data->foto = $fotoName;
+            $data->save();
+        }
+    
+        $user = $data->user; // Get the associated User model
+        if ($user) {
+            $user->name = $request->input('namasiswa');
+            $user->nisn_nip = $request->input('nisn');
+            if ($request->input('password')) {
+                $user->password = Hash::make($request->input('password'));
+            } 
+            $user->save();
+        }
+    
+        return redirect()->route('profilsiswa');
+    }
+
+
 
     public function jadwal(){
         $user = User::with('siswa')->find(Auth::id()); // Mencari data user yang sedang login
@@ -31,7 +76,7 @@ class SiswaController extends Controller
             ->latest('created_at')
             ->get();
     
-        return view('siswa.jadwal', compact('jadwalbk', 'namasiswa','layanan'));
+        return view('siswa.jadwal', compact('jadwalbk', 'namasiswa','layanan','user'));
     }
 
     public function siswatambahJadwal(Request $request){
@@ -62,7 +107,17 @@ class SiswaController extends Controller
         return redirect()->route('jadwal');
     }
 
-    public function histori(){
-        return view('siswa.histori');
+    public function histori(){    
+        $user = User::with('siswa')->find(Auth::id()); // nyari tabel user yg login
+        $id = $user->siswa->id; // nyari id guru dari siapa yang loginnya
+        // $kelas = Kelas::where('guru_id', $id)->get(); // cari kelas sesuai dari tabel yang adai di kelas
+        
+        $jadwalbk = Konseling_bk::with('guru', 'siswa', 'layanan_bk', 'wali_kelas')->where('siswa_id', $id)
+        ->whereIn('status', ['SELESAI'])//Hanya memanggil data yg statusnya berisi value 'SELESAI'
+        ->latest('created_at')
+        ->get();
+
+
+        return view('siswa.histori', compact('jadwalbk','user'));
     }
 }

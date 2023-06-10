@@ -57,7 +57,8 @@ class GuruController extends Controller
             $user->nisn_nip = $request->input('nip');
             if ($request->input('password')) {
                 $user->password = Hash::make($request->input('password'));
-            } $user->save();
+            } 
+            $user->save();
         }
     
         return redirect()->route('guru');
@@ -70,13 +71,16 @@ class GuruController extends Controller
         $id = $user->guru->id; // nyari id guru dari siapa yang loginnya
         $kelas = Kelas::where('guru_id', $id)->get(); // cari kelas sesuai dari tabel yang adai di kelas
         
-        return view('guru.akunSiswa', compact('kelas'));
+        return view('guru.akunSiswa', compact('kelas','user'));
     }
 
     public function menampikanmurid($kelasId){
+        $user = User::find(Auth::id()); // Ambil data pengguna yang sedang login
+        $user->load('guru');
+
         $kelasguru = Kelas::find($kelasId); //membawa data kelas sesuai id
         $siswa = Siswa::where('kelas_id', $kelasId)->get();
-        return view('guru.siswa', compact('siswa','kelasguru'));
+        return view('guru.siswa', compact('siswa','kelasguru','user'));
     }
     ////////////////////////////////kelas siswa end//////////////////////////////////
 
@@ -86,6 +90,7 @@ class GuruController extends Controller
         $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
         $id = $user->guru->id; // nyari id guru dari siapa yang loginnya
         $kelas = Kelas::where('guru_id', $id)->get(); // cari kelas sesuai dari tabel yang adai di kelas
+        $siswa = Siswa::whereIn('kelas_id', $kelas->pluck('id'))->get(); // Mengambil siswa yang diajar oleh guru
         $jadwalbk = Konseling_bk::with('guru', 'siswa', 'layanan_bk', 'wali_kelas')
         ->where('guru_id', $id)
         ->whereIn('status', ['MENUNGGU..', 'DITERIMA', 'DIUNDUR'])
@@ -94,7 +99,7 @@ class GuruController extends Controller
         //memnaggil jadwal konseling beserta relasinya
         $layanan = Layanan_bk::whereIn('id', [1, 2, 4])->get(); //memanggil jenis layanan bk
 
-        return view('guru.buatJadwal', compact('kelas','layanan', 'jadwalbk'));
+        return view('guru.buatJadwal', compact('kelas','layanan', 'jadwalbk','user','siswa'));
     }
 
     public function getSiswaByKelas(Request $request){
@@ -107,7 +112,6 @@ class GuruController extends Controller
     }
 
     public function tambahjadwal(Request $request){
-        // dd($request->all());
         $request->validate([
             'kelas_id' => 'required',
             'siswa_id' => 'required',
@@ -206,7 +210,7 @@ class GuruController extends Controller
         ->get();
 
 
-        return view('guru.history', compact('kelas', 'jadwalbk'));
+        return view('guru.history', compact('kelas', 'jadwalbk','user'));
     }
     ////////////////////////////////History End//////////////////////////////////
 

@@ -26,7 +26,7 @@ class LoginController extends Controller
                 } elseif ($user->level == 'siswa') {
                     return redirect('/profilsiswa');
                 } elseif ($user->level == 'wali_kelas') {
-                    return redirect('/walikelas');
+                    return redirect('/profilwalas');
                 }
             }
     

@@ -21,7 +21,7 @@
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="../assets/img/logo-ct-dark.png">
   <title>
-    TBCounseling - Siswa
+    TBCounseling - Wali Kelas
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
@@ -51,36 +51,36 @@
     <div class="collapse navbar-collapse h-auto  w-auto " id="sidenav-collapse-main">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link{{ Request::is('profilsiswa*') ? ' active' : '' }}" href="/profilsiswa">
+          <a class="nav-link{{ Request::is('profilwalas*') ? ' active' : '' }}" href="/profilwalas">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                <path class="{{ Request::is('profilsiswa*') ? 'text-white' : 'text-custom' }}" style="color: {{ Request::is('profilsiswa*') ? '#FFFFFF' : '#3A416F' }}" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                <path class="{{ Request::is('profilwalas*') ? 'text-white' : 'text-custom' }}" style="color: {{ Request::is('profilwalas*') ? '#FFFFFF' : '#3A416F' }}" d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Profil Siswa</span>
+            <span class="nav-link-text ms-1">Profil Guru</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link{{ Request::is('jadwal*') ? ' active' : '' }}  " href="/jadwal">
+          <a class="nav-link{{ Request::is('jadwalkonseling*') ? ' active' : '' }}  " href="/jadwalkonseling">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar2-plus-fill" viewBox="0 0 16 16"> 
-                <path  class="{{ Request::is('jadwal*') ? 'text-white' : 'text-custom' }}" style="color: {{ Request::is('jadwal*') ? '#FFFFFF' : '#3A416F' }}" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 3.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5H2.545c-.3 0-.545.224-.545.5zm6.5 5a.5.5 0 0 0-1 0V10H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V11H10a.5.5 0 0 0 0-1H8.5V8.5z"/> 
+                <path  class="{{ Request::is('jadwalkonseling*') ? 'text-white' : 'text-custom' }}" style="color: {{ Request::is('jadwalkonseling*') ? '#FFFFFF' : '#3A416F' }}" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 3.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5H2.545c-.3 0-.545.224-.545.5zm6.5 5a.5.5 0 0 0-1 0V10H6a.5.5 0 0 0 0 1h1.5v1.5a.5.5 0 0 0 1 0V11H10a.5.5 0 0 0 0-1H8.5V8.5z"/> 
               </svg>
             </div>
             <span class="nav-link-text ms-1">Jadwal Panggilan</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link{{ Request::is('histori*') ? ' active' : '' }}" href="/histori">
+          <a class="nav-link{{ Request::is('hasilkonseling*') ? ' active' : '' }}" href="/hasilkonseling">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> 
                 <g> 
                   <path fill="none" d="M0 0h24v24H0z"/> 
-                  <path class="{{ Request::is('histori*') ? 'text-white' : 'text-custom' }}" style="color: {{ Request::is('histori*') ? '#FFFFFF' : '#3A416F' }}" d="M4 3h16l2 4v13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.004L4 3zm9 11v-4h-2v4H8l4 4 4-4h-3zm6.764-7l-1-2H5.237l-1 2h15.527z"/> 
+                  <path class="{{ Request::is('hasilkonseling*') ? 'text-white' : 'text-custom' }}" style="color: {{ Request::is('hasilkonseling*') ? '#FFFFFF' : '#3A416F' }}" d="M4 3h16l2 4v13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.004L4 3zm9 11v-4h-2v4H8l4 4 4-4h-3zm6.764-7l-1-2H5.237l-1 2h15.527z"/> 
                 </g> 
               </svg>
             </div>
-            <span class="nav-link-text ms-1">Archives</span>
+            <span class="nav-link-text ms-1">Hasil Konseling</span>
           </a>
         </li>
       </ul>

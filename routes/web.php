@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\WaliKelasController;
 use Illuminate\Routing\Route as RoutingRoute;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -82,11 +83,33 @@ Route::group(['middleware' => ['auth']], function () {
     //////////////////////////////////////////akun guru end/////////////////////////////////////////////
 
     //////////////////////////////////////////akun siswa start//////////////////////////////////////////
-        Route::get('/profilsiswa', [SiswaController::class, 'profilsiswa'])->middleware('checkRole:siswa');
+        //Profil
+        Route::get('/profilsiswa', [SiswaController::class, 'profilsiswa'])->name('profilsiswa')->middleware('checkRole:siswa');
+        Route::post('/updateprofilsiswa/{id}', [SiswaController::class, 'updateprofilsiswa'])->middleware('checkRole:siswa');
+
+        //Jadwal Panggilan
         Route::get('/jadwal', [SiswaController::class, 'jadwal'])->name('jadwal')->middleware('checkRole:siswa');
-        Route::get('/histori', [SiswaController::class, 'histori'])->middleware('checkRole:siswa');
         Route::post('/siswatambahJadwal', [SiswaController::class, 'siswatambahJadwal'])->middleware('checkRole:siswa');
+        
+        //Archives
+        Route::get('/histori', [SiswaController::class, 'histori'])->middleware('checkRole:siswa');
    //////////////////////////////////////////akun siswa end////////////////////////////////////////////
+
+    //////////////////////////////////////////akun wali kelas start//////////////////////////////////////////
+        //Profil
+        Route::get('/profilwalas', [WaliKelasController::class, 'profilwalas'])->name('profilwalas')->middleware('checkRole:wali_kelas');
+        Route::post('/updateprofilwalikelas/{id}', [WaliKelasController::class, 'updateprofilwalikelas'])->middleware('checkRole:wali_kelas');
+               
+        
+        //Jadwal Panggilan
+        Route::get('/jadwalkonseling', [WaliKelasController::class, 'jadwalkonseling'])->middleware('checkRole:wali_kelas');
+        Route::post('/imputhasilbelajar/{id}', [WaliKelasController::class, 'imputhasilbelajar'])->middleware('checkRole:wali_kelas');
+        
+        
+        //hasil konseling
+        Route::get('/hasilkonseling', [WaliKelasController::class, 'hasilkonseling'])->name('hasilkonseling')->middleware('checkRole:wali_kelas');
+       
+   //////////////////////////////////////////akun wali kelas end////////////////////////////////////////////
 });
 
      /////////////////////////////////////ExportExcel///////////////////////////////////////////

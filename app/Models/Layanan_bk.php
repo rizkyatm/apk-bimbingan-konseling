@@ -17,4 +17,6 @@ class Layanan_bk extends Model
     public function konseling_bk(){
         return $this->hasMany(Konseling_bk::class);
     }
+
+    
 }
