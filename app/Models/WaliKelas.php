@@ -20,4 +20,8 @@ class WaliKelas extends Model
     public function kelas(){
         return $this->hasOne(kelas::class);
     }
+
+    public function konseling_bk(){
+        return $this->hasMany(Konseling_bk::class);
+    }
 }

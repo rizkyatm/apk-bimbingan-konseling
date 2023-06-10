@@ -73,9 +73,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/buatJadwal', [GuruController::class, 'buatJadwal'])->middleware('checkRole:guru');
         Route::post('/getdatasiswa', [GuruController::class, 'getSiswaByKelas']);
         Route::post('/tambahjadwal', [GuruController::class, 'tambahjadwal'])->middleware('checkRole:guru');
+        Route::post('/mundurkanjadwal/{id}', [GuruController::class, 'mundurkanjadwal'])->middleware('checkRole:guru');
+        Route::post('/terimajadwal/{id}', [GuruController::class, 'terimajadwal'])->middleware('checkRole:guru');
+        Route::post('/selesaikanjadwal/{id}', [GuruController::class, 'selesaikanjadwal'])->middleware('checkRole:guru');
 
-
-        Route::get('/kelasSiswa', [GuruController::class, 'kelasSiswa'])->middleware('checkRole:guru');
+        //History
+        Route::get('/history', [GuruController::class, 'history'])->middleware('checkRole:guru');
     //////////////////////////////////////////akun guru end/////////////////////////////////////////////
 
     //////////////////////////////////////////akun siswa start//////////////////////////////////////////

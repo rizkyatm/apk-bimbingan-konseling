@@ -12,4 +12,9 @@ class Layanan_bk extends Model
     protected $table = "layanan_bks";
     protected $primaryKey = "id";
     protected $guarded = [];
+
+
+    public function konseling_bk(){
+        return $this->hasMany(Konseling_bk::class);
+    }
 }

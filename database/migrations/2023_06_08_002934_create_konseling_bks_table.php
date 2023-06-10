@@ -22,7 +22,15 @@ return new class extends Migration
             $table->dateTime('waktu');
             $table->string('tempat');
             $table->string('status');
+            $table->text('hasil_konseling')->nullable();
             $table->timestamps();
+
+
+            $table->foreign('layanan_id')->references('id')->on('layanan_bks')->onDelete('cascade');
+            $table->foreign('guru_id')->references('id')->on('gurus')->onDelete('cascade');
+            $table->foreign('walas_id')->references('id')->on('wali_kelas')->onDelete('cascade');
+            $table->foreign('siswa_id')->references('id')->on('siswas')->onDelete('cascade');
+
         });
     }
 

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('gurus', function (Blueprint $table) {
             $table->id();
-            $table->string('foto');
             $table->string('namaguru');
+            $table->string('foto');
             $table->string('tempatlahir');
             $table->date('tanggallahir');
             $table->enum('jeniskelamin', ['laki-laki', 'perempuan']);
