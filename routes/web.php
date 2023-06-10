@@ -83,8 +83,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     //////////////////////////////////////////akun siswa start//////////////////////////////////////////
         Route::get('/profilsiswa', [SiswaController::class, 'profilsiswa'])->middleware('checkRole:siswa');
-        Route::get('/jadwal', [SiswaController::class, 'jadwal'])->middleware('checkRole:siswa');
+        Route::get('/jadwal', [SiswaController::class, 'jadwal'])->name('jadwal')->middleware('checkRole:siswa');
         Route::get('/histori', [SiswaController::class, 'histori'])->middleware('checkRole:siswa');
+        Route::post('/siswatambahJadwal', [SiswaController::class, 'siswatambahJadwal'])->middleware('checkRole:siswa');
    //////////////////////////////////////////akun siswa end////////////////////////////////////////////
 });
 

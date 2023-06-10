@@ -42,74 +42,76 @@
       <div class="container-fluid ">
         <div class="col-md-14 mt-4">
             <div class="card">
-              <div class="card-header pb-0 px-3">
-                <h6 class="mb-0">Billing Information</h6>
+              <div class="card-header pb-0 px-3 d-flex justify-content-between align-items-center" id="daftar">
+                <h4 class="mb-0">Daftar Jadwal Anda</h4>
+                <a class="btn btn-primary" id="tambah-jadwal" onclick="tampilkanForm()">Tambah Jadwal</a>
               </div>
-              <div class="card-body pt-4 p-3">
-                <ul class="list-group">
-                  <li class="list-group-item border-0 d-flex p-4 mb-2 bg-gray-100 border-radius-lg">
+              <div class="card-body pt-17 p-3">
+                <form id="form-jadwal" action="/siswatambahJadwal" method="POST" style="display: none;">
+                  @csrf
+                  <div class="form-group">
+                    <label for="nama-siswa">Nama Siswa:</label>
+                    <input type="text" class="form-control" name="siswa_id" value="{{ $namasiswa }}" readonly>
+                  </div>
+                  <div class="form-grou">
+                    <label for="layanan" class="form-label">Pilih layanan</label>
+                    <select class="form-select" id="layanan" name="layanan_id">
+                      <option value="">-- Pilih Layanan --</option>
+                      @foreach ($layanan as $layanan)
+                        <option value="{{$layanan->id}}">{{$layanan->jenis_layanan}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label for="tanggal" class="form-label">Tanggal</label>
+                    <input type="date" class="form-control" id="tanggal" name="tanggal">
+                  </div>
+                  <div class="mb-3">
+                    <label for="waktu" class="form-label">Waktu</label>
+                    <input type="time" class="form-control" id="waktu" name="waktu">
+                  </div>
+                  <div class="mb-3">
+                    <label for="tempat" class="form-label">Tempat</label>
+                    <input type="text" class="form-control" id="tempat" name="tempat">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Simpan</button>
+                  <button type="button" onclick="kembali()" class="btn btn-primary">kembali</button>
+                </form>
+                <ul class="list-group" id="list-jadwal">
+                  @foreach ($jadwalbk as $item)
+                  <li i class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
                     <div class="d-flex flex-column">
-                      <h6 class="mb-3 text-sm">Oliver Liam</h6>
-                      <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Viking Burrito</span></span>
-                      <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">oliver@burrito.com</span></span>
-                      <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                    </div>
-                    <div class="ms-auto text-end">
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
+                      <span class="mb-2 text-xs">
+                        Status:
+                        <span class="p-1 rounded" style="display: inline-block; width: max-content; margin-top: 30px; font-weight: bold; color: white; background-color: {{ ($item->status === 'DIUNDUR') ? 'rgb(255, 250, 0)' : (($item->status === 'MENUNGGU..') ? 'rgb(88, 88, 86)' : (($item->status === 'DITERIMA' || $item->status === 'SELESAI') ? 'rgb(17, 255, 0)' : 'gray')) }};">
+                          {{$item->status}}
+                        </span>
+                      </span>
+                      <span class="mb-2 text-xs">Nama Siswa: <span class="text-dark font-weight-bold ms-sm-2">{{$item->siswa->namasiswa}}</span></span>
+                      <span class="mb-2 text-xs">Kelas: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->siswa->kelas->kelas}}</span></span>
+                      <span class="mb-2 text-xs">Nama Wali Kelas: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->wali_kelas->namagurukelas}}</span></span>
+                      <span class="mb-2 text-xs">Bimbingan: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->layanan_bk->jenis_layanan}}</span></span>
+                      <span class="mb-2 text-xs">Tempat: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->tempat}}</span></span>
+                      <span class="mb-2 text-xs">Waktu: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->waktu}}</span></span>
                     </div>
                   </li>
-                  <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-3 text-sm">Lucas Harper</h6>
-                      <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Stone Tech Zone</span></span>
-                      <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">lucas@stone-tech.com</span></span>
-                      <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                    </div>
-                    <div class="ms-auto text-end">
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-3 text-sm">Lucas Harper</h6>
-                      <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Stone Tech Zone</span></span>
-                      <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">lucas@stone-tech.com</span></span>
-                      <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                    </div>
-                    <div class="ms-auto text-end">
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-3 text-sm">Lucas Harper</h6>
-                      <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Stone Tech Zone</span></span>
-                      <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">lucas@stone-tech.com</span></span>
-                      <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                    </div>
-                    <div class="ms-auto text-end">
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                    </div>
-                  </li>
-                  <li class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
-                    <div class="d-flex flex-column">
-                      <h6 class="mb-3 text-sm">Ethan James</h6>
-                      <span class="mb-2 text-xs">Company Name: <span class="text-dark font-weight-bold ms-sm-2">Fiber Notion</span></span>
-                      <span class="mb-2 text-xs">Email Address: <span class="text-dark ms-sm-2 font-weight-bold">ethan@fiber.com</span></span>
-                      <span class="text-xs">VAT Number: <span class="text-dark ms-sm-2 font-weight-bold">FRB1235476</span></span>
-                    </div>
-                    <div class="ms-auto text-end">
-                      <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i class="far fa-trash-alt me-2"></i>Delete</a>
-                      <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;"><i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>Edit</a>
-                    </div>
-                  </li>
+                @endforeach
                 </ul>
-              </div>
+              </div> 
             </div>
         </div>
       </div>
+
+      <script>
+        function tampilkanForm() {
+          document.getElementById("form-jadwal").style.display = "block";
+          document.getElementById("list-jadwal").style.display = "none";
+          document.getElementById("tambah-jadwal").style.display = "none";
+        }
+        function kembali() {
+          document.getElementById("form-jadwal").style.display = "none";
+          document.getElementById("list-jadwal").style.display = "block";
+          document.getElementById("tambah-jadwal").style.display = "block";
+        }
+      </script>
 @endsection

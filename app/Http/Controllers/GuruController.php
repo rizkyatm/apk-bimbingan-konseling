@@ -205,7 +205,7 @@ class GuruController extends Controller
         ->get();
 
 
-        return view('guru.history', compact('kelas','layanan', 'jadwalbk'));
+        return view('guru.history', compact('kelas', 'jadwalbk'));
     }
     ////////////////////////////////History End//////////////////////////////////
 
