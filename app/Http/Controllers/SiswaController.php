@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Konseling_bk;
 use App\Models\Layanan_bk;
@@ -63,49 +64,63 @@ class SiswaController extends Controller
 
 
 
-    public function jadwal(){
-        $user = User::with('siswa')->find(Auth::id()); // Mencari data user yang sedang login
-        $namasiswa = $user->siswa->namasiswa; // Mengambil nama siswa dari user yang sedang login
-        $id = $user->siswa->id; // Mengambil ID siswa dari user yang sedang login
-
+    public function jadwal()
+    {
+        $user = User::with('siswa')->find(Auth::id());
+        $namasiswa = $user->siswa->id;
+    
+        // Mendapatkan guru yang mengajar siswa yang sedang login
+        $guru = $user->siswa->kelas->guru;
+    
         $layanan = Layanan_bk::all();
     
+        // Mendapatkan daftar siswa yang diajar oleh guru yang sama dengan siswa yang sedang login
+        $siswa = Siswa::whereHas('kelas', function ($query) use ($guru) {
+            $query->where('guru_id', $guru->id);
+        })->get();
+    
         $jadwalbk = Konseling_bk::with('guru', 'siswa', 'layanan_bk', 'wali_kelas')
-            ->where('siswa_id', $id)
+            ->where('siswa_id', $user->siswa->id)
             ->whereIn('status', ['MENUNGGU..', 'DITERIMA', 'DIUNDUR'])
             ->latest('created_at')
             ->get();
     
-        return view('siswa.jadwal', compact('jadwalbk', 'namasiswa','layanan','user'));
+        return view('siswa.jadwal', compact('jadwalbk', 'namasiswa', 'layanan', 'user', 'siswa'));
     }
+    
+    
 
-    public function siswatambahJadwal(Request $request){
-        $user = User::with('siswa.kelas.guru', 'siswa.kelas.walikelas')->find(Auth::id()); // Mencari data user yang sedang login
-        $siswa_id = $user->siswa->id; // Mengambil ID siswa dari user yang sedang login
-        $guru_id = $user->siswa->kelas->guru->id; // Mengambil ID guru dari kelas siswa
-        $walas_id = $user->siswa->kelas->walikelas->id; // Mengambil ID wali kelas dari kelas siswa
-        
-        $input = $request->only('layanan_id', 'tanggal', 'waktu', 'tempat');
+    public function siswatambahJadwal(Request $request)
+    {
+        if ($request->has('manysiswa')) {
+            $siswa_ids = (array) $request->input('manysiswa');
+        } else {
+            $siswa_ids = Siswa::where('user_id', Auth::id())->pluck('id')->toArray();
+        }
 
-        // Menggabungkan tanggal dan waktu menjadi format datetime
-        $waktu = $input['tanggal'] . ' ' . $input['waktu'];
-
-        // Menyimpan data ke tabel Konseling_bk
-        $jadwalbk = new Konseling_bk();
-        $jadwalbk->siswa_id = $siswa_id;
-        $jadwalbk->layanan_id = $input['layanan_id'];
-        $jadwalbk->guru_id = $guru_id;
-        $jadwalbk->walas_id = $walas_id;
-        $jadwalbk->tempat = $input['tempat'];
-        $jadwalbk->waktu = $waktu;
-        $jadwalbk->status = 'MENUNGGU..';
-        $jadwalbk->save();
-
-        // Redirect atau melakukan operasi lainnya
-
-        // Contoh redirect ke halaman jadwal setelah berhasil menambahkan
-        return redirect()->route('jadwal');
+        foreach ($siswa_ids as $siswa_id) {
+            $siswa = Siswa::with('kelas.guru', 'kelas.walikelas')->find($siswa_id);
+            $guru_id = $siswa->kelas->guru->id;
+            $walas_id = $siswa->kelas->walikelas->id;
+    
+            $input = $request->only('layanan_id', 'tanggal', 'waktu', 'tempat');
+            $waktu = $input['tanggal'] . ' ' . $input['waktu'];
+    
+            $jadwalbk = new Konseling_bk();
+            $jadwalbk->siswa_id = $siswa_id;
+            $jadwalbk->layanan_id = $input['layanan_id'];
+            $jadwalbk->guru_id = $guru_id;
+            $jadwalbk->walas_id = $walas_id;
+            $jadwalbk->tempat = $input['tempat'];
+            $jadwalbk->waktu = $waktu;
+            $jadwalbk->status = 'MENUNGGU..';
+            $jadwalbk->save();
+        }
+    
+        return redirect()->route('jadwal')->with('success', 'Data jadwal berhasil ditambahkan.');
     }
+    
+    
 
     public function histori(){    
         $user = User::with('siswa')->find(Auth::id()); // nyari tabel user yg login

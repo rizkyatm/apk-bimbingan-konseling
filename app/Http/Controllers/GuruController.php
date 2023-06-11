@@ -89,7 +89,7 @@ class GuruController extends Controller
     public function buatJadwal(){
         $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
         $id = $user->guru->id; // nyari id guru dari siapa yang loginnya
-        $kelas = Kelas::where('guru_id', $id)->get(); // cari kelas sesuai dari tabel yang adai di kelas
+        $kelas = Kelas::where('guru_id', $id)->get(); // cari kelas sesuai dari tabel yang ada di kelas
         $siswa = Siswa::whereIn('kelas_id', $kelas->pluck('id'))->get(); // Mengambil siswa yang diajar oleh guru
         $jadwalbk = Konseling_bk::with('guru', 'siswa', 'layanan_bk', 'wali_kelas')
         ->where('guru_id', $id)
@@ -111,38 +111,39 @@ class GuruController extends Controller
         return response()->json($siswaList);
     }
 
-    public function tambahjadwal(Request $request){
-        $request->validate([
-            'kelas_id' => 'required',
-            'siswa_id' => 'required',
-            'layanan_id' => 'required',
-            'tanggal' => 'required',
-            'waktu' => 'required',
-            'tempat' => 'required'
-        ]);
-
-        // Mendapatkan guru_id dan walas_id dari siswa terkait
-        $siswa = Siswa::with('kelas')->find($request->siswa_id);
-        $guru_id = $siswa->kelas->guru->id;
-        $walas_id = $siswa->kelas->walikelas->id;
-
-
-        // Menggabungkan waktu dan tanggal menjadi satu field datetime
-        $tanggalWaktu = $request->tanggal . ' ' . $request->waktu;
-
+    public function tambahjadwal(Request $request)
+    {
+        
+        // Menentukan siswa_id yang akan digunakan
+        if ($request->has('manysiswa_id')) {
+            $siswa_ids = (array) $request->input('manysiswa_id');
+        } else {
+            $siswa_ids = [$request->input('siswa_id')];
+        }
+        
         // Menambahkan data jadwal baru
-        $jadwal = new Konseling_bk();
-        $jadwal->guru_id = $guru_id;
-        $jadwal->walas_id = $walas_id;
-        $jadwal->siswa_id = $request->siswa_id;
-        $jadwal->layanan_id = $request->layanan_id;
-        $jadwal->waktu = $tanggalWaktu;
-        $jadwal->tempat = $request->tempat;
-        $jadwal->status = "DITERIMA";
-        $jadwal->save();  
-
+        foreach ($siswa_ids as $siswa_id) {
+            // Mendapatkan guru_id dan walas_id dari kelas terkait
+            $siswa = Siswa::with('kelas')->find($siswa_id);
+            $guru_id = $siswa->kelas->guru->id;
+            $walas_id = $siswa->kelas->walikelas->id;
+            // Menggabungkan tanggal dan waktu menjadi satu field datetime
+            $tanggalWaktu = $request->tanggal . ' ' . $request->waktu;
+        
+            $jadwal = new Konseling_bk();
+            $jadwal->guru_id = $guru_id;
+            $jadwal->walas_id = $walas_id;
+            $jadwal->siswa_id = $siswa_id;
+            $jadwal->layanan_id = $request->layanan_id;
+            $jadwal->waktu = $tanggalWaktu;
+            $jadwal->tempat = $request->tempat;
+            $jadwal->status = "DITERIMA";
+            $jadwal->save();
+        }
+    
         return redirect()->back()->with('success', 'Data jadwal berhasil ditambahkan.');
-    }
+    }    
+    
 
     public function terimajadwal(Request $request, $id){
         $jadwal = Konseling_bk::find($id);

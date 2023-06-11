@@ -51,19 +51,27 @@
               <div class="card-body pt-17 p-3">
                 <form id="form-jadwal" action="/siswatambahJadwal" method="POST" style="display: none;">
                   @csrf
-                  <div class="form-group">
-                    <label for="nama-siswa">Nama Siswa:</label>
-                    <input type="text" class="form-control" name="siswa_id" value="{{ $namasiswa }}" readonly>
-                  </div>
                   <div class="form-grou">
                     <label for="layanan" class="form-label">Pilih layanan</label>
-                    <select class="form-select" id="layanan" name="layanan_id">
-                      <option value="">-- Pilih Layanan --</option>
-                      @foreach ($layanan as $layanan)
-                        <option value="{{$layanan->id}}">{{$layanan->jenis_layanan}}</option>
-                      @endforeach
+                    <select class="form-select" id="layanan" name="layanan_id" onchange="updateForm()">
+                        <option value="">-- Pilih Layanan --</option>
+                        @foreach ($layanan as $layanan)
+                            <option value="{{ $layanan->id }}">{{ $layanan->jenis_layanan }}</option>
+                        @endforeach
                     </select>
                   </div>
+                  <div class="form-group mb-3" id="siswaForm" style="display: none;">
+                    <label for="manysiswa">Pilih Siswa:</label>
+                    <div class="form-check">
+                        @foreach ($siswa as $data)
+                            <label class="form-check-label" for="manysiswa_{{ $data->id }}">
+                                <input class="form-check-input" type="checkbox" name="manysiswa[]" value="{{ $data->id }}" id="manysiswa_{{ $data->id }}">
+                                {{ $data->namasiswa }} ({{$data->kelas->kelas}})
+                            </label>
+                            <br>
+                        @endforeach
+                    </div>
+                </div>                                    
                   <div class="mb-3">
                     <label for="tanggal" class="form-label">Tanggal</label>
                     <input type="date" class="form-control" id="tanggal" name="tanggal">
@@ -77,8 +85,8 @@
                     <input type="text" class="form-control" id="tempat" name="tempat">
                   </div>
                   <button type="submit" class="btn btn-primary">Simpan</button>
-                  <button type="button"  onclick="kembali()" class="btn btn-secondary">kembali</button>
-                </form>
+                  <button type="button" onclick="kembali()" class="btn btn-secondary">kembali</button>
+                </form>                
                 <ul class="list-group" id="list-jadwal">
                   @foreach ($jadwalbk as $item)
                   <li i class="list-group-item border-0 d-flex p-4 mb-2 mt-3 bg-gray-100 border-radius-lg">
@@ -104,6 +112,20 @@
         </div>
       </div>
 
+
+      <script>
+        function updateForm() {
+            var layananId = document.getElementById("layanan").value;
+            var siswaForm = document.getElementById("siswaForm");
+    
+            if (layananId == 2) {
+                siswaForm.style.display = "block";
+            } else {
+                siswaForm.style.display = "none";
+            }
+        }
+    </script>
+    
       <script>
         function tampilkanForm() {
           document.getElementById("form-jadwal").style.display = "block";
