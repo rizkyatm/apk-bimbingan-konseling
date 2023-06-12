@@ -2,16 +2,20 @@
 
 namespace App\Exports;
 
-use App\Models\kelas;
+use App\Models\Kelas;
+use Illuminate\Contracts\View\View;
+use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromView;
 
-class KelasExport implements FromCollection
+class KelasExport implements FromView
 {
-    /**
-    * @return \Illuminate\Support\Collection
-    */
-    public function collection()
+    use Exportable;
+    
+    public function view(): View
     {
-        return kelas::all();
+        $datakelas = Kelas::with('guru', 'walikelas')->get();
+        // dd($datakelas);
+        return view('export.kelas', compact('datakelas'));
     }
 }

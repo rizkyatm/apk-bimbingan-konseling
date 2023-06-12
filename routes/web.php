@@ -117,6 +117,14 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/exportwalas', [AdminController::class, 'exportwalas'])->name('exportwalas');
      Route::get('/exportkelas', [AdminController::class, 'exportkelas'])->name('exportkelas');
      Route::get('/exportsiswa', [AdminController::class, 'exportsiswa'])->name('exportsiswa');
+     Route::get('/exportpetakerawanan', [AdminController::class, 'exportpetakerawanan'])->name('exportpetakerawanan');
+
+
+    ////////////////////////////////////petakerawanan///////////////////////////////////////////
+    Route::get('/petakerawanan', [AdminController::class, 'petakerawanan'])->name('petakerawanan');
+    Route::get('/tambahpelanggaran', [AdminController::class, 'tambahpelanggaran'])->name('tambahpelanggaran');
+    Route::post('/insertpetakerawanan', [AdminController::class, 'insertpetakerawanan'])->name('insertpetakerawanan');
+    Route::get('/deletepetakerawanan/{id}', [AdminController::class, 'deletepetakerawanan'])->name('deletepetakerawanan');
      
 
     // Route::post('/postlogin', 'LoginController@postlogin')->name('postlogin');

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Exports\GuruExport;
 use App\Exports\KelasExport;
+use App\Exports\PetaKerawananExport;
 use App\Exports\SiswaExport;
 use App\Exports\WalasExport;
 use App\Models\Guru;
 use App\Models\User;
 use App\Models\Kelas;
+use App\Models\PetaKerawanan;
 use App\Models\Siswa;
 use App\Models\WaliKelas;
 use Illuminate\Http\Request;
@@ -405,6 +407,30 @@ class AdminController extends Controller
     {
         return Excel::download(new SiswaExport, 'akunsiswa.xlsx');
     }
+    public function exportpetakerawanan()
+    {
+        return Excel::download(new PetaKerawananExport, 'akunpetakerawanan.xlsx');
+    }
 
     ////////////////////////endExport//////////////////////////////////
+
+    ////////////////////////////////////petakerawanan///////////////////////////////////////////
+    public function Petakerawanan(){
+        $data = PetaKerawanan::all();
+        return view('admin.petakerawanan', compact('data'));
+    }
+
+    public function tambahpelanggaran(){
+        return view('admin.tambahpetakerawanan');
+    }
+
+    public function insertpetakerawanan(Request $request){
+        $data = PetaKerawanan::create($request->all());
+        return redirect('/petakerawanan');
+    }
+    public function deletepetakerawanan($id){
+        $data = PetaKerawanan::find($id);
+        $data->delete();
+        return redirect()->route('petakerawanan')->with('sucess', 'data berhasil diapus');
+    }
 }
