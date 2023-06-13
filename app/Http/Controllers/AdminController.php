@@ -70,7 +70,7 @@ class AdminController extends Controller
         $siswa->kelas_id = $request->input('kelas_id');
         $siswa->save();
         
-        return redirect()->route('datasiswa');
+        return redirect()->route('Siswa');
     }
 
 
@@ -94,7 +94,7 @@ class AdminController extends Controller
         // Hapus data di tabel Siswa
         $data->delete();
     
-        return redirect()->route('datasiswa');
+        return redirect()->route('Siswa');
     }
     
 
@@ -141,7 +141,7 @@ class AdminController extends Controller
             $user->save();
         }
 
-        return redirect()->route('datasiswa');
+        return redirect()->route('Siswa');
     }
     ///////////////////////////////////////siswa end/////////////////////////////////////////
 
@@ -435,4 +435,5 @@ class AdminController extends Controller
         $data->delete();
         return redirect()->route('petakerawanan')->with('sucess', 'data berhasil diapus');
     }
+
 }

@@ -95,11 +95,13 @@
                             <div class="col-md-6">
                               <label for="kelas_id" class="form-label">Kelas</label>
                               <select name="kelas_id" id="kelas_id" class="form-control" required>
-                                  <option disabled selected>{{$data->kelas->kelas}}</option>
-                                  @foreach ($datakelas as $kelas)
-                                    <option value="{{$kelas->id}}">{{$kelas->kelas}}</option>
-                                  @endforeach
-                              </select>
+                                <option value="{{ $data->kelas->id }}" selected>{{ $data->kelas->kelas }}</option>
+                                @foreach ($datakelas as $kelas)
+                                    @if ($kelas->id !== $data->kelas->id)
+                                        <option value="{{ $kelas->id }}">{{ $kelas->kelas }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                             </div>  
                         </div>
                         <button type="submit" class="btn" style="background-color: #4BBBFA; color: white">Simpan</button>

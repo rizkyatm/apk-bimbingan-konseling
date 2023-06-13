@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Kelas;
-use App\Models\Konseling_bk;
 use App\Models\User;
+use App\Models\Kelas;
+use App\Models\Siswa;
 use App\Models\WaliKelas;
+use App\Models\Konseling_bk;
 use Illuminate\Http\Request;
+use App\Models\PetaKerawanan;
+use App\Models\JenisPetaKerawanan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -103,5 +106,73 @@ class WaliKelasController extends Controller
         return view('walas.hasilkonseling', compact('jadwalbk','user'));
     }
     ////////////////////////////////////archives end//////////////////////////////////////
-   
+   /////////////////////////////////////kerawanan walas/////////////////////////////////
+   public function datakerawananwalas(){
+
+    $user = User::with('walikelas')->find(Auth::id()); // Mengambil data user yang sedang login dan eager load relasi walikelas
+    $walikelas = $user->walikelas->first(); // Mengambil walikelas pertama yang terkait dengan user
+    
+    $id = $walikelas->id ?? null; // Mengambil ID walikelas jika walikelas tersedia, jika tidak, nilainya menjadi null
+    
+    $kelas = $id ? Kelas::find($id) : null; // Mendapatkan objek kelas berdasarkan ID walikelas jika ID walikelas tersedia, jika tidak, nilainya menjadi null
+    
+    $siswa = $kelas ? Siswa::where('kelas_id', $kelas->id)->get() : null; // Mengambil siswa-siswa yang memiliki kelas dengan ID yang sama jika kelas tersedia, jika tidak, nilainya menjadi null
+
+    return view('walas.petakerawanan', compact('user','siswa'));
+   }
+
+   public function tambahpetakerawanan(){
+    $user = User::with('walikelas')->find(Auth::id()); // nyari tabel user yg login
+
+    $siswa = Siswa::all();
+    $jenispetakerawanan = PetaKerawanan::all();
+
+    // dd($jenispetakerawanan);
+    return view('walas.tambahpeta', compact('siswa', 'jenispetakerawanan', 'user',));
+}
+
+public function storekerawanan(Request $request){
+    $data = new JenisPetaKerawanan();
+    $data->siswa_id = $request->siswa_id;
+    $data->petakerawanan_id = $request->petakerawanan_id;
+    // dd($data);
+    $data->save();
+    return redirect('/petakerawanan');
+
+    // dd($jenispetakerawanan);
+}
+
+public function updatepeta(Request $request){
+    // $siswa = Siswa::create($request->all());
+    $peta = PetaKerawanan::create($request->all());
+    return redirect('/petakerawanan', compact('siswa', 'peta'));
+
+    // $siswa = Siswa::find($id);
+    // $peta = PetaKerawanan::find($id);
+
+    // $siswa->namasiswa = $request->input('namasiswa');
+    // $peta->jenispetakerawanan = $request->input('jenispetakerawanan');
+}
+
+public function jeniskerawanan($id){
+    $user = User::with('walikelas')->find(Auth::id()); // nyari tabel user yg login
+    // $kerawanan = JenisPetaKerawanan::with('petakerawanan')->find($id);
+    // dd($kerawanan);
+    // return view('guru.isijeniskerawanan', compact('kerawanan', 'user'));
+
+    $jenisKerawanan = JenisPetaKerawanan::with('petakerawanan')->whereHas('petakerawanan', function ($query) use ($id) {
+        $query->where('siswa_id', $id);
+    })->get();
+    
+
+    return view('walas.isijeniskerawanan', compact('jenisKerawanan', 'user'));
+}
+
+public function deletekerawanan($id){
+        $data = JenisPetaKerawanan::find($id);
+        $data->delete();
+        return redirect()->back()->with('sucess', 'data berhasil diapus');
+}
+
+   /////////////////////////////////////end/////////////////////////////////
 }

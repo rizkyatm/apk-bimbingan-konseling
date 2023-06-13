@@ -123,11 +123,25 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     ////////////////////////////////////petakerawanan///////////////////////////////////////////
-    Route::get('/petakerawanan', [AdminController::class, 'petakerawanan'])->name('petakerawanan');
+    Route::get('/adminpetakerawanan', [AdminController::class, 'petakerawanan'])->name('petakerawanan');
     Route::get('/tambahpelanggaran', [AdminController::class, 'tambahpelanggaran'])->name('tambahpelanggaran');
     Route::post('/insertpetakerawanan', [AdminController::class, 'insertpetakerawanan'])->name('insertpetakerawanan');
     Route::get('/deletepetakerawanan/{id}', [AdminController::class, 'deletepetakerawanan'])->name('deletepetakerawanan');
      
 
+    //petapelanggaran/guru////
+    Route::get('/petakerawanan', [GuruController::class, 'datapetakerawanan'])->name('petakerawanan');
+    Route::get('/tambahpetakerawanan', [GuruController::class, 'tambahpetakerawanan'])->name('tambahpetakerawanan');
+    Route::post('/insertkerawanan', [GuruController::class, 'storekerawanan'])->name('insertkerawanan');
+    Route::get('/jeniskerawanan/{id}', [GuruController::class, 'jeniskerawanan'])->name('jeniskerawanan');
+    Route::get('/deletekerawanan/{id}', [GuruController::class, 'deletekerawanan'])->name('deletekerawanan');
+    ////ENDDGURU
+
+    /////PETAKERAWANAN/WALAS//////
+    Route::get('/petakerawanan', [WaliKelasController::class, 'datakerawananwalas'])->name('petakerawanan');
+    Route::get('/tambahpetakerawanan', [WaliKelasController::class, 'tambahpetakerawanan'])->name('tambahpetakerawanan');
+    Route::post('/insertkerawanan', [WaliKelasController::class, 'storekerawanan'])->name('insertkerawanan');
+    Route::get('/jeniskerawanan/{id}', [WaliKelasController::class, 'jeniskerawanan'])->name('jeniskerawanan');
+    Route::get('/deletekerawanan/{id}', [WaliKelasController::class, 'deletekerawanan'])->name('deletekerawanan');
     // Route::post('/postlogin', 'LoginController@postlogin')->name('postlogin');
     // Route::get('/siswa',[SiswaController::class, 'siswa'])->name('siswa');

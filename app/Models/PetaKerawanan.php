@@ -13,4 +13,7 @@ class PetaKerawanan extends Model
     protected $primaryKey = "id";
     protected $guarded = [];
 
+    public function jenispetakerawanan(){
+        return $this->hasMany(JenisPetaKerawanan::class);
+    }
 }
