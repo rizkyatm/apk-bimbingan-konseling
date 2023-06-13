@@ -21,7 +21,7 @@
                       <i class="fa fa-user me-sm-1"></i>
                       @if (Auth::check())
                           <span class="d-sm-inline d-none">
-                              Selamat datang, {{ Auth::user()->name }}
+                              {{ Auth::user()->name }}
                           </span>
                       @endif
                     </a>
@@ -48,16 +48,13 @@
                     <div class="row">
                       <div class="col-8">
                         <div class="numbers">
-                          <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Money</p>
-                          <h5 class="font-weight-bolder mb-0">
-                            $53,000
-                            <span class="text-success text-sm font-weight-bolder">+55%</span>
-                          </h5>
+                          <p class="text-sm mb-0 text-capitalize font-weight-bold">DATA GURU BK</p>
+                          <h5 class="font-weight-bolder mb-0">{{ count($guru) }}</h5>
                         </div>
                       </div>
                       <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                          <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
+                        <div class="icon icon-shape shadow text-center border-radius-md" style="background-color: #4BBBFA;">
+                          <i class="fa-solid fa-users text-lg opacity-10"></i>
                         </div>
                       </div>
                     </div>
@@ -70,16 +67,13 @@
                     <div class="row">
                       <div class="col-8">
                         <div class="numbers">
-                          <p class="text-sm mb-0 text-capitalize font-weight-bold">Today's Users</p>
-                          <h5 class="font-weight-bolder mb-0">
-                            2,300
-                            <span class="text-success text-sm font-weight-bolder">+3%</span>
-                          </h5>
+                          <p class="text-sm mb-0 text-capitalize font-weight-bold">DATA WALI KELAS</p>
+                          <h5 class="font-weight-bolder mb-0">{{ count($walikelas) }}</h5>
                         </div>
                       </div>
                       <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                          <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
+                        <div class="icon icon-shape shadow text-center border-radius-md" style="background-color: #4BBBFA;">
+                          <i class="fa-solid fa-users text-lg opacity-10"></i>
                         </div>
                       </div>
                     </div>
@@ -92,16 +86,13 @@
                     <div class="row">
                       <div class="col-8">
                         <div class="numbers">
-                          <p class="text-sm mb-0 text-capitalize font-weight-bold">New Clients</p>
-                          <h5 class="font-weight-bolder mb-0">
-                            +3,462
-                            <span class="text-danger text-sm font-weight-bolder">-2%</span>
-                          </h5>
+                          <p class="text-sm mb-0 text-capitalize font-weight-bold">DATA MURID</p>
+                          <h5 class="font-weight-bolder mb-0">{{ count($siswa) }}</h5>
                         </div>
                       </div>
                       <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                          <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
+                        <div class="icon icon-shape shadow text-center border-radius-md" style="background-color: #4BBBFA;">
+                          <i class="fa-solid fa-users text-lg opacity-10"></i>
                         </div>
                       </div>
                     </div>
@@ -114,16 +105,13 @@
                     <div class="row">
                       <div class="col-8">
                         <div class="numbers">
-                          <p class="text-sm mb-0 text-capitalize font-weight-bold">Sales</p>
-                          <h5 class="font-weight-bolder mb-0">
-                            $103,430
-                            <span class="text-success text-sm font-weight-bolder">+5%</span>
-                          </h5>
+                          <p class="text-sm mb-0 text-capitalize font-weight-bold">DATA JADWAL</p>
+                          <h5 class="font-weight-bolder mb-0">{{ count($jadwal) }}</h5>
                         </div>
                       </div>
                       <div class="col-4 text-end">
-                        <div class="icon icon-shape bg-gradient-primary shadow text-center border-radius-md">
-                          <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
+                        <div class="icon icon-shape shadow text-center border-radius-md" style="background-color: #4BBBFA;">
+                          <i class="fa-solid fa-file-lines text-lg opacity-10"></i>
                         </div>
                       </div>
                     </div>
@@ -133,4 +121,5 @@
             </div>
           </div>
           <!-- isi end -->
+          <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
 @endsection

@@ -20,7 +20,7 @@ class LoginController extends Controller
     
             if (Auth::attempt($credentials)) {
                 if ($user->level == 'admin') {
-                    return redirect('/admin');
+                    return redirect('/Admin/Profile');
                 } elseif ($user->level == 'guru') {
                     return redirect('/guru');
                 } elseif ($user->level == 'siswa') {

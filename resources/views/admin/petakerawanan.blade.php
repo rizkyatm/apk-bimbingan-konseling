@@ -57,23 +57,29 @@
                   <table class="table align-items-center mb-0">
                     <thead>
                       <tr>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">NO</th>
                         <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Peta Kerawanan</th>
+                        <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      @foreach ($data as $petakerawanan)
-                      <tr>
-                        <td style="padding-left: 20px;" class="align-middle">
-                          <h6 class="mb-0 text-sm text-start">{{$petakerawanan->jenispetakerawanan}}</h6>
-                        </td>
-                        <td class="align-middle">
+                      <tbody>
+                        @foreach ($data as $index => $petakerawanan)
+                        <tr>
+                          <td style="padding-left: 20px;" class="align-middle">
+                            <h6 class="mb-0 text-sm text-start">{{ $index + 1 }}</h6>
+                          </td>
+                          <td class="align-middle">
+                            <h6 class="mb-0 text-sm text-start" style="padding-left:15px ">{{ $petakerawanan->jenispetakerawanan }}</h6>
+                          </td>
+                          <td class="align-middle">
                             <a href="/deletepetakerawanan/{{ $petakerawanan->id }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
                               <i class="fas fa-trash-alt fa-lg"></i>
                             </a>
                           </td>
-                      </tr> 
-                      @endforeach
-                    </tbody>
+                        </tr>
+                        @endforeach
+                      </tbody> 
                   </table>                      
                 </div>
               </div>

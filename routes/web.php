@@ -31,18 +31,19 @@ Route::get( '/logout',[LoginController::class, 'logout'])->name('logout');//back
 
 Route::group(['middleware' => ['auth']], function () {
     //////////////////////////////////////////akun admin start//////////////////////////////////////////
-        Route::get('/admin', [AdminController::class, 'admin'])->middleware('checkRole:admin');
-        Route::get('/akunGuru', [AdminController::class, 'akunGuru'])->name('akunGuru')->middleware('checkRole:admin');
-        Route::get('/tambahdataguru', [AdminController::class, 'tambahdataguru'])->middleware('checkRole:admin');
-        Route::get('/tambahkelas', [AdminController::class, 'tambahkelas'])->middleware('checkRole:admin');
-        Route::post('/insertdataguru', [AdminController::class, 'insertdataguru'])->middleware('checkRole:admin');
-        Route::get('/tampilkandataguru/{id}', [AdminController::class, 'tampilkandataguru'])->middleware('checkRole:admin');
-        Route::post('/updatedataguru/{id}', [AdminController::class, 'updatedataguru'])->middleware('checkRole:admin');
-        Route::get('/deletedataguru/{id}', [AdminController::class, 'deletedataguru'])->middleware('checkRole:admin');
+        Route::get('/Admin/Profile', [AdminController::class, 'profileAdmin'])->middleware('checkRole:admin'); //MENAMPILKAN PROFILE ADMIN
+
+        // guru
+        Route::get('/Admin/Guru', [AdminController::class, 'Guru'])->name('Guru')->middleware('checkRole:admin'); //MENAMPILKAN TABLE GURU BK
+        Route::get('/Admin/TambahGuru', [AdminController::class, 'tambahdataguru'])->middleware('checkRole:admin'); //MENAMPILKAN FORM UNTUK MENAMBAHKAN DATA GURU BK
+        Route::post('/Admin/insertGuru', [AdminController::class, 'insertGuru'])->middleware('checkRole:admin'); //UNTUK MEMASUKAN DATA GURU KEDALAM DATABASE (BACKEND)
+        Route::get('TampilkanGuru/{id}', [AdminController::class, 'TampilkanGuru'])->middleware('checkRole:admin'); //UNTUK MENAMPILKAN FORM BESERTA VALUENYA SESUAI ID
+        Route::post('/Admin/UpdateGuru/{id}', [AdminController::class, 'UpdateGuru'])->middleware('checkRole:admin'); //UNTUK MENGUPDATE DATA GURU KEDALAM DATABASE SESUAI ID (BACKEND)
+        Route::get('/Admin/DeleteGuru/{id}', [AdminController::class, 'DeleteGuru'])->middleware('checkRole:admin');  //UNTUK HAPUS DATA GURU KEDALAM DATABASE SESUAI ID (BACKEND)
     
         // siswa
-        Route::get('/siswa', [AdminController::class, 'datasiswa'])->name('datasiswa')->middleware('checkRole:admin');
-        Route::get('/tambahsiswa', [AdminController::class, 'tambahsiswa'])->middleware('checkRole:admin');
+        Route::get('/Admin/Siswa', [AdminController::class, 'Siswa'])->name('Siswa')->middleware('checkRole:admin'); //MENAMPILKAN TABLE SISWA
+        Route::get('/tambahsiswa', [AdminController::class, 'tambahsiswa'])->middleware('checkRole:admin'); 
         Route::post('/insertdatasiswa', [AdminController::class, 'insertdatasiswa'])->middleware('checkRole:admin');
         Route::get('/tampilkandatasiswa/{id}', [AdminController::class, 'tampilkandatasiswa'])->middleware('checkRole:admin');
         Route::post('/updatedatasiswa/{id}', [AdminController::class, 'updatedatasiswa'])->middleware('checkRole:admin');
@@ -52,6 +53,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/kelas', [AdminController::class, 'kelas'])->name('kelas')->middleware('checkRole:admin');
         Route::post('/insertdatakelas', [AdminController::class, 'insertdatakelas'])->name('insertdatakelas')->middleware('checkRole:admin');
         Route::get('/deletedatakelas/{id}', [AdminController::class, 'deletedatakelas'])->name('deletedatakelas')->middleware('checkRole:admin');
+        Route::get('/tambahkelas', [AdminController::class, 'tambahkelas'])->middleware('checkRole:admin');
 
         // Wali Kelas
         Route::get('/datawalikelas', [AdminController::class, 'datawalikelas'])->name('datawalikelas')->middleware('checkRole:admin');

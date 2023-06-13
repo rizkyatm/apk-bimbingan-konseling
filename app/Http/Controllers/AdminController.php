@@ -10,6 +10,7 @@ use App\Exports\WalasExport;
 use App\Models\Guru;
 use App\Models\User;
 use App\Models\Kelas;
+use App\Models\Konseling_bk;
 use App\Models\PetaKerawanan;
 use App\Models\Siswa;
 use App\Models\WaliKelas;
@@ -21,12 +22,17 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
-    public function admin(){
-        return view('admin.admin');
+    public function profileAdmin(){
+        $walikelas = WaliKelas::all();
+        $guru = Guru::all();
+        $siswa = Siswa::all();
+        $jadwal = Konseling_bk::all();
+
+        return view('admin.profileAdmin', compact('walikelas', 'guru', 'siswa', 'jadwal'));
     }
 
     ///////////////////////////////////////siswa start///////////////////////////////////////
-    public function datasiswa(){
+    public function Siswa(){
         $data = Siswa::with('kelas')->paginate();
         return view('admin.datasiswa', compact('data'));
     }
@@ -277,17 +283,16 @@ class AdminController extends Controller
 
 
     ///////////////////////////////////////guru start///////////////////////////////////////
-    public function akunGuru(){
+    public function Guru(){
         $data = Guru::with('user')->paginate();
-        return view('admin.akunGuru', compact('data'));
+        return view('admin.dataGuru', compact('data'));
     }
     
     public function tambahdataguru(){
-        return view('admin.tambahakunguru');
+        return view('admin.tambahguru');
     }
 
-    public function insertdataguru(Request $request){
-        // dd($request->all());
+    public function insertGuru(Request $request){
         $data = [
             'name' => $request->input('namaguru'),
             'nisn_nip' => $request->input('nip'),        
@@ -314,18 +319,16 @@ class AdminController extends Controller
         $guru->tanggallahir = $request->input('tanggallahir');
         $guru->save();
         
-        return redirect()->route('akunGuru');
+        return redirect()->route('Guru');
         
     }
 
-    public function tampilkandataguru($id){
+    public function TampilkanGuru($id){
         $data = Guru::with('user')->find($id);
-        // dd($data);
-        return view('admin.editakunguru', compact('data'));
+        return view('admin.EditGuru', compact('data'));
     }
 
-    public function updateDataGuru(Request $request, $id)
-    {
+    public function UpdateGuru(Request $request, $id){
         $data = Guru::find($id);
         $previousFoto = $data->foto; // Simpan nama foto sebelumnya
     
@@ -360,12 +363,11 @@ class AdminController extends Controller
             $user->save();
         }
     
-        return redirect()->route('akunGuru');
+        return redirect()->route('Guru');
     }
     
 
-    public function deletedataguru($id)
-    {
+    public function DeleteGuru($id){
         $guru = Guru::find($id);
     
         // Menghapus foto jika ada
@@ -385,14 +387,14 @@ class AdminController extends Controller
         // Menghapus data di tabel Guru
         $guru->delete();
     
-        return redirect()->route('akunGuru');
+        return redirect()->route('Guru');
     }
     ///////////////////////////////////////guru end///////////////////////////////////////
 
     /////////////////////////////////////ExportExcel////////////////////////////////
     public function exportguru()
     {
-        return Excel::download(new GuruExport, 'akunguru.xlsx');
+        return Excel::download(new GuruExport, 'Guru.xlsx');
     }
 
     public function exportwalas()
