@@ -118,34 +118,34 @@ class WaliKelasController extends Controller
     
     $siswa = $kelas ? Siswa::where('kelas_id', $kelas->id)->get() : null; // Mengambil siswa-siswa yang memiliki kelas dengan ID yang sama jika kelas tersedia, jika tidak, nilainya menjadi null
 
-    return view('walas.petakerawanan', compact('user','siswa'));
+    return view('walas.petakerawananwalas', compact('user','siswa'));
    }
 
-   public function tambahpetakerawanan(){
+   public function tambahpetakerawananwalas(){
     $user = User::with('walikelas')->find(Auth::id()); // nyari tabel user yg login
 
     $siswa = Siswa::all();
     $jenispetakerawanan = PetaKerawanan::all();
 
     // dd($jenispetakerawanan);
-    return view('walas.tambahpeta', compact('siswa', 'jenispetakerawanan', 'user',));
+    return view('walas.tambahpetawalas', compact('siswa', 'jenispetakerawanan', 'user',));
 }
 
-public function storekerawanan(Request $request){
+public function storekerawananwalas(Request $request){
     $data = new JenisPetaKerawanan();
     $data->siswa_id = $request->siswa_id;
     $data->petakerawanan_id = $request->petakerawanan_id;
     // dd($data);
     $data->save();
-    return redirect('/petakerawanan');
+    return redirect('/petakerawananwalas');
 
     // dd($jenispetakerawanan);
 }
 
-public function updatepeta(Request $request){
+public function updatepetawalas(Request $request){
     // $siswa = Siswa::create($request->all());
     $peta = PetaKerawanan::create($request->all());
-    return redirect('/petakerawanan', compact('siswa', 'peta'));
+    return redirect('/petakerawananwalas', compact('siswa', 'peta'));
 
     // $siswa = Siswa::find($id);
     // $peta = PetaKerawanan::find($id);
@@ -154,7 +154,7 @@ public function updatepeta(Request $request){
     // $peta->jenispetakerawanan = $request->input('jenispetakerawanan');
 }
 
-public function jeniskerawanan($id){
+public function jeniskerawananwalas($id){
     $user = User::with('walikelas')->find(Auth::id()); // nyari tabel user yg login
     // $kerawanan = JenisPetaKerawanan::with('petakerawanan')->find($id);
     // dd($kerawanan);

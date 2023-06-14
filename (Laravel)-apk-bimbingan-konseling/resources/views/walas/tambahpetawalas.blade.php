@@ -49,7 +49,7 @@
                     <h6 class="flex-grow-1">Form Peta Kerawanan</h6>
                   </div>
                   <div class="card-body px-4 pt-2 pb-2">
-                    <form action="/insertkerawanan" method="POST">
+                    <form action="/insertkerawananwalas" method="POST">
                         @csrf
                         <div class="mb-3">
                           <label for="siswa" class="form-label">Nama Siswa</label>

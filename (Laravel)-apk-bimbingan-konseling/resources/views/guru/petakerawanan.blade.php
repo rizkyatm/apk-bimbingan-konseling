@@ -47,7 +47,7 @@
                 <div class="card mb-4" style="height: 500px;">
                     <div class="card-header pb-0 px-3 d-flex justify-content-between align-items-center" id="daftar">
                         <h6 class="mb-0">Daftar Peta Kerawanan</h6>
-                        <a class="btn btn-primary" id="tambah-jadwal" href="/tambahpetakerawanan">Tambah Jadwal</a>
+                        <a class="btn btn-primary" id="tambah-jadwal" href="/tambahpetakerawananguru">Tambah Jadwal</a>
                       </div>
                   <div class="card-header pb-0">
                     <h6></h6>
@@ -59,7 +59,7 @@
                         <div class="row d-flex flex-wrap">
                           @foreach ($siswa as $siswa)
                           <div class="col-md-4 mb-4">
-                            <a href="/jeniskerawanan/{{$siswa->id}}">
+                            <a href="/jeniskerawananguru/{{$siswa->id}}">
                               <div class="card border shadow-sm">
                                 <div class="card-body">
                                   <h5 class="card-title">{{ $siswa->namasiswa}}</h5>

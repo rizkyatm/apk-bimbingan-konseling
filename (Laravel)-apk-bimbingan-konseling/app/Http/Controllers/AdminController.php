@@ -426,14 +426,14 @@ class AdminController extends Controller
         return view('admin.tambahpetakerawanan');
     }
 
-    public function insertpetakerawanan(Request $request){
+    public function insertpetaadmin(Request $request){
         $data = PetaKerawanan::create($request->all());
-        return redirect('/petakerawanan');
+        return redirect('/adminpetakerawanan');
     }
     public function deletepetakerawanan($id){
         $data = PetaKerawanan::find($id);
         $data->delete();
-        return redirect()->route('petakerawanan')->with('sucess', 'data berhasil diapus');
+        return redirect()->route('adminpetakerawanan')->with('sucess', 'data berhasil diapus');
     }
 
 }

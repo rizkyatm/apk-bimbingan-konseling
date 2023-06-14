@@ -84,12 +84,12 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link{{ Request::is('petakerawanan*') ? ' active' : '' }}" href="/petakerawanan">
+          <a class="nav-link{{ Request::is('petakerawanan*') ? ' active' : '' }}" href="/petakerawananwalas">
             <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"> 
                 <g> 
                   <path fill="none" d="M0 0h24v24H0z"/> 
-                  <path class="{{ Request::is('petakerawangan*') ? 'text-white' : 'text-custom' }}" style="color: {{ Request::is('hasilkonseling*') ? '#FFFFFF' : '#3A416F' }}" d="M4 3h16l2 4v13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.004L4 3zm9 11v-4h-2v4H8l4 4 4-4h-3zm6.764-7l-1-2H5.237l-1 2h15.527z"/> 
+                  <path class="{{ Request::is('petakerawangan*') ? 'text-white' : 'text-custom' }}" style="color: {{ Request::is('petakerawananwalas*') ? '#FFFFFF' : '#3A416F' }}" d="M4 3h16l2 4v13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7.004L4 3zm9 11v-4h-2v4H8l4 4 4-4h-3zm6.764-7l-1-2H5.237l-1 2h15.527z"/> 
                 </g> 
               </svg>
             </div>

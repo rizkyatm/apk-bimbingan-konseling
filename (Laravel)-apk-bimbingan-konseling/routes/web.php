@@ -125,23 +125,23 @@ Route::group(['middleware' => ['auth']], function () {
     ////////////////////////////////////petakerawanan///////////////////////////////////////////
     Route::get('/adminpetakerawanan', [AdminController::class, 'petakerawanan'])->name('petakerawanan');
     Route::get('/tambahpelanggaran', [AdminController::class, 'tambahpelanggaran'])->name('tambahpelanggaran');
-    Route::post('/insertpetakerawanan', [AdminController::class, 'insertpetakerawanan'])->name('insertpetakerawanan');
+    Route::post('/insertpetaadmin', [AdminController::class, 'insertpetaadmin'])->name('insertpetaadmin');
     Route::get('/deletepetakerawanan/{id}', [AdminController::class, 'deletepetakerawanan'])->name('deletepetakerawanan');
      
 
     //petapelanggaran/guru////
-    Route::get('/petakerawanan', [GuruController::class, 'datapetakerawanan'])->name('petakerawanan');
-    Route::get('/tambahpetakerawanan', [GuruController::class, 'tambahpetakerawanan'])->name('tambahpetakerawanan');
-    Route::post('/insertkerawanan', [GuruController::class, 'storekerawanan'])->name('insertkerawanan');
-    Route::get('/jeniskerawanan/{id}', [GuruController::class, 'jeniskerawanan'])->name('jeniskerawanan');
-    Route::get('/deletekerawanan/{id}', [GuruController::class, 'deletekerawanan'])->name('deletekerawanan');
+    Route::get('/petakerawananguru', [GuruController::class, 'petakerawananguru'])->name('petakerawananguru');
+    Route::get('/tambahpetakerawananguru', [GuruController::class, 'tambahpetakerawananguru'])->name('tambahpetakerawananguru');
+    Route::post('/insertkerawananguru', [GuruController::class, 'storekerawananguru'])->name('insertkerawananguru');
+    Route::get('/jeniskerawananguru/{id}', [GuruController::class, 'jeniskerawananguru'])->name('jeniskerawananguru');
+    Route::get('/deletekerawananguru/{id}', [GuruController::class, 'deletekerawananguru'])->name('deletekerawananguru');
     ////ENDDGURU
 
     /////PETAKERAWANAN/WALAS//////
-    Route::get('/petakerawanan', [WaliKelasController::class, 'datakerawananwalas'])->name('petakerawanan');
-    Route::get('/tambahpetakerawanan', [WaliKelasController::class, 'tambahpetakerawanan'])->name('tambahpetakerawanan');
-    Route::post('/insertkerawanan', [WaliKelasController::class, 'storekerawanan'])->name('insertkerawanan');
-    Route::get('/jeniskerawanan/{id}', [WaliKelasController::class, 'jeniskerawanan'])->name('jeniskerawanan');
-    Route::get('/deletekerawanan/{id}', [WaliKelasController::class, 'deletekerawanan'])->name('deletekerawanan');
+    Route::get('/petakerawananwalas', [WaliKelasController::class, 'datakerawananwalas'])->name('petakerawananwalas');
+    Route::get('/tambahpetakerawananwalas', [WaliKelasController::class, 'tambahpetakerawananwalas'])->name('tambahpetakerawananwalas');
+    Route::post('/insertkerawananwalas', [WaliKelasController::class, 'storekerawananwalas'])->name('insertkerawananwalas');
+    Route::get('/jeniskerawananwalas/{id}', [WaliKelasController::class, 'jeniskerawananwalas'])->name('jeniskerawananwalas');
+    Route::get('/deletekerawananwalas/{id}', [WaliKelasController::class, 'deletekerawananwalas'])->name('deletekerawananwalas');
     // Route::post('/postlogin', 'LoginController@postlogin')->name('postlogin');
     // Route::get('/siswa',[SiswaController::class, 'siswa'])->name('siswa');

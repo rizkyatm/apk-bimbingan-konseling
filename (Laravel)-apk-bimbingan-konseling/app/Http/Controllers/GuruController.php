@@ -218,7 +218,7 @@ class GuruController extends Controller
     ////////////////////////////////History End//////////////////////////////////
     ////////////////////////////////petakerawanan  Start//////////////////////////////////
          
-    public function datapetakerawanan(){
+    public function petakerawananguru(){
         $user = User::with('guru')->find(Auth::id()); // Mengambil data user yang sedang login dan eager load relasi guru
         $guru = $user->guru->first(); // Mengambil guru pertama yang terkait dengan user
         
@@ -233,23 +233,23 @@ class GuruController extends Controller
         return view('guru.petakerawanan', compact('user','siswa'));
     }
 
-    public function tambahpetakerawanan(){
+    public function tambahpetakerawananguru(){
         $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
 
         $siswa = Siswa::all();
         $jenispetakerawanan = PetaKerawanan::all();
 
         // dd($jenispetakerawanan);
-        return view('guru.tambahpeta', compact('siswa', 'jenispetakerawanan', 'user',));
+        return view('guru.tambahpetaguru', compact('siswa', 'jenispetakerawanan', 'user',));
     }
 
-    public function storekerawanan(Request $request){
+    public function storekerawananguru(Request $request){
         $data = new JenisPetaKerawanan();
         $data->siswa_id = $request->siswa_id;
         $data->petakerawanan_id = $request->petakerawanan_id;
         // dd($data);
         $data->save();
-        return redirect('/petakerawanan');
+        return redirect('/petakerawananguru');
 
         // dd($jenispetakerawanan);
     }
@@ -257,7 +257,7 @@ class GuruController extends Controller
     public function updatepeta(Request $request){
         // $siswa = Siswa::create($request->all());
         $peta = PetaKerawanan::create($request->all());
-        return redirect('/petakerawanan', compact('siswa', 'peta'));
+        return redirect('/petakerawananguru', compact('siswa', 'peta'));
 
         // $siswa = Siswa::find($id);
         // $peta = PetaKerawanan::find($id);
@@ -266,7 +266,7 @@ class GuruController extends Controller
         // $peta->jenispetakerawanan = $request->input('jenispetakerawanan');
     }
 
-    public function jeniskerawanan($id){
+    public function jeniskerawananguru($id){
         $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
         // $kerawanan = JenisPetaKerawanan::with('petakerawanan')->find($id);
         // dd($kerawanan);
@@ -277,10 +277,10 @@ class GuruController extends Controller
         })->get();
         
     
-        return view('guru.isijeniskerawanan', compact('jenisKerawanan', 'user'));
+        return view('guru.isikerawananguru', compact('jenisKerawanan', 'user'));
     }
 
-    public function deletekerawanan($id){
+    public function deletekerawananguru($id){
             $data = JenisPetaKerawanan::find($id);
             $data->delete();
             return redirect()->back()->with('sucess', 'data berhasil diapus');
