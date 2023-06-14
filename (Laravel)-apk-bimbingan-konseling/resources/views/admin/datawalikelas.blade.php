@@ -50,7 +50,7 @@
                     <div class="col-auto custom-buttom" style="margin-right: 10px;">
                     <button class="btn btn-success custom-buttom" style="background-color: #4BBBFA;"><a href="/exportwalas" style="color:white;">Export Excel</a></button> 
                     </div>
-                    <a href="/tambahdatawalikelas" class="btn" style="background-color: #4BBBFA; color: white">Tambah wali kelas</a>
+                    <a href="/Admin/TambahWaliKelas" class="btn" style="background-color: #4BBBFA; color: white">Tambah wali kelas</a>
                   </div>
                   <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
@@ -89,10 +89,10 @@
                               <span class="text-secondary text-xs font-weight-bold">{{$walikelas->jeniskelamin}}</span>
                             </td>
                             <td class="align-middle">
-                              <a href="/tampilkandatawalikelas/{{$walikelas->id}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              <a href="/Admin/TampilkanWaliKelas/{{$walikelas->id}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                 <i class="fas fa-edit fa-lg"></i>
                               </a>
-                              <a href="/deletedatawalikelas/{{$walikelas->id}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                              <a href="/Admin//DeleteWaliKelas/{{$walikelas->id}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
                                 <i class="fas fa-trash-alt fa-lg"></i>
                               </a>
                             </td>

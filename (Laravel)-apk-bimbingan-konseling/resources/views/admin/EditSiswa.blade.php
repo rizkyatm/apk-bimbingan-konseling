@@ -49,7 +49,7 @@
                     <h6 class="flex-grow-1">Form Edit Murid</h6>
                   </div>
                   <div class="card-body px-4 pt-2 pb-2">
-                    <form action="/updatedatasiswa/{{$data->id}}" method="POST" enctype="multipart/form-data" >
+                    <form action="/Admin/UpdateSiswa/{{$data->id}}" method="POST" enctype="multipart/form-data" >
                         @csrf
                         <div class="row mb-3">
                           <div class="col-md-6">

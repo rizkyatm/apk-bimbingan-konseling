@@ -48,7 +48,7 @@
                     <h6 class="flex-grow-1">Form Data Peta Kerawanan</h6>
                   </div>
                   <div class="card-body px-4 pt-2 pb-2">
-                    <form action="insertpetaadmin" method="POST" enctype="multipart/form-data">
+                    <form action="/Admin/InsertDataKerawanan" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="nama" class="form-label">Peta Kerawanan</label>

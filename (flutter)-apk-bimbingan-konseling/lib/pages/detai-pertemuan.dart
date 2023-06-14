@@ -183,7 +183,7 @@ class DetailPage extends StatelessWidget {
                               ),
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(
-                                    28 * fem, 25 * fem, 27 * fem, 55.41 * fem),
+                                    28 * fem, 25 * fem, 3 * fem, 55.41 * fem),
                                 width: double.infinity,
                                 height: double.infinity,
                                 decoration: BoxDecoration(

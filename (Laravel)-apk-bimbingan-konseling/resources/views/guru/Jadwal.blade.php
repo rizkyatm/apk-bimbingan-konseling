@@ -83,7 +83,7 @@
                   </div>
                 </li>
                 <div id="finish-form-{{ $item->id }}" style="display: none;">
-                  <form action="/selesaikanjadwal/{{ $item->id }}" method="POST" class="d-inline" style="vertical-align: middle;">
+                  <form action="/Guru/SelesaikanJadwal/{{ $item->id }}" method="POST" class="d-inline" style="vertical-align: middle;">
                     @csrf
                     <div class="form-group" style="display: flex; align-items: center;">
                       <label style="margin-right: 10px;">Hasil Konseling:</label>
@@ -94,7 +94,7 @@
                   </form>
                 </div>
                 <div id="accept-form-{{ $item->id }}" style="display: none;">
-                  <form action="/terimajadwal/{{ $item->id }}" method="POST" class="d-inline" style="vertical-align: middle;">
+                  <form action="/Guru/TerimaJadwal/{{ $item->id }}" method="POST" class="d-inline" style="vertical-align: middle;">
                     @csrf
                     <div class="form-group" style="display: flex; align-items: center;">
                       <label for="tempat-{{ $item->id }}" style="margin-right: 10px;">Tempat:</label>
@@ -105,7 +105,7 @@
                   </form>
                 </div>
                 <div id="reschedule-form-{{ $item->id }}" style="display: none;">
-                  <form action="/mundurkanjadwal/{{ $item->id }}" method="POST" class="d-inline" style="vertical-align: middle;">
+                  <form action="/Guru/MundurkanJadwal/{{ $item->id }}" method="POST" class="d-inline" style="vertical-align: middle;">
                     @csrf
                     <div class="form-group" style="display: flex; align-items: center;">
                       <label for="tanggal-{{ $item->id }}" style="margin-right: 10px;">Tanggal:</label>
@@ -127,7 +127,7 @@
               <h6 class="mb-0">Tambah Jadwal</h6>
             </div>
             <div class="p-3">
-              <form action="/tambahjadwal" method="POST">
+              <form action="/Guru/tambahjadwal" method="POST">
                 @csrf
                 <!-- Form Jadwal -->
                 <div class="mb-3">
@@ -179,7 +179,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="jam" class="form-label">Jam</label>
-                  <input type="time" class="form-control" id="jam" name="jam">
+                  <input type="time" class="form-control" id="waktu" name="waktu">
                 </div>
                 <div class="mb-3">
                   <label for="tempat" class="form-label">Tempat</label>

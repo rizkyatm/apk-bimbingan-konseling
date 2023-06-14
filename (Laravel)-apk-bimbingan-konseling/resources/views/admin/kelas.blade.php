@@ -51,7 +51,7 @@
                 <div class="col-auto custom-buttom" style="margin-right: 10px;">
                     <button class="btn btn-success custom-buttom" style="background-color: #4BBBFA;"><a href="/exportkelas" style="color:white;">Export Excel</a></button> 
                     </div>
-                <a href="/tambahkelas" class="btn" style="background-color: #4BBBFA; color: white">Tambah kelas</a>
+                <a href="/Admin/TambahKelas" class="btn" style="background-color: #4BBBFA; color: white">Tambah kelas</a>
               </div>
               <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -70,7 +70,7 @@
                         <td style="padding-left: 20px;">{{$kelas->guru->namaguru}}</td>
                         <td style="padding-left: 20px;">{{$kelas->walikelas->namagurukelas}}</td>
                         <td class="align-middle">
-                          <a href="/deletedatakelas/{{$kelas->id}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                          <a href="/Admin/DeleteKelas/{{$kelas->id}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
                             <i class="fas fa-trash-alt fa-lg"></i>
                           </a>
                         </td>

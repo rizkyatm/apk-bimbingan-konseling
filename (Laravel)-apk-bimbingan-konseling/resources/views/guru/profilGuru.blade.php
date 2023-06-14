@@ -95,7 +95,7 @@
                   </div>
                   {{-- ////////// tampilan profil End ////////// --}}
                   <div id="edit-form" style="display: none;" class="pt-3">
-                    <form class="mx-4" action="/updateprofilguru/{{$user->guru->id}}" method="POST" enctype="multipart/form-data">
+                    <form class="mx-4" action="/Guru/UpdateProfile/{{$user->guru->id}}" method="POST" enctype="multipart/form-data">
                       @csrf
                       <div class="row">
                         <div class="col-md-6">

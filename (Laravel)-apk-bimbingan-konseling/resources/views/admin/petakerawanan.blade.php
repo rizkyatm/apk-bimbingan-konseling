@@ -50,7 +50,7 @@
                 <div class="col-auto custom-buttom" style="margin-right: 10px;">
                     <button class="btn btn-success custom-buttom" style="background-color: #4BBBFA;"><a href="/exportpetakerawanan" style="color:white;">Export Excel</a></button> 
                     </div>
-                <a href="/tambahpelanggaran" class="btn" style="background-color: #4BBBFA; color: white">Tambah Peta Kerawanan</a>
+                <a href="/Admin/TambahDataKerawan" class="btn" style="background-color: #4BBBFA; color: white">Tambah Peta Kerawanan</a>
               </div>
               <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -73,7 +73,7 @@
                             <h6 class="mb-0 text-sm text-start" style="padding-left:15px ">{{ $petakerawanan->jenispetakerawanan }}</h6>
                           </td>
                           <td class="align-middle">
-                            <a href="/deletepetakerawanan/{{ $petakerawanan->id }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                            <a href="/Admin/DeleteDataKerawana/{{ $petakerawanan->id }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
                               <i class="fas fa-trash-alt fa-lg"></i>
                             </a>
                           </td>

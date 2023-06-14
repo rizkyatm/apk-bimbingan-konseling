@@ -37,12 +37,12 @@ class AdminController extends Controller
         return view('admin.datasiswa', compact('data'));
     }
 
-    public function tambahsiswa(){
+    public function tambahdatasiswa(){
         $data = Kelas::all();
         return view('admin.tambahsiswa',compact('data'));
     }
 
-    public function insertdatasiswa(Request $request){
+    public function insertSiswa(Request $request){
         $data = [
             'name' => $request->input('namasiswa'),
             'nisn_nip' => $request->input('nisn'),        
@@ -74,7 +74,7 @@ class AdminController extends Controller
     }
 
 
-    public function deletedatasiswa($id){
+    public function DeleteSiswa($id){
         $data = Siswa::find($id);
     
         // Menghapus foto jika ada
@@ -98,14 +98,14 @@ class AdminController extends Controller
     }
     
 
-    public function tampilkandatasiswa($id){
+    public function TampilkanSiswa($id){
         $data = Siswa::with('user')->find($id);
         $datakelas = kelas::all();
-        // dd($data);
-        return view('admin.editdatasiswa', compact('data','datakelas'));
+
+        return view('admin.EditSiswa', compact('data','datakelas'));
     }
     
-    public function updatedatasiswa(Request $request, $id){
+    public function UpdateSiswa(Request $request, $id){
         $data = Siswa::find($id);
         $previousFoto = $data->foto; // Simpan nama foto sebelumnya
 
@@ -157,12 +157,12 @@ class AdminController extends Controller
         return view('admin.tambahkelas', compact('dataguru','datawalikelas'));
     }
 
-    public function insertdatakelas(Request $request){
+    public function insertKelas(Request $request){
         Kelas::create($request->all());
         return redirect()->route('kelas');
     }
 
-    public function deletedatakelas($id){
+    public function DeleteKelas($id){
         $data = Kelas::find($id);        
         $data->delete();
         
@@ -172,16 +172,16 @@ class AdminController extends Controller
 
     ///////////////////////////////////////wali kelas start///////////////////////////////////////
 
-    public function datawalikelas(){
+    public function WaliKelas(){
         $data = WaliKelas::with('user')->paginate();
-        return view('admin.datawalikelas',compact('data'));
+        return view('admin.dataWaliKelas',compact('data'));
     }
 
-    public function tambahwalikelas(){
+    public function TambahWaliKelas(){
         return view('admin.tambahwalikelas');
     }
 
-    public function insertdatawalikelas(Request $request){
+    public function InsertWaliKelas(Request $request){
         // dd($request->all());
         $data = [
             'name' => $request->input('namagurukelas'),
@@ -209,17 +209,17 @@ class AdminController extends Controller
         $walikelas->tanggallahir = $request->input('tanggallahir');
         $walikelas->save();
         
-        return redirect()->route('datawalikelas');
+        return redirect()->route('WaliKelas');
         
     }
 
-    public function tampilkadatawalikelas($id){
+    public function TampilkanWaliKelas($id){
         $data = WaliKelas::with('user')->find($id);
         // dd($data);
-        return view('admin.editdatawalikelas', compact('data'));
+        return view('admin.EditWaliKelas', compact('data'));
     }
 
-    public function updateDatawalikelas(Request $request, $id){
+    public function UpdateWaliKelas(Request $request, $id){
         $data = WaliKelas::find($id);
         $previousFoto = $data->foto; // Simpan nama foto sebelumnya
     
@@ -240,7 +240,7 @@ class AdminController extends Controller
     
             $foto = $request->file('foto');
             $fotoName = $foto->getClientOriginalName();
-            $foto->move('fotosiswa/', $fotoName);
+            $foto->move('fotowalikelas/', $fotoName);
     
             // Update foto walikelas
             $data->foto = $fotoName;
@@ -254,10 +254,10 @@ class AdminController extends Controller
             $user->save();
         }
     
-        return redirect()->route('datawalikelas');
+        return redirect()->route('WaliKelas');
     }
 
-    public function deletedatawalikelas($id){
+    public function DeleteWaliKelas($id){
         $walikelas = WaliKelas::find($id);
     
         // Menghapus foto jika ada
@@ -277,7 +277,7 @@ class AdminController extends Controller
         // Menghapus data di tabel walikelas
         $walikelas->delete();
     
-        return redirect()->route('datawalikelas');
+        return redirect()->route('WaliKelas');
     }
     ///////////////////////////////////////wali kelas end/////////////////////////////////////////
 
@@ -349,7 +349,7 @@ class AdminController extends Controller
     
             $foto = $request->file('foto');
             $fotoName = $foto->getClientOriginalName();
-            $foto->move('fotosiswa/', $fotoName);
+            $foto->move('fotoguru/', $fotoName);
     
             // Update foto guru
             $data->foto = $fotoName;
@@ -428,12 +428,12 @@ class AdminController extends Controller
 
     public function insertpetaadmin(Request $request){
         $data = PetaKerawanan::create($request->all());
-        return redirect('/adminpetakerawanan');
+        return redirect('/Admin/DataKerawan');
     }
     public function deletepetakerawanan($id){
         $data = PetaKerawanan::find($id);
         $data->delete();
-        return redirect()->route('adminpetakerawanan')->with('sucess', 'data berhasil diapus');
+        return redirect('/Admin/DataKerawan')->with('sucess', 'data berhasil diapus');
     }
 
 }

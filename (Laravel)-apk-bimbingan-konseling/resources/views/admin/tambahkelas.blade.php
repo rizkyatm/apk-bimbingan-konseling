@@ -48,7 +48,7 @@
                     <h6 class="flex-grow-1">Form Kelas</h6>
                   </div>
                   <div class="card-body px-4 pt-2 pb-2">
-                    <form action="/insertdatakelas" method="POST">
+                    <form action="/Admin/insertKelas" method="POST">
                         @csrf
                         <div class="mb-3">
                           <label for="kelas" class="form-label">Kelas</label>

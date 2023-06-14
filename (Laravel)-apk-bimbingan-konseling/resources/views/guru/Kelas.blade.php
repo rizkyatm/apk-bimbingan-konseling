@@ -54,7 +54,7 @@
                         <div class="row d-flex flex-wrap">
                           @foreach ($kelas as $kelasguru)
                           <div class="col-md-4 mb-4">
-                            <a href="/siswa/{{ $kelasguru->id }}">
+                            <a href="/Guru/Siswa/{{ $kelasguru->id }}">
                               <div class="card border shadow-sm">
                                 <div class="card-body">
                                   <h5 class="card-title">{{ $kelasguru->kelas }}</h5>
@@ -82,7 +82,7 @@
           
               // Mengirim permintaan AJAX untuk memuat data murid
               $.ajax({
-                url: '/siswa/' + kelasId, // Ubah URL sesuai dengan rute yang sesuai
+                url: '/Guru/Siswa/' + kelasId, // Ubah URL sesuai dengan rute yang sesuai
                 method: 'GET',
                 success: function(response) {
                   // Manipulasi DOM untuk menampilkan data murid

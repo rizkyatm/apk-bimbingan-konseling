@@ -19,13 +19,13 @@ use Illuminate\Support\Facades\Hash;
 class GuruController extends Controller
 {
     ////////////////////////////////profil guru start////////////////////////////////
-    public function guru(){
+    public function Profile(){
         $user = User::find(Auth::id()); // Ambil data pengguna yang sedang login
         $user->load('guru'); // Muat relasi 'guru' dari pengguna
         return view('guru.profilGuru', compact('user'));
     }
 
-    public function updateprofilguru(Request $request, $id){
+    public function UpdateProfile(Request $request, $id){
         $data = Guru::find($id);
         $previousFoto = $data->foto; // Simpan nama foto sebelumnya
     
@@ -63,20 +63,20 @@ class GuruController extends Controller
             $user->save();
         }
     
-        return redirect()->route('guru');
+        return redirect()->route('Profile');
     }
     ////////////////////////////////profil guru end//////////////////////////////////
 
     ////////////////////////////////kelas siswa start////////////////////////////////
-    public function akunSiswa(){
+    public function Kelas(){
         $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
         $id = $user->guru->id; // nyari id guru dari siapa yang loginnya
         $kelas = Kelas::where('guru_id', $id)->get(); // cari kelas sesuai dari tabel yang adai di kelas
         
-        return view('guru.akunSiswa', compact('kelas','user'));
+        return view('guru.Kelas', compact('kelas','user'));
     }
 
-    public function menampikanmurid($kelasId){
+    public function siswa($kelasId){
         $user = User::find(Auth::id()); // Ambil data pengguna yang sedang login
         $user->load('guru');
 
@@ -88,7 +88,7 @@ class GuruController extends Controller
 
 
     ////////////////////////////////profil kelas siswa start////////////////////////////////
-    public function buatJadwal(){
+    public function Jadwal(){
         $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
         $id = $user->guru->id; // nyari id guru dari siapa yang loginnya
         $kelas = Kelas::where('guru_id', $id)->get(); // cari kelas sesuai dari tabel yang ada di kelas
@@ -101,7 +101,7 @@ class GuruController extends Controller
         //memnaggil jadwal konseling beserta relasinya
         $layanan = Layanan_bk::whereIn('id', [1, 2, 4])->get(); //memanggil jenis layanan bk
 
-        return view('guru.buatJadwal', compact('kelas','layanan', 'jadwalbk','user','siswa'));
+        return view('guru.Jadwal', compact('kelas','layanan', 'jadwalbk','user','siswa'));
     }
 
     public function getSiswaByKelas(Request $request){
@@ -113,9 +113,7 @@ class GuruController extends Controller
         return response()->json($siswaList);
     }
 
-    public function tambahjadwal(Request $request)
-    {
-        
+    public function TambahJadwal(Request $request){
         // Menentukan siswa_id yang akan digunakan
         if ($request->has('manysiswa_id')) {
             $siswa_ids = (array) $request->input('manysiswa_id');
@@ -146,8 +144,7 @@ class GuruController extends Controller
         return redirect()->back()->with('success', 'Data jadwal berhasil ditambahkan.');
     }    
     
-
-    public function terimajadwal(Request $request, $id){
+    public function TerimaJadwal(Request $request, $id){
         $jadwal = Konseling_bk::find($id);
         
         $nilaiBaru = $request->input('tempat');
@@ -167,12 +164,9 @@ class GuruController extends Controller
         
         // Redirect atau melakukan tindakan lain sesuai kebutuhan
         return redirect()->back()->with('success', 'Jadwal berhasil diundur.');
-        
-        
     }
-    
 
-    public function mundurkanJadwal(Request $request, $id){
+    public function MundurkanJadwal(Request $request, $id){
     
         // Menggabungkan tanggal dan jam menjadi tipe data datetime
         $waktu = Carbon::parse($request->tanggal . ' ' . $request->jam);
@@ -188,7 +182,7 @@ class GuruController extends Controller
     }
 
 
-    public function selesaikanjadwal(Request $request, $id){
+    public function SelesaikanJadwal(Request $request, $id){
         // Proses penyimpanan data jadwal yang di selesaikan
         $jadwal = Konseling_bk::find($id);
         $jadwal->hasil_konseling = $request->hasil_konseling;
@@ -201,8 +195,8 @@ class GuruController extends Controller
     ////////////////////////////////profil kelas siswa end//////////////////////////////////
 
 
-    ////////////////////////////////History Start////////////////////////////////
-    public function history(){
+    ///////////////////////////////////////Archives Start///////////////////////////////////////
+    public function Archives(){
         $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
         $id = $user->guru->id; // nyari id guru dari siapa yang loginnya
         $kelas = Kelas::where('guru_id', $id)->get(); // cari kelas sesuai dari tabel yang adai di kelas
@@ -213,9 +207,11 @@ class GuruController extends Controller
         ->get();
 
 
-        return view('guru.history', compact('kelas', 'jadwalbk','user'));
+        return view('guru.Archives', compact('kelas', 'jadwalbk','user'));
     }
-    ////////////////////////////////History End//////////////////////////////////
+    ///////////////////////////////////////Archives End///////////////////////////////////////
+
+    
     ////////////////////////////////petakerawanan  Start//////////////////////////////////
          
     public function petakerawananguru(){

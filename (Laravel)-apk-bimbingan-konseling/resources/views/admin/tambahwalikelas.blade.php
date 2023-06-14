@@ -48,7 +48,7 @@
                     <h6 class="flex-grow-1">Form Wali Kelas</h6>
                   </div>
                   <div class="card-body px-4 pt-2 pb-2">
-                    <form action="/insertdatawalikelas" method="POST" enctype="multipart/form-data" >
+                    <form action="/Admin/InsertWaliKelas" method="POST" enctype="multipart/form-data" >
                         @csrf
                         <div class="row mb-3">
                           <div class="col-md-6">

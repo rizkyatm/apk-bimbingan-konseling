@@ -50,7 +50,7 @@
                 <div class="col-auto custom-buttom" style="margin-right: 10px;">
                     <button class="btn btn-success custom-buttom" style="background-color: #4BBBFA;"><a href="/exportsiswa" style="color:white;">Export Excel</a></button> 
                     </div>
-                <a href="/tambahsiswa" class="btn" style="background-color: #4BBBFA; color: white">Tambah Murid</a>
+                <a href="/Admin/TambahSiswa" class="btn" style="background-color: #4BBBFA; color: white">Tambah Murid</a>
               </div>
               <div class="card-body px-0 pt-0 pb-2">
                 <div class="table-responsive p-0">
@@ -90,10 +90,10 @@
                           <span class="text-secondary text-xs font-weight-bold">{{$siswa->kelas->guru->namaguru}}</span>
                         </td>
                         <td class="align-middle">
-                          <a href="/tampilkandatasiswa/{{$siswa->id}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                          <a href="/Admin/TampilkanSiswa/{{$siswa->id}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             <i class="fas fa-edit fa-lg"></i>
                           </a>
-                          <a href="/deletedatasiswa/{{$siswa->id}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                          <a href="/Admin/DeleteSiswa/{{$siswa->id}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
                             <i class="fas fa-trash-alt fa-lg"></i>
                           </a>
                         </td>

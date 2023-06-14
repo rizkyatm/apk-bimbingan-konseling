@@ -89,7 +89,7 @@
                               <span class="text-secondary text-xs font-weight-bold">{{$guru->jeniskelamin}}</span>
                             </td>
                             <td class="align-middle">
-                              <a href="/TampilkanGuru/{{$guru->id}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                              <a href="/Admin/TampilkanGuru/{{$guru->id}}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                 <i class="fas fa-edit fa-lg"></i>
                               </a>
                               <a href="/Admin/DeleteGuru/{{$guru->id}}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
