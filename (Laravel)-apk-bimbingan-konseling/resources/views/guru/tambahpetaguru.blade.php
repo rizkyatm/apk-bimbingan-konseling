@@ -56,7 +56,7 @@
                           <select name="siswa_id" id="siswa_id" class="form-control" required>
                             <option disabled selected>Pilih Nama Siswa</option>
                             @foreach ($siswa as $datasiswa)
-                              <option value="{{$datasiswa->id}}">{{$datasiswa->namasiswa}}</option>
+                              <option value="{{$datasiswa->id}}">{{$datasiswa->namasiswa}} (<strong>{{$datasiswa->kelas->kelas}}</strong>)</option>
                             @endforeach
                           </select>
                         </div>

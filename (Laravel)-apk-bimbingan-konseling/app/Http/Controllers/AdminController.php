@@ -20,8 +20,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 
-class AdminController extends Controller
-{
+class AdminController extends Controller{
     public function profileAdmin(){
         $walikelas = WaliKelas::all();
         $guru = Guru::all();
@@ -33,7 +32,7 @@ class AdminController extends Controller
 
     ///////////////////////////////////////siswa start///////////////////////////////////////
     public function Siswa(){
-        $data = Siswa::with('kelas')->paginate();
+        $data = Siswa::with('kelas')->get();
         return view('admin.datasiswa', compact('data'));
     }
 
@@ -78,12 +77,12 @@ class AdminController extends Controller
         $data = Siswa::find($id);
     
         // Menghapus foto jika ada
-        if ($data->foto) {
-            $filePath = public_path('fotosiswa/' . $data->foto);
-            if (File::exists($filePath)) {
-                File::delete($filePath);
-            }
-        }
+        // if ($data->foto) {
+        //     $filePath = public_path('fotosiswa/' . $data->foto);
+        //     if (File::exists($filePath)) {
+        //         File::delete($filePath);
+        //     }
+        // }
     
         // Hapus data di tabel User
         $user = User::find($data->user_id);
@@ -118,12 +117,12 @@ class AdminController extends Controller
         $data->save();
 
         if ($request->hasFile('foto')) {
-            if ($previousFoto) {
-                $filePath = public_path('fotosiswa/' . $previousFoto);
-                if (File::exists($filePath)) {
-                    File::delete($filePath);
-                }
-            }
+            // if ($previousFoto) {
+            //     $filePath = public_path('fotosiswa/' . $previousFoto);
+            //     if (File::exists($filePath)) {
+            //         File::delete($filePath);
+            //     }
+            // }
 
             $foto = $request->file('foto');
             $fotoName = $foto->getClientOriginalName();
@@ -231,12 +230,12 @@ class AdminController extends Controller
         $data->save();
     
         if ($request->hasFile('foto')) {
-            if ($previousFoto) {
-                $filePath = public_path('fotowalikelas/' . $previousFoto);
-                if (File::exists($filePath)) {
-                    File::delete($filePath);
-                }
-            }
+            // if ($previousFoto) {
+            //     $filePath = public_path('fotowalikelas/' . $previousFoto);
+            //     if (File::exists($filePath)) {
+            //         File::delete($filePath);
+            //     }
+            // }
     
             $foto = $request->file('foto');
             $fotoName = $foto->getClientOriginalName();
@@ -261,12 +260,12 @@ class AdminController extends Controller
         $walikelas = WaliKelas::find($id);
     
         // Menghapus foto jika ada
-        if ($walikelas->foto) {
-            $filePath = public_path('fotowalikelas/' . $walikelas->foto);
-            if (File::exists($filePath)) {
-                File::delete($filePath);
-            }
-        }
+        // if ($walikelas->foto) {
+        //     $filePath = public_path('fotowalikelas/' . $walikelas->foto);
+        //     if (File::exists($filePath)) {
+        //         File::delete($filePath);
+        //     }
+        // }
     
         // Menghapus data di tabel User
         $user = User::find($walikelas->user_id);
@@ -340,12 +339,12 @@ class AdminController extends Controller
         $data->save();
     
         if ($request->hasFile('foto')) {
-            if ($previousFoto) {
-                $filePath = public_path('fotoguru/' . $previousFoto);
-                if (File::exists($filePath)) {
-                    File::delete($filePath);
-                }
-            }
+            // if ($previousFoto) {
+            //     $filePath = public_path('fotoguru/' . $previousFoto);
+            //     if (File::exists($filePath)) {
+            //         File::delete($filePath);
+            //     }
+            // }
     
             $foto = $request->file('foto');
             $fotoName = $foto->getClientOriginalName();
@@ -371,12 +370,12 @@ class AdminController extends Controller
         $guru = Guru::find($id);
     
         // Menghapus foto jika ada
-        if ($guru->foto) {
-            $filePath = public_path('fotoguru/' . $guru->foto);
-            if (File::exists($filePath)) {
-                File::delete($filePath);
-            }
-        }
+        // if ($guru->foto) {
+        //     $filePath = public_path('fotoguru/' . $guru->foto);
+        //     if (File::exists($filePath)) {
+        //         File::delete($filePath);
+        //     }
+        // }
     
         // Menghapus data di tabel User
         $user = User::find($guru->user_id);

@@ -55,9 +55,11 @@
                           <label for="siswa" class="form-label">Nama Siswa</label>
                           <select name="siswa_id" id="siswa_id" class="form-control" required>
                             <option disabled selected>Pilih Nama Siswa</option>
-                            @foreach ($siswa as $datasiswa)
-                              <option value="{{$datasiswa->id}}">{{$datasiswa->namasiswa}}</option>
-                            @endforeach
+                            @if ($siswa)
+                                @foreach ($siswa as $datasiswa)
+                                    <option value="{{$datasiswa->id}}">{{$datasiswa->namasiswa}}</option>
+                                @endforeach
+                            @endif
                           </select>
                         </div>
                         <div class="mb-3">

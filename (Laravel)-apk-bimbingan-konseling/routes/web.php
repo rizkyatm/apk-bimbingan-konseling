@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\FakerController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SiswaController;
@@ -144,3 +145,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/deletekerawananwalas/{id}', [WaliKelasController::class, 'deletekerawananwalas'])->name('deletekerawananwalas');
     // Route::post('/postlogin', 'LoginController@postlogin')->name('postlogin');
     // Route::get('/siswa',[SiswaController::class, 'siswa'])->name('siswa');
+
+
+    // FAKER
+    Route::get('/RunFakeData', [FakerController::class, 'RunFakeData']); //MEMBUAT DATA PALSU (FAKER)

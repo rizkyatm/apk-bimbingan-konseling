@@ -33,12 +33,12 @@ class SiswaController extends Controller
         $data->save();
     
         if ($request->hasFile('foto')) {
-            if ($previousFoto) {
-                $filePath = public_path('fotosiswa/' . $previousFoto);
-                if (File::exists($filePath)) {
-                    File::delete($filePath);
-                }
-            }
+            // if ($previousFoto) {
+            //     $filePath = public_path('fotosiswa/' . $previousFoto);
+            //     if (File::exists($filePath)) {
+            //         File::delete($filePath);
+            //     }
+            // }
     
             $foto = $request->file('foto');
             $fotoName = $foto->getClientOriginalName();

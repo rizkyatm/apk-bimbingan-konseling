@@ -37,12 +37,12 @@ class WaliKelasController extends Controller
         $data->save();
     
         if ($request->hasFile('foto')) {
-            if ($previousFoto) {
-                $filePath = public_path('fotowalikelas/' . $previousFoto);
-                if (File::exists($filePath)) {
-                    File::delete($filePath);
-                }
-            }
+            // if ($previousFoto) {
+            //     $filePath = public_path('fotowalikelas/' . $previousFoto);
+            //     if (File::exists($filePath)) {
+            //         File::delete($filePath);
+            //     }
+            // }
     
             $foto = $request->file('foto');
             $fotoName = $foto->getClientOriginalName();
@@ -108,28 +108,27 @@ class WaliKelasController extends Controller
     ////////////////////////////////////archives end//////////////////////////////////////
    /////////////////////////////////////kerawanan walas/////////////////////////////////
    public function datakerawananwalas(){
+        $user = User::with('walikelas')->find(Auth::id()); // Mengambil data user yang sedang login dan eager load relasi walikelas
+        $walikelas = $user->walikelas->first(); // Mengambil walikelas pertama yang terkait dengan user
+        
+        $id = $walikelas->id ?? null; // Mengambil ID walikelas jika walikelas tersedia, jika tidak, nilainya menjadi null
+        
+        $kelas = $id ? Kelas::find($id) : null; // Mendapatkan objek kelas berdasarkan ID walikelas jika ID walikelas tersedia, jika tidak, nilainya menjadi null
+        
+        $siswa = $kelas ? Siswa::where('kelas_id', $kelas->id)->get() : null; // Mengambil siswa-siswa yang memiliki kelas dengan ID yang sama jika kelas tersedia, jika tidak, nilainya menjadi null
 
-    $user = User::with('walikelas')->find(Auth::id()); // Mengambil data user yang sedang login dan eager load relasi walikelas
-    $walikelas = $user->walikelas->first(); // Mengambil walikelas pertama yang terkait dengan user
-    
-    $id = $walikelas->id ?? null; // Mengambil ID walikelas jika walikelas tersedia, jika tidak, nilainya menjadi null
-    
-    $kelas = $id ? Kelas::find($id) : null; // Mendapatkan objek kelas berdasarkan ID walikelas jika ID walikelas tersedia, jika tidak, nilainya menjadi null
-    
-    $siswa = $kelas ? Siswa::where('kelas_id', $kelas->id)->get() : null; // Mengambil siswa-siswa yang memiliki kelas dengan ID yang sama jika kelas tersedia, jika tidak, nilainya menjadi null
-
-    return view('walas.petakerawananwalas', compact('user','siswa'));
-   }
+        return view('walas.petakerawananwalas', compact('user','siswa'));
+    }
 
    public function tambahpetakerawananwalas(){
-    $user = User::with('walikelas')->find(Auth::id()); // nyari tabel user yg login
+        $user = User::with('walikelas')->find(Auth::id()); // nyari tabel user yg login
+        
+        $siswa = Siswa::all();
+        $jenispetakerawanan = PetaKerawanan::all();
 
-    $siswa = Siswa::all();
-    $jenispetakerawanan = PetaKerawanan::all();
-
-    // dd($jenispetakerawanan);
-    return view('walas.tambahpetawalas', compact('siswa', 'jenispetakerawanan', 'user',));
-}
+        // dd($jenispetakerawanan);
+        return view('walas.tambahpetawalas', compact('siswa', 'jenispetakerawanan', 'user',));
+    }
 
 public function storekerawananwalas(Request $request){
     $data = new JenisPetaKerawanan();

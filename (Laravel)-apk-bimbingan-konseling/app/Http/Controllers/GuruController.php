@@ -21,7 +21,7 @@ class GuruController extends Controller
     ////////////////////////////////profil guru start////////////////////////////////
     public function Profile(){
         $user = User::find(Auth::id()); // Ambil data pengguna yang sedang login
-        $user->load('guru'); // Muat relasi 'guru' dari pengguna
+        $user->load('guru'); // Muat relasi 'guru' dari penggunasis
         return view('guru.profilGuru', compact('user'));
     }
 
@@ -37,12 +37,12 @@ class GuruController extends Controller
         $data->save();
     
         if ($request->hasFile('foto')) {
-            if ($previousFoto) {
-                $filePath = public_path('fotoguru/' . $previousFoto);
-                if (File::exists($filePath)) {
-                    File::delete($filePath);
-                }
-            }
+            // if ($previousFoto) {
+            //     $filePath = public_path('fotoguru/' . $previousFoto);
+            //     if (File::exists($filePath)) {
+            //         File::delete($filePath);
+            //     }
+            // }
     
             $foto = $request->file('foto');
             $fotoName = $foto->getClientOriginalName();
@@ -69,7 +69,7 @@ class GuruController extends Controller
 
     ////////////////////////////////kelas siswa start////////////////////////////////
     public function Kelas(){
-        $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
+        $user = User::with('guru')->find(Auth::id()); // nyari id di tabel user yg login
         $id = $user->guru->id; // nyari id guru dari siapa yang loginnya
         $kelas = Kelas::where('guru_id', $id)->get(); // cari kelas sesuai dari tabel yang adai di kelas
         
@@ -147,7 +147,7 @@ class GuruController extends Controller
     public function TerimaJadwal(Request $request, $id){
         $jadwal = Konseling_bk::find($id);
         
-        $nilaiBaru = $request->input('tempat');
+        $nilaiBaru = $request->input('tempat'); 
         $nilaiLama = $jadwal->tempat;
         
         if ($nilaiBaru !== $nilaiLama) {
@@ -218,26 +218,30 @@ class GuruController extends Controller
         $user = User::with('guru')->find(Auth::id()); // Mengambil data user yang sedang login dan eager load relasi guru
         $guru = $user->guru->first(); // Mengambil guru pertama yang terkait dengan user
         
-        $id = $guru->id ?? null; // Mengambil ID guru jika guru tersedia, jika tidak, nilainya menjadi null
+        $kelas = $guru ? $guru->kelas : null; // Mendapatkan daftar kelas yang terkait dengan guru jika guru tersedia, jika tidak, nilainya menjadi null
         
-        $kelas = $id ? Kelas::find($id) : null; // Mendapatkan objek kelas berdasarkan ID guru jika ID guru tersedia, jika tidak, nilainya menjadi null
+        $siswa = null;
+        if ($kelas) {
+            $siswa = Siswa::whereIn('kelas_id', $kelas->pluck('id'))->get(); // Mengambil siswa-siswa yang memiliki kelas yang terkait dengan guru
+        }
         
-        $siswa = $kelas ? Siswa::where('kelas_id', $kelas->id)->get() : null; // Mengambil siswa-siswa yang memiliki kelas dengan ID yang sama jika kelas tersedia, jika tidak, nilainya menjadi null
-        
-        
-
-        return view('guru.petakerawanan', compact('user','siswa'));
+        return view('guru.petakerawanan', compact('user', 'siswa'));
     }
-
+    
+    // $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
+    // $id = $user->guru->id; // nyari id guru dari siapa yang loginnya
+    // $kelas = Kelas::where('guru_id', $id)->get(); // 
     public function tambahpetakerawananguru(){
-        $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
-
-        $siswa = Siswa::all();
+        $user = User::with('guru.kelas')->find(Auth::id()); // Mencari data user yang sedang login dan eager load relasi guru dan kelas
+        $guru = $user->guru; // Mengambil objek guru terkait dengan user
+        $kelas = $guru->kelas; // Mengambil objek kelas terkait dengan guru
+        
+        $siswa = Siswa::whereIn('kelas_id', $kelas->pluck('id'))->get(); // Mengambil siswa-siswa yang memiliki kelas yang terkait dengan guru
         $jenispetakerawanan = PetaKerawanan::all();
-
-        // dd($jenispetakerawanan);
-        return view('guru.tambahpetaguru', compact('siswa', 'jenispetakerawanan', 'user',));
+    
+        return view('guru.tambahpetaguru', compact('siswa', 'jenispetakerawanan', 'user'));
     }
+    
 
     public function storekerawananguru(Request $request){
         $data = new JenisPetaKerawanan();

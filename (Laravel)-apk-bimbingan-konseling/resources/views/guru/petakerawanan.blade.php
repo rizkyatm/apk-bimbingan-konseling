@@ -44,7 +44,7 @@
           <div class="container-fluid py-4">
             <div class="row" >
               <div class="col-12" >
-                <div class="card mb-4" style="height: 500px;">
+                <div class="card mb-4" style="min-height: 500px;">
                     <div class="card-header pb-0 px-3 d-flex justify-content-between align-items-center" id="daftar">
                         <h6 class="mb-0">Daftar Peta Kerawanan</h6>
                         <a class="btn btn-primary" id="tambah-jadwal" href="/tambahpetakerawananguru">Tambah Jadwal</a>
