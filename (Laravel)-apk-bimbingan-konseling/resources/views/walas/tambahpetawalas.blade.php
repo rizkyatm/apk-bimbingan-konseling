@@ -57,7 +57,7 @@
                             <option disabled selected>Pilih Nama Siswa</option>
                             @if ($siswa)
                                 @foreach ($siswa as $datasiswa)
-                                    <option value="{{$datasiswa->id}}">{{$datasiswa->namasiswa}}</option>
+                                    <option value="{{$datasiswa->id}}">{{$datasiswa->namasiswa}} ({{ $datasiswa->kelas->kelas }})</option>
                                 @endforeach
                             @endif
                           </select>

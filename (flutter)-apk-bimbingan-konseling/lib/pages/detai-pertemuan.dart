@@ -202,7 +202,7 @@ class DetailPage extends StatelessWidget {
                                   children: [
                                     Container(
                                       margin: EdgeInsets.fromLTRB(0 * fem,
-                                          0 * fem, 100 * fem, 14 * fem),
+                                          0 * fem, 100 * fem, 10 * fem),
                                       child: Text(
                                         'Detail bimbingan ',
                                         style: GoogleFonts.poppins(

@@ -125,17 +125,14 @@
                       <div class="row">
                         <div class="col-lg-6">
                           <div class="d-flex flex-column h-100">
-                            <p class="mb-1 pt-2 text-bold">Built by developers</p>
-                            <h5 class="font-weight-bolder">Soft UI Dashboard</h5>
-                            <p class="mb-5">From colors, cards, typography to complex elements, you will find the full documentation.</p>
+                            <p class="mb-1 pt-2 text-bold">Aplikasi Bimbingan Konseling</p>
+                            <h3 class="font-weight-bolder">TBCounseling</h3>
+                            <p class="mb-5">Selamat datang di dashboard admin! Saya adalah Admin, bertanggung jawab atas pengelolaan dan pengawasan keseluruhan sistem ini. Dalam peran saya sebagai admin, saya memastikan bahwa semua operasi berjalan dengan lancar, memberikan dukungan kepada pengguna, dan menjaga keamanan serta integritas data. Dan terima kasih telah menjadi bagian dari platform kami. Saya berharap Anda memiliki pengalaman yang menyenangkan dan produktif di sini. Jika ada saran atau masukan, kami sangat menghargainya.</p>
                           </div>
                         </div>
                         <div class="col-lg-5 ms-auto text-center mt-5 mt-lg-0">
-                          <div class="bg-gradient-primary border-radius-lg h-100">
-                            <img src="../assets/img/shapes/waves-white.svg" class="position-absolute h-100 w-50 top-0 d-lg-block d-none" alt="waves">
-                            <div class="position-relative d-flex align-items-center justify-content-center h-100">
-                              <img class="w-100 position-relative z-index-2 pt-4" src="../assets/img/illustrations/rocket-white.png" alt="rocket">
-                            </div>
+                          <div class=" h-100">
+                            <img class="w-100 position-relative z-index-2 pt-4" src="{{ asset('assets/img/bg-dashboard.png') }}" style="margin-top: -20px; border-radius: 40px;">
                           </div>
                         </div>
                       </div>
@@ -144,11 +141,11 @@
                 </div>
                 <div class="col-lg-12 mt-4">
                   <div class="card h-100 p-3">
-                    <div class="overflow-hidden position-relative border-radius-lg bg-cover h-100" style="background-image: url('../assets/img/ivancik.jpg');">
+                    <div class="overflow-hidden position-relative border-radius-lg  h-100" style="background-color: #4bbbfa;">
                       <span class="mask bg-gradient-dark"></span>
                       <div class="card-body position-relative z-index-1 d-flex flex-column h-100 p-3">
-                        <h5 class="text-white font-weight-bolder mb-4 pt-2">Work with the rockets</h5>
-                        <p class="text-white">Wealth creation is an evolutionarily recent positive-sum game. It is all about who take the opportunity first.</p>
+                        <h5 class="text-white font-weight-bolder mb-4 pt-2">Layanan TBCounseling SMK Taruna Bhakti Depok</h5>
+                        <p class="text-white">Bimbingan dan konseling adalah jembatan yang membantu kita menemukan kekuatan dalam menghadapi tantangan, mewujudkan potensi terbaik, dan meraih kesuksesan.</p>
                       </div>
                     </div>
                   </div>
