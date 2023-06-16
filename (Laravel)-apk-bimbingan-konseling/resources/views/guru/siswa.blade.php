@@ -48,9 +48,12 @@
                   <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
                         <div id="murid-container" class="px-4">
-                            <div class="card-header pb-0">
-                                <h3>Data Murid Kelas {{ $kelasguru->kelas }}</h3>
+                          <div class="card-header pb-0" style="display: flex; justify-content: space-between;">
+                            <h3>Data Murid Kelas {{ $kelasguru->kelas }}</h3>
+                            <div style="margin-right:60px ">
+                                <a class="btn btn-primary" id="tambah-jadwal" href="0">Export Exel</a>
                             </div>
+                          </div>
                             <table class="table mx-auto">
                                 <thead>
                                     <tr>
@@ -58,15 +61,19 @@
                                         <th>Nama Murid</th>
                                         <th>NISN</th>
                                         <th>jenis kelamin</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($siswa as $index => $dataMurid)
-                                        <tr>
+                                        <tr class="justify-content-center">
                                           <td style="padding-left: 23px;">{{ $index + 1 }}</td>
                                           <td style="padding-left: 23px;">{{ $dataMurid->namasiswa }}</td>
                                           <td style="padding-left: 23px;">{{ $dataMurid->user->nisn_nip }}</td>
                                           <td style="padding-left: 23px;">{{ $dataMurid->jeniskelamin }}</td>
+                                          <td style="padding-left: 23px;">
+                                            <a href="/jeniskerawananguru/{{$dataMurid->id}}" class="btn btn-primary">Detail</a>
+                                          </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

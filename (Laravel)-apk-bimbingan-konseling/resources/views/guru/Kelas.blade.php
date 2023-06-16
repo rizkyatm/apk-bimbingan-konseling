@@ -45,8 +45,9 @@
             <div class="row" >
               <div class="col-12" >
                 <div class="card mb-4" style="height: 500px;">
-                  <div class="card-header pb-0">
-                    <h6></h6>
+                  <div class="card-header pb-0 d-flex justify-content-between align-items-center">
+                    <h4>Lihat Kelas</h4>
+                    <a class="btn btn-primary" id="tambah-jadwal" href="/tambahpetakerawananguru">Tambah Kerawanan</a>
                   </div>
                   <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">

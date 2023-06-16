@@ -48,6 +48,7 @@
                     <div class="card-header pb-0 px-3 d-flex justify-content-between align-items-center" id="daftar">
                         <h6 class="mb-0">Daftar Peta Kerawanan</h6>
                         <a class="btn btn-primary" id="tambah-jadwal" href="/tambahpetakerawananguru">Tambah Jadwal</a>
+                        <a class="btn btn-primary" id="tambah-jadwal" href="/tambahpetakerawananguru">Tambah Jadwal</a>
                       </div>
                   <div class="card-header pb-0">
                     <h6></h6>
