@@ -103,7 +103,7 @@ class SiswaController extends Controller
             $guru_id = $siswa->kelas->guru->id;
             $walas_id = $siswa->kelas->walikelas->id;
     
-            $input = $request->only('layanan_id', 'tanggal', 'waktu', 'tempat');
+            $input = $request->only('layanan_id', 'tanggal', 'waktu', 'tempat', 'karir');
             $waktu = $input['tanggal'] . ' ' . $input['waktu'];
     
             $jadwalbk = new Konseling_bk();
@@ -112,6 +112,7 @@ class SiswaController extends Controller
             $jadwalbk->guru_id = $guru_id;
             $jadwalbk->walas_id = $walas_id;
             $jadwalbk->tempat = $input['tempat'];
+            $jadwalbk->karier = $input['karir'];
             $jadwalbk->waktu = $waktu;
             $jadwalbk->status = 'MENUNGGU..';
             $jadwalbk->save();

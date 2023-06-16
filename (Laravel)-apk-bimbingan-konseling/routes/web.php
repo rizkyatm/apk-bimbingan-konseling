@@ -142,7 +142,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tambahpetakerawananwalas', [WaliKelasController::class, 'tambahpetakerawananwalas'])->name('tambahpetakerawananwalas');
     Route::post('/insertkerawananwalas', [WaliKelasController::class, 'storekerawananwalas'])->name('insertkerawananwalas');
     Route::get('/jeniskerawananwalas/{id}', [WaliKelasController::class, 'jeniskerawananwalas'])->name('jeniskerawananwalas');
-    Route::get('/deletekerawananwalas/{id}', [WaliKelasController::class, 'deletekerawananwalas'])->name('deletekerawananwalas');
+    Route::get('/deletekerawananwalas/{id}', [WaliKelasController::class, 'deletekerawanan']);
     // Route::post('/postlogin', 'LoginController@postlogin')->name('postlogin');
     // Route::get('/siswa',[SiswaController::class, 'siswa'])->name('siswa');
 

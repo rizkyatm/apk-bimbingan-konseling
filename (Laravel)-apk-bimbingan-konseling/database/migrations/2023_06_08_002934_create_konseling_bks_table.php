@@ -22,6 +22,7 @@ return new class extends Migration
             $table->dateTime('waktu');
             $table->string('tempat');
             $table->string('status');
+            $table->string('karier')->nullable();
             $table->text('hasil_konseling')->nullable();
             $table->timestamps();
 

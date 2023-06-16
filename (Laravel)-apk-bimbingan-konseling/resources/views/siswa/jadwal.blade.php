@@ -51,7 +51,7 @@
               <div class="card-body pt-17 p-3">
                 <form id="form-jadwal" action="/siswatambahJadwal" method="POST" style="display: none;">
                   @csrf
-                  <div class="form-grou">
+                  <div class="form-grou mb-3">
                     <label for="layanan" class="form-label">Pilih layanan</label>
                     <select class="form-select" id="layanan" name="layanan_id" onchange="updateForm()">
                         <option value="">-- Pilih Layanan --</option>
@@ -61,17 +61,25 @@
                     </select>
                   </div>
                   <div class="form-group mb-3" id="siswaForm" style="display: none;">
-                    <label for="manysiswa">Pilih Siswa:</label>
-                    <div class="form-check">
-                        @foreach ($siswa as $data)
-                            <label class="form-check-label" for="manysiswa_{{ $data->id }}">
-                                <input class="form-check-input" type="checkbox" name="manysiswa[]" value="{{ $data->id }}" id="manysiswa_{{ $data->id }}">
-                                {{ $data->namasiswa }} ({{$data->kelas->kelas}})
-                            </label>
-                            <br>
-                        @endforeach
-                    </div>
-                </div>                                    
+                      <label for="manysiswa">Pilih Siswa:</label>
+                      <div class="form-check">
+                          @foreach ($siswa as $data)
+                              <label class="form-check-label" for="manysiswa_{{ $data->id }}">
+                                  <input class="form-check-input" type="checkbox" name="manysiswa[]" value="{{ $data->id }}" id="manysiswa_{{ $data->id }}">
+                                  {{ $data->namasiswa }} ({{$data->kelas->kelas}})
+                              </label>
+                              <br>
+                          @endforeach
+                      </div>
+                  </div>
+                  <div class="form-group mb-3" id="kerjaKuliahForm" style="display: none;">
+                    <label for="karir">Lajutan Karir:</label>
+                    <select class="form-select" name="karir" id="karir">
+                      <option value="">-- Pilih Lajutan Karir --</option>
+                      <option value="(Kerja)">Kerja</option>
+                      <option value="(Kuliah)">Kuliah</option>
+                    </select>
+                  </div>                                    
                   <div class="mb-3">
                     <label for="tanggal" class="form-label">Tanggal</label>
                     <input type="date" class="form-control" id="tanggal" name="tanggal">
@@ -100,7 +108,7 @@
                       <span class="mb-2 text-xs">Nama Siswa: <span class="text-dark font-weight-bold ms-sm-2">{{$item->siswa->namasiswa}}</span></span>
                       <span class="mb-2 text-xs">Kelas: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->siswa->kelas->kelas}}</span></span>
                       <span class="mb-2 text-xs">Nama Wali Kelas: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->wali_kelas->namagurukelas}}</span></span>
-                      <span class="mb-2 text-xs">Bimbingan: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->layanan_bk->jenis_layanan}}</span></span>
+                      <span class="mb-2 text-xs">Bimbingan: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->layanan_bk->jenis_layanan}} <strong>{{$item->karier}}</strong></span></span>
                       <span class="mb-2 text-xs">Tempat: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->tempat}}</span></span>
                       <span class="mb-2 text-xs">Waktu: <span class="text-dark ms-sm-2 font-weight-bold">{{$item->waktu}}</span></span>
                     </div>
@@ -115,16 +123,22 @@
 
       <script>
         function updateForm() {
-            var layananId = document.getElementById("layanan").value;
-            var siswaForm = document.getElementById("siswaForm");
-    
-            if (layananId == 2) {
-                siswaForm.style.display = "block";
-            } else {
-                siswaForm.style.display = "none";
-            }
+          var layananId = document.getElementById("layanan").value;
+          var siswaForm = document.getElementById("siswaForm");
+          var kerjaKuliahForm = document.getElementById("kerjaKuliahForm");
+      
+          if (layananId == 2) {
+            siswaForm.style.display = "block";
+            kerjaKuliahForm.style.display = "none";
+          } else if (layananId == 3) {
+            siswaForm.style.display = "none";
+            kerjaKuliahForm.style.display = "block";
+          } else {
+            siswaForm.style.display = "none";
+            kerjaKuliahForm.style.display = "none";
+          }
         }
-    </script>
+      </script>
     
       <script>
         function tampilkanForm() {

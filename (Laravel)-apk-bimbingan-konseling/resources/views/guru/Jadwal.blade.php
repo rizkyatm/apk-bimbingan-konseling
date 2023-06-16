@@ -62,7 +62,7 @@
                     <span class="mb-2 text-xs">Nama Siswa: <span class="text-dark font-weight-bold ms-sm-2">{{ $item->siswa->namasiswa }}</span></span>
                     <span class="mb-2 text-xs">Kelas: <span class="text-dark ms-sm-2 font-weight-bold">{{ $item->siswa->kelas->kelas }}</span></span>
                     <span class="mb-2 text-xs">Nama Wali Kelas: <span class="text-dark ms-sm-2 font-weight-bold">{{ $item->wali_kelas->namagurukelas }}</span></span>
-                    <span class="mb-2 text-xs">Bimbingan: <span class="text-dark ms-sm-2 font-weight-bold">{{ $item->layanan_bk->jenis_layanan }}</span></span>
+                    <span class="mb-2 text-xs">Bimbingan: <span class="text-dark ms-sm-2 font-weight-bold">{{ $item->layanan_bk->jenis_layanan }} <strong>{{$item->karier}}</strong></span></span>
                     <span class="mb-2 text-xs">Tempat: <span class="text-dark ms-sm-2 font-weight-bold">{{ $item->tempat }}</span></span>
                     <span class="mb-2 text-xs">Waktu: <span class="text-dark ms-sm-2 font-weight-bold">{{ $item->waktu }}</span></span>
                   </div>

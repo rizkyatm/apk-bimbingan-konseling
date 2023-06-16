@@ -64,12 +64,12 @@
                         </div>
                         <div class="mb-3">
                           <label for="petakerawanan" class="form-label">Peta Kerawanan</label>
-                          <select name="petakerawanan_id" id="petakerawanan_id" class="form-control" required>
-                            <option disabled selected>Peta Kerawanan</option>
-                            @foreach ($jenispetakerawanan as $peta)
-                              <option value="{{$peta->id}}">{{$peta->jenispetakerawanan}}</option>
-                            @endforeach
-                          </select>
+                          @foreach ($jenispetakerawanan as $peta)
+                            <div class="form-check">
+                              <input class="form-check-input" type="checkbox" name="petakerawanan_id[]" id="petakerawanan_{{$peta->id}}" value="{{$peta->id}}">
+                              <label class="form-check-label" for="petakerawanan_{{$peta->id}}">{{$peta->jenispetakerawanan}}</label>
+                            </div>
+                          @endforeach
                         </div>
                         <button type="submit" class="btn" style="background-color: #4BBBFA; color: white">Tambah Data Peta Kerawanan</button>
                     </form>      

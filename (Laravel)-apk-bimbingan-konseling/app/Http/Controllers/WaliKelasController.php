@@ -73,6 +73,7 @@ class WaliKelasController extends Controller
         
         $jadwalbk = Konseling_bk::with('guru', 'siswa', 'layanan_bk', 'wali_kelas')->where('walas_id', $id)
         ->whereIn('status', ['MENUNGGU..', 'DITERIMA', 'DIUNDUR'])//Hanya memanggil data yg statusnya berisi value 'MENUNGGU..', 'DITERIMA', 'DIUNDUR'
+        ->whereIn('layanan_id', [2, 3, 4]) // Menambahkan batasan pada layanan_id
         ->latest('created_at')
         ->get();
 
@@ -97,8 +98,10 @@ class WaliKelasController extends Controller
         $user = User::with('walikelas')->find(Auth::id()); // nyari tabel user yg login
         $id = $user->walikelas->id; // nyari id wali kelas dari siapa yang loginnya
         
-        $jadwalbk = Konseling_bk::with('guru', 'siswa', 'layanan_bk', 'wali_kelas')->where('walas_id', $id)
-        ->whereIn('status', ['SELESAI'])//Hanya memanggil data yg statusnya berisi value 'SELESAI'
+        $jadwalbk = Konseling_bk::with('guru', 'siswa', 'layanan_bk', 'wali_kelas')
+        ->where('walas_id', $id)
+        ->whereIn('status', ['SELESAI'])
+        ->whereIn('layanan_id', [2, 3, 4]) // Menambahkan batasan pada layanan_id
         ->latest('created_at')
         ->get();
 
@@ -130,16 +133,22 @@ class WaliKelasController extends Controller
         return view('walas.tambahpetawalas', compact('siswa', 'jenispetakerawanan', 'user',));
     }
 
-public function storekerawananwalas(Request $request){
-    $data = new JenisPetaKerawanan();
-    $data->siswa_id = $request->siswa_id;
-    $data->petakerawanan_id = $request->petakerawanan_id;
-    // dd($data);
-    $data->save();
-    return redirect('/petakerawananwalas');
-
-    // dd($jenispetakerawanan);
-}
+    public function storekerawananwalas(Request $request)
+    {
+        $siswaId = $request->siswa_id;
+        $petakerawananIds = $request->input('petakerawanan_id', []);
+    
+        // Lakukan iterasi untuk menyimpan setiap pilihan Peta Kerawanan
+        foreach ($petakerawananIds as $petakerawananId) {
+            $data = new JenisPetaKerawanan();
+            $data->siswa_id = $siswaId;
+            $data->petakerawanan_id = $petakerawananId;
+            $data->save();
+        }
+    
+        return redirect('/petakerawananwalas');
+    }
+    
 
 public function updatepetawalas(Request $request){
     // $siswa = Siswa::create($request->all());

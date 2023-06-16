@@ -65,12 +65,11 @@
                             <td scope="row">{{ $no++ }}</th>
                             <td>{{ $jenis->petakerawanan->jenispetakerawanan }}</td>
                             <td class="align-middle">
-                                <a href="/deletekerawananwalas/{{ $jenis->id }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
-                                  <i class="fas fa-trash-alt fa-lg"></i>
-                                </a>
-                              </td>
-                        </tr>
-                        
+                              <a href="/deletekerawananwalas/{{ $jenis->id }}" class="text-danger font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                                <i class="fas fa-trash-alt fa-lg"></i>
+                              </a>
+                            </td>
+                        </tr>  
                     @endforeach
                     </tbody>
                   </table>                      

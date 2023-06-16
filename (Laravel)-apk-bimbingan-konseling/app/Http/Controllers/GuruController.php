@@ -216,14 +216,10 @@ class GuruController extends Controller
          
     public function petakerawananguru(){
         $user = User::with('guru')->find(Auth::id()); // Mengambil data user yang sedang login dan eager load relasi guru
-        $guru = $user->guru->first(); // Mengambil guru pertama yang terkait dengan user
+        $guru = $user->guru; // Mengambil objek guru terkait dengan user
+        $kelas = $guru->kelas; // Mengambil objek kelas terkait dengan guru
         
-        $kelas = $guru ? $guru->kelas : null; // Mendapatkan daftar kelas yang terkait dengan guru jika guru tersedia, jika tidak, nilainya menjadi null
-        
-        $siswa = null;
-        if ($kelas) {
-            $siswa = Siswa::whereIn('kelas_id', $kelas->pluck('id'))->get(); // Mengambil siswa-siswa yang memiliki kelas yang terkait dengan guru
-        }
+        $siswa = Siswa::whereIn('kelas_id', $kelas->pluck('id'))->get(); // Mengambil siswa-siswa yang memiliki kelas yang terkait dengan guru
         
         return view('guru.petakerawanan', compact('user', 'siswa'));
     }
@@ -244,14 +240,18 @@ class GuruController extends Controller
     
 
     public function storekerawananguru(Request $request){
-        $data = new JenisPetaKerawanan();
-        $data->siswa_id = $request->siswa_id;
-        $data->petakerawanan_id = $request->petakerawanan_id;
-        // dd($data);
-        $data->save();
+        $siswaId = $request->siswa_id;
+        $petakerawananIds = $request->input('petakerawanan_id', []);
+    
+        // Lakukan iterasi untuk menyimpan setiap pilihan Peta Kerawanan
+        foreach ($petakerawananIds as $petakerawananId) {
+            $data = new JenisPetaKerawanan();
+            $data->siswa_id = $siswaId;
+            $data->petakerawanan_id = $petakerawananId;
+            $data->save();
+        }
+    
         return redirect('/petakerawananguru');
-
-        // dd($jenispetakerawanan);
     }
 
     public function updatepeta(Request $request){

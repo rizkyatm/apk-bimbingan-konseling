@@ -8,7 +8,7 @@ class API{
     required String route, 
     required Map<String,String> data,
   }) async {
-    final String apiUrl = 'https://9f74-117-102-67-66.ngrok-free.app/api/auth';
+    final String apiUrl = ' https://dc16-182-0-136-138.ngrok-free.app/api/auth';
     // apiUrl dari atas dan route itu untuk menjalankan perintah yang ada di link apiUrl
     String url = apiUrl + route;
     // postRequest menjalankan http.post(metod), membutuhkan : uri(link line 13), body(isi data yang akan di kirim ke url), headers(buat ngirim datanya/setingan)
