@@ -66,8 +66,7 @@
                             <div class="form-check">
                               <input class="form-check-input" type="checkbox" name="petakerawanan_id[]" id="petakerawanan_{{$peta->id}}" value="{{$peta->id}}">
                               <label class="form-check-label" for="petakerawanan_{{$peta->id}}">{{$peta->jenispetakerawanan}}</label>
-                            </div>
-                          @endforeach
+                            </div>                          @endforeach
                         </div>
                         <button type="submit" class="btn" style="background-color: #4BBBFA; color: white">Tambah Data Peta Kerawanan</button>
                     </form>      

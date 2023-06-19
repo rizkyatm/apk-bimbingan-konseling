@@ -50,34 +50,42 @@
                         <div id="murid-container" class="px-4">
                           <div class="card-header pb-0" style="display: flex; justify-content: space-between;">
                             <h3>Data Murid Kelas {{ $kelasguru->kelas }}</h3>
-                            <div style="margin-right:60px ">
-                                <a class="btn btn-primary" id="tambah-jadwal" href="0">Export Exel</a>
+                            <div style="margin-right:0px ">
+                                <a class="btn btn-primary" id="tambah-jadwal" href="{{$kelasguru->walikelas->id}}">Export Exel</a>
                             </div>
                           </div>
-                            <table class="table mx-auto">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama Murid</th>
-                                        <th>NISN</th>
-                                        <th>jenis kelamin</th>
-                                        <th></th>
+                          <table class="table mx-auto">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Murid</th>
+                                    <th>NISN</th>
+                                    <th>jenis kelamin</th>
+                                    <th>status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($siswa as $index => $dataMurid)
+                                    <tr class="justify-content-center">
+                                        <td style="padding-left: 23px;">{{ $index + 1 }}</td>
+                                        <td style="padding-left: 23px;">{{ $dataMurid->namasiswa }}</td>
+                                        <td style="padding-left: 23px;">{{ $dataMurid->user->nisn_nip }}</td>
+                                        <td style="padding-left: 23px;">{{ $dataMurid->jeniskelamin }}</td>
+                                        <td style="padding-left: 35px;">
+                                            @if ($dataMurid->petakerawanan && $dataMurid->petakerawanan->siswa_id == $dataMurid->id)
+                                                <i class="fas fa-check text-success"></i>
+                                            @else
+                                                <i class="fas fa-times text-danger"></i>
+                                            @endif
+                                        </td>
+                                        <td style="text-align: right;">
+                                          <a href="/Kerawanan/{{$dataMurid->id}}" class="btn btn-primary">Detail</a>
+                                      </td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($siswa as $index => $dataMurid)
-                                        <tr class="justify-content-center">
-                                          <td style="padding-left: 23px;">{{ $index + 1 }}</td>
-                                          <td style="padding-left: 23px;">{{ $dataMurid->namasiswa }}</td>
-                                          <td style="padding-left: 23px;">{{ $dataMurid->user->nisn_nip }}</td>
-                                          <td style="padding-left: 23px;">{{ $dataMurid->jeniskelamin }}</td>
-                                          <td style="padding-left: 23px;">
-                                            <a href="/jeniskerawananguru/{{$dataMurid->id}}" class="btn btn-primary">Detail</a>
-                                          </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                @endforeach
+                            </tbody>
+                        </table>                        
                         </div>                        
                     </div>                                                  
                   </div>
@@ -85,4 +93,5 @@
               </div>
             </div>
           </div>
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 @endsection

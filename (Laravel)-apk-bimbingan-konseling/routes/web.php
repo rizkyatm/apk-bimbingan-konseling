@@ -74,10 +74,6 @@ Route::group(['middleware' => ['auth']], function () {
         //profil
         Route::get('/Guru/Profile', [GuruController::class, 'Profile'])->name('Profile')->middleware('checkRole:guru');
         Route::post('/Guru/UpdateProfile/{id}', [GuruController::class, 'UpdateProfile'])->middleware('checkRole:guru');
-
-        //kelas siswa
-        Route::get('/Guru/Kelas', [GuruController::class, 'Kelas'])->middleware('checkRole:guru');
-        Route::get('/Guru/Siswa/{kelasId}', [GuruController::class, 'siswa'])->middleware('checkRole:guru');//memampilkan murid sesuai login
         
         //buat jadwal
         Route::get('/Guru/Jadwal', [GuruController::class, 'Jadwal'])->middleware('checkRole:guru');
@@ -89,13 +85,12 @@ Route::group(['middleware' => ['auth']], function () {
 
         //Archives
         Route::get('/Guru/Archives', [GuruController::class, 'Archives'])->middleware('checkRole:guru');
-
-        // Peta Kerawanan
-        Route::get('/petakerawananguru', [GuruController::class, 'petakerawananguru'])->name('petakerawananguru');
-        Route::get('/tambahpetakerawananguru', [GuruController::class, 'tambahpetakerawananguru'])->name('tambahpetakerawananguru');
-        Route::post('/insertkerawananguru', [GuruController::class, 'storekerawananguru'])->name('insertkerawananguru');
-        Route::get('/jeniskerawananguru/{id}', [GuruController::class, 'jeniskerawananguru'])->name('jeniskerawananguru');
-        Route::get('/deletekerawananguru/{id}', [GuruController::class, 'deletekerawananguru'])->name('deletekerawananguru');
+        
+        //Peta Kerawanan 
+        Route::get('/Guru/Kelas', [GuruController::class, 'Kelas'])->middleware('checkRole:guru');
+        Route::get('/Guru/Siswa/{kelasId}', [GuruController::class, 'siswa'])->middleware('checkRole:guru');
+        Route::get('/Kerawanan/{id}', [GuruController::class, 'kerawanan'])->middleware('checkRole:guru');
+        Route::post('/tambahkerawan/{id}', [GuruController::class, 'tambahDataPetakerawanan'])->middleware('checkRole:guru');
 
     //////////////////////////////////////////akun guru end/////////////////////////////////////////////
 
@@ -126,6 +121,13 @@ Route::group(['middleware' => ['auth']], function () {
         //hasil konseling
         Route::get('/hasilkonseling', [WaliKelasController::class, 'hasilkonseling'])->name('hasilkonseling')->middleware('checkRole:wali_kelas');
        
+        // Peta Kerawanan
+        Route::get('/petakerawananwalas', [WaliKelasController::class, 'datakerawananwalas'])->name('petakerawananwalas');
+        Route::get('/Kerawanansiswa/{id}', [WaliKelasController::class, 'Kerawanansiswa'])->name('petakerawananwalas');
+        Route::post('/tambahKerawanansiswa/{id}', [WaliKelasController::class, 'tambahPetakerawanansiswa'])->name('petakerawananwalas');
+
+        Route::get('/exportpetakerawanansiswa', [WaliKelasController::class, 'exportpetakerawanansiswa'])->name('exportpetakerawanansiswa');
+
    //////////////////////////////////////////akun wali kelas end////////////////////////////////////////////
 });
 
@@ -134,18 +136,9 @@ Route::group(['middleware' => ['auth']], function () {
      Route::get('/exportwalas', [AdminController::class, 'exportwalas'])->name('exportwalas');
      Route::get('/exportkelas', [AdminController::class, 'exportkelas'])->name('exportkelas');
      Route::get('/exportsiswa', [AdminController::class, 'exportsiswa'])->name('exportsiswa');
-     Route::get('/exportpetakerawanan', [AdminController::class, 'exportpetakerawanan'])->name('exportpetakerawanan');
-    
 
     /////PETAKERAWANAN/WALAS//////
-    Route::get('/petakerawananwalas', [WaliKelasController::class, 'datakerawananwalas'])->name('petakerawananwalas');
-    Route::get('/tambahpetakerawananwalas', [WaliKelasController::class, 'tambahpetakerawananwalas'])->name('tambahpetakerawananwalas');
-    Route::post('/insertkerawananwalas', [WaliKelasController::class, 'storekerawananwalas'])->name('insertkerawananwalas');
-    Route::get('/jeniskerawananwalas/{id}', [WaliKelasController::class, 'jeniskerawananwalas'])->name('jeniskerawananwalas');
-    Route::get('/deletekerawananwalas/{id}', [WaliKelasController::class, 'deletekerawanan']);
-    // Route::post('/postlogin', 'LoginController@postlogin')->name('postlogin');
-    // Route::get('/siswa',[SiswaController::class, 'siswa'])->name('siswa');
-
+   
 
     // FAKER
     Route::get('/RunFakeData', [FakerController::class, 'RunFakeData']); //MEMBUAT DATA PALSU (FAKER)

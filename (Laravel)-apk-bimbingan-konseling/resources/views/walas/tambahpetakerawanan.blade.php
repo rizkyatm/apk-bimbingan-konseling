@@ -1,4 +1,4 @@
-@extends('layouts.guruLayouts')
+@extends('layouts.walasLayouts')
 
 @section('contentAdmin')
         <!-- Navbar -->
@@ -19,8 +19,8 @@
                   <li class="nav-item d-flex align-items-center position-relative">
                     <a href="javascript:;" class="nav-link text-body font-weight-bold px-0" id="signInDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       @if (Auth::check())
-                        @if ($user->guru)
-                          <img src="{{ asset('fotoguru/'.$user->guru->foto) }}" alt="Profile Picture" class="me-sm-1 rounded-circle" style="width: 32px; height: 32px; object-fit: cover; vertical-align: middle;">
+                        @if ($user->walikelas)
+                          <img src="{{ asset('fotowalikelas/'.$user->walikelas->foto) }}" alt="Profile Picture" class="me-sm-1 rounded-circle" style="width: 32px; height: 32px; object-fit: cover; vertical-align: middle;">
                         @else
                           <i class="fa fa-user me-sm-1"></i>
                         @endif
@@ -65,7 +65,7 @@
                             <p style="margin-bottom: 5px; font-size: 14px; color: #555;">Wali Kelas : {{$siswa->kelas->walikelas->namagurukelas}}</p>
                           </div>
                         </div>                        
-                        <form action="/tambahkerawan/{{$siswa->id}}" method="POST" style="padding: 0 20px 0 20px">
+                        <form action="/tambahKerawanansiswa/{{$siswa->id}}" method="POST" style="padding: 0 20px 0 20px">
                           @csrf
                           <div class="form-check mb-3" >
                             <div class="row">
@@ -161,7 +161,7 @@
                           </div>
                           
                           <button type="submit" class="btn btn-primary">Save</button>
-                          <a href="/Guru/Siswa/{{$siswa->kelas->id}}" class="btn btn-primary">Kembali</a>
+                          <a href="/petakerawananwalas" class="btn btn-primary">Kembali</a>
                         </form>
                       </div>                                     
                     </div>
@@ -170,5 +170,4 @@
               </div>
             </div>
           </div>
-          
 @endsection

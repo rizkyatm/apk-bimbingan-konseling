@@ -43,7 +43,7 @@ class Siswa extends Authenticatable
         return $this->hasMany(Konseling_bk::class);
     }
 
-    public function jenispetakerawanan(){
-        return $this->hasMany(JenisPetaKerawanan::class);
+    public function petakerawanan(){
+        return $this->hasOne(petakerawanan::class);
     }
 }

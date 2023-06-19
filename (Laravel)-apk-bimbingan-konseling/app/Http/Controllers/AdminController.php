@@ -408,31 +408,6 @@ class AdminController extends Controller{
     {
         return Excel::download(new SiswaExport, 'akunsiswa.xlsx');
     }
-    public function exportpetakerawanan()
-    {
-        return Excel::download(new PetaKerawananExport, 'akunpetakerawanan.xlsx');
-    }
-
     ////////////////////////endExport//////////////////////////////////
-
-    ////////////////////////////////////petakerawanan///////////////////////////////////////////
-    public function Petakerawanan(){
-        $data = PetaKerawanan::all();
-        return view('admin.petakerawanan', compact('data'));
-    }
-
-    public function tambahpelanggaran(){
-        return view('admin.tambahpetakerawanan');
-    }
-
-    public function insertpetaadmin(Request $request){
-        $data = PetaKerawanan::create($request->all());
-        return redirect('/Admin/DataKerawan');
-    }
-    public function deletepetakerawanan($id){
-        $data = PetaKerawanan::find($id);
-        $data->delete();
-        return redirect('/Admin/DataKerawan')->with('sucess', 'data berhasil diapus');
-    }
 
 }

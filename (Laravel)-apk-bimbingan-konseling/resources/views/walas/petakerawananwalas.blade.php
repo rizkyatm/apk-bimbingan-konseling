@@ -19,8 +19,8 @@
                   <li class="nav-item d-flex align-items-center position-relative">
                     <a href="javascript:;" class="nav-link text-body font-weight-bold px-0" id="signInDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       @if (Auth::check())
-                        @if ($user->guru)
-                          <img src="{{ asset('fotoguru/'.$user->guru->foto) }}" alt="Profile Picture" class="me-sm-1 rounded-circle" style="width: 32px; height: 32px; object-fit: cover; vertical-align: middle;">
+                        @if ($user->walikelas)
+                          <img src="{{ asset('fotowalikelas/'.$user->walikelas->foto) }}" alt="Profile Picture" class="me-sm-1 rounded-circle" style="width: 32px; height: 32px; object-fit: cover; vertical-align: middle;">
                         @else
                           <i class="fa fa-user me-sm-1"></i>
                         @endif
@@ -43,63 +43,55 @@
           <!-- End Navbar -->
           <div class="container-fluid py-4">
             <div class="row" >
-              <div class="col-12" >
-                <div class="card mb-4" style="min-height: 500px;">
-                    <div class="card-header pb-0 px-3 d-flex justify-content-between align-items-center" id="daftar">
-                        <h6 class="mb-0">Daftar Peta Kerawanan</h6>
-                        <a class="btn btn-primary" id="tambah-jadwal" href="/tambahpetakerawananwalas">Tambah Peta Kerawanan</a>
-                      </div>
-                  <div class="card-header pb-0">
-                    <h6></h6>
-                  </div>
-                
+              <div class="col-12"  >
+                <div class="card mb-4" style="height: max-content; min-height: 500px">
                   <div class="card-body px-0 pt-0 pb-2">
                     <div class="table-responsive p-0">
-                      <div class="container">
-                        <div class="row d-flex flex-wrap">
-                          @foreach ($siswa as $walas)
-                          <div class="col-md-4 mb-4">
-                            <a href="/jeniskerawananwalas/{{$walas->id}}">
-                              <div class="card border shadow-sm">
-                                <div class="card-body">
-                                  <h5 class="card-title">{{ $walas->namasiswa}}</h5>
-                                  <h5 class="card-title">{{ $walas->user->nisn_nip }}</h5>
-                                  <h5 class="card-title">{{ $walas->kelas->kelas }}</h5>
-                                </div>
-                              </div>
-                            </a>
+                        <div id="murid-container" class="px-4">
+                          <div class="card-header pb-0" style="display: flex; justify-content: space-between;">
+                            <h3>Data Murid Yang Diajar {{$user->walikelas->namagurukelas }}</h3>
+                            <div style="margin-right:0px ">
+                                <a class="btn btn-primary" id="tambah-jadwal" href="/exportpetakerawanansiswa">Export Exel</a>
+                                {{-- {{$user->walikelas->id}} --}}
+                            </div>
                           </div>
-                          @endforeach
-                        </div>
-                      </div>                                     
-                    </div>
+                          <table class="table mx-auto">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Murid</th>
+                                    <th>NISN</th>
+                                    <th>jenis kelamin</th>
+                                    <th>status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($siswa as $index => $data)
+                                    <tr class="justify-content-center">
+                                        <td style="padding-left: 23px;">{{ $index + 1 }}</td>
+                                        <td style="padding-left: 23px;">{{ $data->namasiswa }}</td>
+                                        <td style="padding-left: 23px;">{{ $data->user->nisn_nip }}</td>
+                                        <td style="padding-left: 23px;">{{ $data->jeniskelamin }}</td>
+                                        <td style="padding-left: 35px;">
+                                            @if ($data->petakerawanan && $data->petakerawanan->siswa_id == $data->id)
+                                                <i class="fas fa-check text-success"></i>
+                                            @else
+                                                <i class="fas fa-times text-danger"></i>
+                                            @endif
+                                        </td>
+                                        <td style="text-align: right;">
+                                          <a href="/Kerawanansiswa/{{$data->id}}" class="btn btn-primary">Detail</a>
+                                      </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>                        
+                        </div>                        
+                    </div>                                                  
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
-
-          <script>
-            // Menangkap klik pada card
-            $('.card').on('click', function() {
-              // Mendapatkan ID kelas dari atribut data
-              var kelasId = $(this).data('kelas-id');
-          
-              // Mengirim permintaan AJAX untuk memuat data murid
-              $.ajax({
-                url: '/siswa/' + kelasId, // Ubah URL sesuai dengan rute yang sesuai
-                method: 'GET',
-                success: function(response) {
-                  // Manipulasi DOM untuk menampilkan data murid
-                  // Misalnya, tampilkan data murid dalam elemen dengan ID tertentu
-                  $('#murid-container').html(response);
-                },
-                error: function(xhr) {
-                  // Penanganan kesalahan
-                }
-              });
-            });
-          </script>
-          
 @endsection

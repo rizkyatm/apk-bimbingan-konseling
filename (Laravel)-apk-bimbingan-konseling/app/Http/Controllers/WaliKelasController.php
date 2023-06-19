@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\PetaKerawananExport;
 use App\Models\User;
 use App\Models\Kelas;
 use App\Models\Siswa;
@@ -13,6 +14,8 @@ use App\Models\JenisPetaKerawanan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class WaliKelasController extends Controller
 {
@@ -110,77 +113,96 @@ class WaliKelasController extends Controller
     }
     ////////////////////////////////////archives end//////////////////////////////////////
    /////////////////////////////////////kerawanan walas/////////////////////////////////
-   public function datakerawananwalas(){
-        $user = User::with('walikelas')->find(Auth::id()); // Mengambil data user yang sedang login dan eager load relasi walikelas
-        $walikelas = $user->walikelas->first(); // Mengambil walikelas pertama yang terkait dengan user
-        
-        $id = $walikelas->id ?? null; // Mengambil ID walikelas jika walikelas tersedia, jika tidak, nilainya menjadi null
-        
-        $kelas = $id ? Kelas::find($id) : null; // Mendapatkan objek kelas berdasarkan ID walikelas jika ID walikelas tersedia, jika tidak, nilainya menjadi null
-        
-        $siswa = $kelas ? Siswa::where('kelas_id', $kelas->id)->get() : null; // Mengambil siswa-siswa yang memiliki kelas dengan ID yang sama jika kelas tersedia, jika tidak, nilainya menjadi null
+//    public function datakerawananwalas(){
+//        $user = User::with('walikelas')->find(Auth::id()); // Mengambil data user yang sedang login dan eager load relasi walikelas
+       
+//        $walikelas = $user->walikelas;// Mengambil daftar ID kelas terkait dengan walikelas
+//        $kelasIds = $walikelas->kelas->siswa->pluck('kelas_id')->toArray(); // Mengambil daftar ID kelas terkait dengan walikelas
+       
+//        $siswa = Siswa::whereHas('kelas', function ($query) use ($kelasIds) {
+//            $query->whereIn('id', $kelasIds);
+//        })->get(); // Mengambil siswa-siswa yang memiliki kelas dengan ID yang terkait dengan walikelas
+       
+//        return view('walas.petakerawananwalas', compact('user','siswa'));
+//    }
 
-        return view('walas.petakerawananwalas', compact('user','siswa'));
-    }
+        public function datakerawananwalas(){
+            $user = User::with('walikelas')->find(Auth::id()); // Mengambil data user yang sedang login dan eager load relasi walikelas
 
-   public function tambahpetakerawananwalas(){
-        $user = User::with('walikelas')->find(Auth::id()); // nyari tabel user yg login
-        
-        $siswa = Siswa::all();
-        $jenispetakerawanan = PetaKerawanan::all();
+            $walikelasId = $user->walikelas->id; // Mengambil ID walikelas terkait dengan user
 
-        // dd($jenispetakerawanan);
-        return view('walas.tambahpetawalas', compact('siswa', 'jenispetakerawanan', 'user',));
-    }
+            $siswa = Siswa::whereHas('kelas', function ($query) use ($walikelasId) {
+                $query->where('walikelas_id', $walikelasId);
+            })->get(); // Mengambil siswa-siswa yang memiliki kelas dengan ID walikelas yang terkait
 
-    public function storekerawananwalas(Request $request)
-    {
-        $siswaId = $request->siswa_id;
-        $petakerawananIds = $request->input('petakerawanan_id', []);
-    
-        // Lakukan iterasi untuk menyimpan setiap pilihan Peta Kerawanan
-        foreach ($petakerawananIds as $petakerawananId) {
-            $data = new JenisPetaKerawanan();
-            $data->siswa_id = $siswaId;
-            $data->petakerawanan_id = $petakerawananId;
-            $data->save();
+            return view('walas.petakerawananwalas', compact('user', 'siswa'));
         }
-    
-        return redirect('/petakerawananwalas');
-    }
-    
 
-public function updatepetawalas(Request $request){
-    // $siswa = Siswa::create($request->all());
-    $peta = PetaKerawanan::create($request->all());
-    return redirect('/petakerawananwalas', compact('siswa', 'peta'));
+        public function Kerawanansiswa($id){
+            $siswa = Siswa::find($id);
+            $user = User::with('guru')->find(Auth::id()); // nyari tabel user yg login
+            $petakerawanan = PetaKerawanan::where('siswa_id', $siswa->id)->get();
+                
+            return view('walas.tambahpetakerawanan', compact('user', 'siswa', 'petakerawanan'));
+        }
 
-    // $siswa = Siswa::find($id);
-    // $peta = PetaKerawanan::find($id);
+        public function tambahPetakerawanansiswa(Request $request, $id)
+        {
+            // Ambil data siswa berdasarkan ID yang diberikan
+            $siswa = Siswa::findOrFail($id);
+        
+            // Ambil data kelas dan wali kelas dari objek siswa
+            $kelas = $siswa->kelas;
+            $waliKelas = $kelas->walikelas;
+        
+            // Buat array untuk menyimpan nilai checkbox yang dicentang
+            $checkboxValues = [];
+            for ($i = 1; $i <= 20; $i++) {
+                if ($request->has($i)) {
+                    $checkboxValues[$i] = 'YA';
+                } else {
+                    $checkboxValues[$i] = null;
+                }
+            }
+        
+            // Temukan atau buat data pada tabel "petakerawanan" berdasarkan siswa_id
+            $petakerawanan = Petakerawanan::where('siswa_id', $siswa->id)->first();
+            if ($petakerawanan) {
+                // Update data petakerawanan jika sudah ada
+                $petakerawanan->walas_id = $waliKelas->id;
+                for ($i = 1; $i <= 20; $i++) {
+                    $petakerawanan->{"kolom" . $i} = $checkboxValues[$i];
+                }
+                $petakerawanan->save();
+        
+                $message = "Data berhasil diperbarui!";
+            } else {
+                // Buat data petakerawanan baru jika belum ada
+                $petakerawanan = new Petakerawanan([
+                    'siswa_id' => $siswa->id,
+                    'walas_id' => $waliKelas->id,
+                ]);
+                for ($i = 1; $i <= 20; $i++) {
+                    $petakerawanan->{"kolom" . $i} = $checkboxValues[$i];
+                }
+                $petakerawanan->save();
+        
+                $message = "Data berhasil ditambahkan!";
+            }
+        
+            // Menghapus data petakerawanan jika tidak ada inputan dari checkbox
+            if (empty(array_filter($checkboxValues))) {
+                $petakerawanan->delete();
+                $message = "Siswa Tidak Memilik Data Kerawanan!";
+            }
+        
+            return redirect()->back()->with('success', $message);
+        }
 
-    // $siswa->namasiswa = $request->input('namasiswa');
-    // $peta->jenispetakerawanan = $request->input('jenispetakerawanan');
-}
-
-public function jeniskerawananwalas($id){
-    $user = User::with('walikelas')->find(Auth::id()); // nyari tabel user yg login
-    // $kerawanan = JenisPetaKerawanan::with('petakerawanan')->find($id);
-    // dd($kerawanan);
-    // return view('guru.isijeniskerawanan', compact('kerawanan', 'user'));
-
-    $jenisKerawanan = JenisPetaKerawanan::with('petakerawanan')->whereHas('petakerawanan', function ($query) use ($id) {
-        $query->where('siswa_id', $id);
-    })->get();
-    
-
-    return view('walas.isijeniskerawanan', compact('jenisKerawanan', 'user'));
-}
-
-public function deletekerawanan($id){
-        $data = JenisPetaKerawanan::find($id);
-        $data->delete();
-        return redirect()->back()->with('sucess', 'data berhasil diapus');
-}
-
+        public function exportpetakerawanansiswa()
+        {
+            return Excel::download(new PetaKerawananExport, 'Petakerawana.xlsx');
+        }
+   
    /////////////////////////////////////end/////////////////////////////////
 }
