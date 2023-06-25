@@ -49,10 +49,9 @@
                     <div class="table-responsive p-0">
                         <div id="murid-container" class="px-4">
                           <div class="card-header pb-0" style="display: flex; justify-content: space-between;">
-                            <h3>Data Murid Yang Diajar {{$user->walikelas->namagurukelas }}</h3>
+                            <h3>Data Murid Yang Diajar {{$user->walikelas->namagurukelas}}</h3>
                             <div style="margin-right:0px ">
-                                <a class="btn btn-primary" id="tambah-jadwal" href="/exportpetakerawanansiswa">Export Exel</a>
-                                {{-- {{$user->walikelas->id}} --}}
+                                <a class="btn btn-primary" id="tambah-jadwal" href="/exportpetakerawanansiswa/{{$user->walikelas->id}}">Export Exel</a>
                             </div>
                           </div>
                           <table class="table mx-auto">
@@ -81,7 +80,7 @@
                                             @endif
                                         </td>
                                         <td style="text-align: right;">
-                                          <a href="/Kerawanansiswa/{{$data->id}}" class="btn btn-primary">Detail</a>
+                                          <a href="/Kerawanansiswa/{{$data->id}}" class="btn btn-primary">Kerawanan</a>
                                       </td>
                                     </tr>
                                 @endforeach

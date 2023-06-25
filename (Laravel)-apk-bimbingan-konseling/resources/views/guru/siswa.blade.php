@@ -51,7 +51,7 @@
                           <div class="card-header pb-0" style="display: flex; justify-content: space-between;">
                             <h3>Data Murid Kelas {{ $kelasguru->kelas }}</h3>
                             <div style="margin-right:0px ">
-                                <a class="btn btn-primary" id="tambah-jadwal" href="{{$kelasguru->walikelas->id}}">Export Exel</a>
+                                <a class="btn btn-primary" id="tambah-jadwal" href="/exportpetakerawanansiswa/{{$kelasguru->walikelas->id}}">Export Exel</a>
                             </div>
                           </div>
                           <table class="table mx-auto">

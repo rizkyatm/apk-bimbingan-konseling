@@ -43,7 +43,7 @@ class _ListPageState extends State<ListPage> {
 
     int userId = preferences.getInt('user_id') ?? 0;
     String id = userId.toString();
-    final String urlj = ' https://dc16-182-0-136-138.ngrok-free.app/api/auth/getdata?id=' + id; 
+    final String urlj = 'http://128.0.0.1:8000/api/auth/getdata?id=' + id; 
     var response = await http.get(Uri.parse(urlj));
     var jsonRespone = jsonDecode(response.body);
     // return print(jsonRespone);

@@ -159,7 +159,7 @@ class WaliKelasController extends Controller
             $checkboxValues = [];
             for ($i = 1; $i <= 20; $i++) {
                 if ($request->has($i)) {
-                    $checkboxValues[$i] = 'YA';
+                    $checkboxValues[$i] = '✓';
                 } else {
                     $checkboxValues[$i] = null;
                 }
@@ -169,7 +169,7 @@ class WaliKelasController extends Controller
             $petakerawanan = Petakerawanan::where('siswa_id', $siswa->id)->first();
             if ($petakerawanan) {
                 // Update data petakerawanan jika sudah ada
-                $petakerawanan->walas_id = $waliKelas->id;
+                $petakerawanan->waliKelas_id = $waliKelas->id;
                 for ($i = 1; $i <= 20; $i++) {
                     $petakerawanan->{"kolom" . $i} = $checkboxValues[$i];
                 }
@@ -180,7 +180,7 @@ class WaliKelasController extends Controller
                 // Buat data petakerawanan baru jika belum ada
                 $petakerawanan = new Petakerawanan([
                     'siswa_id' => $siswa->id,
-                    'walas_id' => $waliKelas->id,
+                    'waliKelas_id' => $waliKelas->id,
                 ]);
                 for ($i = 1; $i <= 20; $i++) {
                     $petakerawanan->{"kolom" . $i} = $checkboxValues[$i];
@@ -199,9 +199,9 @@ class WaliKelasController extends Controller
             return redirect()->back()->with('success', $message);
         }
 
-        public function exportpetakerawanansiswa()
+        public function exportpetakerawanansiswa($id)
         {
-            return Excel::download(new PetaKerawananExport, 'Petakerawana.xlsx');
+            return Excel::download(new PetaKerawananExport($id), 'Petakerawana.xlsx');
         }
    
    /////////////////////////////////////end/////////////////////////////////

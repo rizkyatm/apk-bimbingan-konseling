@@ -11,9 +11,16 @@ class PetaKerawananExport implements FromView
 {
     use Exportable;
 
-    public function view(): View{
-        $data = Petakerawanan::all();
-        return view('Export.petakerawanan', compact('data'));
+    protected $id;
+
+    public function __construct($id)
+    {
+        $this->id = $id;
     }
 
+    public function view(): View
+    {
+        $data = PetaKerawanan::where('walikelas_id', $this->id)->get();
+        return view('Export.petakerawanan', compact('data'));
+    }
 }

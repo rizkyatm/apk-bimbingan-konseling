@@ -43,36 +43,34 @@
                $no = 1; 
             @endphp
             @foreach ($data as $peta)
-            <tr>
-                <th style="text-align: center" scope="row">{{$no++}}</th>
-                <td >{{ $peta->siswa->namasiswa}}</td>
-                <td style="text-align: center" >{{ $peta->siswa->user->nisn_nip}}</td>
-                <td >{{ $peta->siswa->jeniskelamin}}</td>
-                <td style="text-align: center" >{{ $peta->kolom1}}</td>
-                <td style="text-align: center" >{{ $peta->kolom2}}</td>
-                <td style="text-align: center" >{{ $peta->kolom3}}</td>
-                <td style="text-align: center" >{{ $peta->kolom4}}</td>
-                <td style="text-align: center" >{{ $peta->kolom5}}</td>
-                <td style="text-align: center" >{{ $peta->kolom6}}</td>
-                <td style="text-align: center" >{{ $peta->kolom7}}</td>
-                <td style="text-align: center" >{{ $peta->kolom8}}</td>
-                <td style="text-align: center" >{{ $peta->kolom9}}</td>
-                <td style="text-align: center" >{{ $peta->kolom10}}</td>
-                <td style="text-align: center" >{{ $peta->kolom11}}</td>
-                <td style="text-align: center" >{{ $peta->kolom12}}</td>
-                <td style="text-align: center" >{{ $peta->kolom13}}</td>
-                <td style="text-align: center" >{{ $peta->kolom14}}</td>
-                <td style="text-align: center" >{{ $peta->kolom15}}</td>
-                <td style="text-align: center" >{{ $peta->kolom16}}</td>
-                <td style="text-align: center" >{{ $peta->kolom17}}</td>
-                <td style="text-align: center" >{{ $peta->kolom18}}</td>
-                <td style="text-align: center" >{{ $peta->kolom19}}</td>
-                <td style="text-align: center" >{{ $peta->kolom10}}</td>
-            </tr>
+                <tr style="background-color: {{ $no % 2 == 0 ? '#f2f2f0x`' : '#ffffff' }};">
+                    <th style="text-align: center" scope="row">{{ $no++ }}</th>
+                    <td>{{ $peta->siswa->namasiswa }}</td>
+                    <td style="text-align: center">{{ $peta->siswa->user->nisn_nip }}</td>
+                    <td>{{ $peta->siswa->jeniskelamin }}</td>
+                    <td style="text-align: center">{{ $peta->kolom1 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom2 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom3 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom4 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom5 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom6 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom7 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom8 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom9 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom10 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom11 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom12 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom13 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom14 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom15 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom16 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom17 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom18 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom19 }}</td>
+                    <td style="text-align: center">{{ $peta->kolom10 }}</td>
+                </tr>
             @endforeach
-        </tbody>
+        </tbody>        
     </table>
 </body>
 </html>
-
-

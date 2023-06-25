@@ -126,7 +126,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/Kerawanansiswa/{id}', [WaliKelasController::class, 'Kerawanansiswa'])->name('petakerawananwalas');
         Route::post('/tambahKerawanansiswa/{id}', [WaliKelasController::class, 'tambahPetakerawanansiswa'])->name('petakerawananwalas');
 
-        Route::get('/exportpetakerawanansiswa', [WaliKelasController::class, 'exportpetakerawanansiswa'])->name('exportpetakerawanansiswa');
+        Route::get('/exportpetakerawanansiswa/{id}', [WaliKelasController::class, 'exportpetakerawanansiswa'])->name('exportpetakerawanansiswa');
 
    //////////////////////////////////////////akun wali kelas end////////////////////////////////////////////
 });

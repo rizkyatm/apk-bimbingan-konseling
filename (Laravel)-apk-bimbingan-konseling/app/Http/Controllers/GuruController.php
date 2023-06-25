@@ -232,7 +232,7 @@ class GuruController extends Controller
         $checkboxValues = [];
         for ($i = 1; $i <= 20; $i++) {
             if ($request->has($i)) {
-                $checkboxValues[$i] = 'YA';
+                $checkboxValues[$i] = '✓';
             } else {
                 $checkboxValues[$i] = null;
             }
@@ -253,7 +253,7 @@ class GuruController extends Controller
             // Buat data petakerawanan baru jika belum ada
             $petakerawanan = new Petakerawanan([
                 'siswa_id' => $siswa->id,
-                'walas_id' => $waliKelas->id,
+                'waliKelas_id' => $waliKelas->id,
             ]);
             for ($i = 1; $i <= 20; $i++) {
                 $petakerawanan->{"kolom" . $i} = $checkboxValues[$i];
