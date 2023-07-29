@@ -198,11 +198,10 @@ class DetailPage extends StatelessWidget {
                                   ],
                                 ),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      margin: EdgeInsets.fromLTRB(0 * fem,
-                                          0 * fem, 100 * fem, 10 * fem),
+                                      margin: EdgeInsets.only(bottom: 20 * fem),
                                       child: Text(
                                         'Detail bimbingan ',
                                         style: GoogleFonts.poppins(

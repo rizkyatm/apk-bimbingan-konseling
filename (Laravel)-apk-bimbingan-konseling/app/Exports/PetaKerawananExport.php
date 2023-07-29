@@ -20,7 +20,7 @@ class PetaKerawananExport implements FromView
 
     public function view(): View
     {
-        $data = PetaKerawanan::where('walikelas_id', $this->id)->get();
+        $data = PetaKerawanan::where('walas_id', $this->id)->get();
         return view('Export.petakerawanan', compact('data'));
     }
 }

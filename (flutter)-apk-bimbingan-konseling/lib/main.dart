@@ -3,6 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/pages/detai-pertemuan.dart';
+import 'package:myapp/pages/jadwal-pertemuan.dart';
 import 'package:myapp/pages/list-view-pertemuan.dart';
 import 'package:myapp/pages/login.dart';
 import 'package:myapp/pages/splash-screen.dart';

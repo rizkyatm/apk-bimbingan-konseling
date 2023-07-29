@@ -5,6 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/pages/detai-pertemuan.dart';
+import 'package:myapp/pages/jadwal-pertemuan.dart';
 import 'package:myapp/pages/login.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,7 +44,7 @@ class _ListPageState extends State<ListPage> {
 
     int userId = preferences.getInt('user_id') ?? 0;
     String id = userId.toString();
-    final String urlj = 'http://128.0.0.1:8000/api/auth/getdata?id=' + id; 
+    final String urlj = 'http://localhost:8000/api/auth/getdata?id=' + id;
     var response = await http.get(Uri.parse(urlj));
     var jsonRespone = jsonDecode(response.body);
     // return print(jsonRespone);
@@ -272,24 +273,62 @@ class _ListPageState extends State<ListPage> {
                     ),
                     Container(
                       width: 322 * fem,
+                      // margin: EdgeInsets.only(bottom: 50 * fem),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 0 * fem, 18 * fem),
-                            child: Text(
-                              'Pertemuena mu :',
-                              style: GoogleFonts.poppins(
-                                fontSize: 15 * ffem,
-                                fontWeight: FontWeight.w700,
-                                height: 1.5 * ffem / fem,
-                                letterSpacing: 0.45 * fem,
-                                color: Color(0xff218ecb),
-                              ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.fromLTRB(
+                                      0 * fem, 0 * fem, 0 * fem, 18 * fem),
+                                  child: Text(
+                                    'Pertemuan mu :',
+                                    style: GoogleFonts.poppins(
+                                      fontSize: 15 * ffem,
+                                      fontWeight: FontWeight.w700,
+                                      height: 1.5 * ffem / fem,
+                                      letterSpacing: 0.45 * fem,
+                                      color: Color(0xff218ecb),
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                JadwalPage()));
+                                  },
+                                  child: Container(
+                                    width: 64 * fem,
+                                    height: 28 * fem,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xff4bbbfa),
+                                      borderRadius:
+                                          BorderRadius.circular(10 * fem),
+                                    ),
+                                    child: Text(
+                                      '+ Jadwal',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 10 * ffem,
+                                        fontWeight: FontWeight.w400,
+                                        height: 1.5 * ffem / fem,
+                                        letterSpacing: 0.2 * fem,
+                                        color: Color(0xffffffff),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                           Container(
+                            margin: EdgeInsets.only(top: 5 * fem),
                             width: double.infinity,
                             // color: Colors.amber,
                             height: MediaQuery.of(context).size.height / 2,

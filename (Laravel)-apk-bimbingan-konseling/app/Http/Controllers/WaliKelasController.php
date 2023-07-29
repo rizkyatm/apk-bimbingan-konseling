@@ -169,7 +169,7 @@ class WaliKelasController extends Controller
             $petakerawanan = Petakerawanan::where('siswa_id', $siswa->id)->first();
             if ($petakerawanan) {
                 // Update data petakerawanan jika sudah ada
-                $petakerawanan->waliKelas_id = $waliKelas->id;
+                $petakerawanan->walas_id = $waliKelas->id;
                 for ($i = 1; $i <= 20; $i++) {
                     $petakerawanan->{"kolom" . $i} = $checkboxValues[$i];
                 }
@@ -180,7 +180,7 @@ class WaliKelasController extends Controller
                 // Buat data petakerawanan baru jika belum ada
                 $petakerawanan = new Petakerawanan([
                     'siswa_id' => $siswa->id,
-                    'waliKelas_id' => $waliKelas->id,
+                    'walas_id' => $waliKelas->id,
                 ]);
                 for ($i = 1; $i <= 20; $i++) {
                     $petakerawanan->{"kolom" . $i} = $checkboxValues[$i];
