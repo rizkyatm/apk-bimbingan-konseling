@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         } else if (snapshot.hasData) {
           final token = snapshot.data!.getString('token');
           if (token != null){}
-          return  SplashScreen1();
+          return  ListPage();
         } else {
           return LoginPage();
         }

@@ -1,12 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/pages/list-view-pertemuan.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 class JadwalPage extends StatefulWidget {
-  const JadwalPage({super.key});
+  final Map jadwal;
+  JadwalPage({super.key, required this.jadwal});
 
   @override
   State<JadwalPage> createState() => _JadwalPageState();
@@ -14,8 +18,13 @@ class JadwalPage extends StatefulWidget {
 
 class _JadwalPageState extends State<JadwalPage> {
   // layanan bimbingan bk
-  String? selectedValue;
-  List<String> items = ["Item 1", "Item 2", "Item 3", "Item 4"];
+ String? selectedValue;
+  Map<String, String> items = {
+    "1": "Bimbingan Pribadi",
+    // "2": "Bimbingan Sosial",
+    "3": "Bimbingan Karier",
+    "4": "Bimbingan Belajar",
+  };
 
   // tanggal bimbingan
   TextEditingController datetimeinput = TextEditingController();
@@ -30,15 +39,46 @@ class _JadwalPageState extends State<JadwalPage> {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
+      builder: (BuildContext context, Widget? child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child!,
+        );
+      },
     );
+
     if (pickedTime != null) {
-      String formattedTime = pickedTime.format(context);
+      String formattedTime = DateFormat('HH:mm:ss').format(DateTime(0, 1, 1, pickedTime.hour, pickedTime.minute));
       _timeController.text = formattedTime;
     }
   }
 
   // tempat
   TextEditingController tempat = TextEditingController();
+
+  String concatenateDateTime(String date, String time) {
+  return '$date $time';
+}
+
+  //UNTUK TAMBAH DATA KE DATABASE
+  Future savejadwal() async {
+    final selectedDate = datetimeinput.text; // MENGAMBIL IMPUTAN WAKTU
+    final selectedTime = _timeController.text; // MENGAMBIL IMPUTAN TANGGAL
+    final dateTime = concatenateDateTime(selectedDate, selectedTime); //TANGGAL DAN WAKTU DI JADIKAN SATU
+
+    final response = await http
+        .post(Uri.parse('http://127.0.0.1:8000/api/createjadwal/storejadwal'), body: {
+      "layanan_id": selectedValue,
+      "siswa_id": widget.jadwal['siswa_id'].toString(),
+      "walas_id": widget.jadwal['walikelas_id'].toString(),
+      "guru_id": widget.jadwal['guru_id'].toString(),
+      "tempat": tempat.text,
+      "waktu": dateTime,
+      "status": 'MENUNGGU..',
+    });
+    print(response.body);
+    return json.decode(response.body);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -275,43 +315,33 @@ class _JadwalPageState extends State<JadwalPage> {
                                       border:
                                           Border.all(color: Color(0xffa5c6e4)),
                                     ),
-                                    child: DropdownButtonHideUnderline(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: DropdownButton<String>(
-                                              hint: Text(
-                                                "Select item",
-                                                style: GoogleFonts.poppins(
-                                                    fontSize: 10 * ffem,
-                                                    color: Color(0xffa5c6e4)),
-                                              ),
-                                              dropdownColor: Colors.white,
-                                              isExpanded: true,
-                                              value: selectedValue,
-                                              onChanged: (newValue) {
-                                                setState(() {
-                                                  selectedValue = newValue;
-                                                });
-                                              },
-                                              items: items.map((valueItem) {
-                                                return DropdownMenuItem<String>(
-                                                  value: valueItem,
-                                                  child: Text(
-                                                    valueItem,
-                                                    style: TextStyle(
-                                                        fontSize: 11 * ffem,
-                                                        color: Colors.black),
-                                                  ),
-                                                );
-                                              }).toList(),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+child: DropdownButton<String>(
+  hint: Text(
+    "Select item",
+    style: GoogleFonts.poppins(
+      fontSize: 10 * ffem,
+      color: Color(0xffa5c6e4),
+    ),    
+  ),
+  dropdownColor: Colors.white,
+  isExpanded: true,
+  value: selectedValue,
+  onChanged: (newValue) {
+    setState(() {
+      selectedValue = newValue;
+    });
+  },
+  items: items.entries.map((entry) {
+    return DropdownMenuItem<String>(
+      value: entry.key,
+      child: Text(
+        entry.value,
+        style: TextStyle(fontSize: 11 * ffem, color: Colors.black),
+      ),
+    );
+  }).toList(),
+),
+
                                   )
                                 ],
                               ),
@@ -375,7 +405,7 @@ class _JadwalPageState extends State<JadwalPage> {
                                                 lastDate: DateTime(2100));
                                         if (pickedDatae != null) {
                                           String formatDate =
-                                              DateFormat('dd-MM-yyyy')
+                                              DateFormat('yyyy-MM-dd')
                                                   .format(pickedDatae);
                                           setState(() {
                                             datetimeinput.text = formatDate;
@@ -517,7 +547,15 @@ class _JadwalPageState extends State<JadwalPage> {
                             left: 58 * fem,
                             top: 548 * fem,
                             child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                  // print('$selectedValue ${datetimeinput.text} ${_timeController.text} ${tempat.text}');
+                                  savejadwal().then((value) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ListPage()));
+                                  });
+                              },
                               style: TextButton.styleFrom(
                                 padding: EdgeInsets.zero,
                               ),

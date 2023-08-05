@@ -1,16 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
-import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/pages/detai-pertemuan.dart';
 import 'package:myapp/pages/jadwal-pertemuan.dart';
+import 'package:myapp/pages/profile.dart';
 import 'package:myapp/pages/login.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:snapshot/snapshot.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ListPage extends StatefulWidget {
   @override
@@ -24,7 +21,6 @@ class _ListPageState extends State<ListPage> {
   @override
   void initState() {
     super.initState();
-    getJadwal();
     getUserData();
   }
 
@@ -33,23 +29,43 @@ class _ListPageState extends State<ListPage> {
       isLoading = true;
     });
     preferences = await SharedPreferences.getInstance();
-
     setState(() {
       isLoading = false;
     });
   }
 
+  Future createJadwal() async {
+    int userId = preferences.getInt('user_id') ?? 0;
+    String user = userId.toString();
+    final String urlj = 'http://127.0.0.1:8000/api/createjadwal?id=$userId';
+    var response = await http.get(Uri.parse(urlj));
+    var decodedResponse = jsonDecode(response.body);
+    var id = decodedResponse['id'];
+    print(id); // For example, print it
+    return decodedResponse;
+  }
+
   Future getJadwal() async {
     preferences = await SharedPreferences.getInstance();
-
     int userId = preferences.getInt('user_id') ?? 0;
     String id = userId.toString();
     final String urlj = 'http://localhost:8000/api/auth/getdata?id=' + id;
     var response = await http.get(Uri.parse(urlj));
-    var jsonRespone = jsonDecode(response.body);
-    // return print(jsonRespone);
-    return jsonRespone;
+    var jsonResponse = jsonDecode(response.body);
+    return jsonResponse;
   }
+
+  // Future<Map<String, dynamic>> getProfile() async {
+  //   int userId = preferences.getInt('user_id') ?? 0;
+  //   String user = userId.toString();
+  //   final String urlj = 'http://127.0.0.1:8000/api/profilesiswa?id=' + user;
+  //   var response = await http.get(Uri.parse(urlj));
+  //   if (response.statusCode == 200) {
+  //     return jsonDecode(response.body);
+  //   } else {
+  //     throw Exception('Failed to load profile data');
+  //   }
+  // }
 
   void logout() {
     preferences.clear();
@@ -57,6 +73,7 @@ class _ListPageState extends State<ListPage> {
       builder: (context) => LoginPage(),
     ));
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +86,7 @@ class _ListPageState extends State<ListPage> {
           Container(
             width: double.infinity,
             child: Container(
-              // listviewpertemuanvHC (20:852)
-              padding:
-                  EdgeInsets.fromLTRB(17 * fem, 26 * fem, 13 * fem, 26 * fem),
+              padding: EdgeInsets.fromLTRB(17 * fem, 26 * fem, 13 * fem, 26 * fem),
               width: double.infinity,
               height: 800 * fem,
               decoration: BoxDecoration(
@@ -84,8 +99,7 @@ class _ListPageState extends State<ListPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 17.74 * fem),
+                      margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 17.74 * fem),
                       width: double.infinity,
                       height: 28.26 * fem,
                       decoration: BoxDecoration(
@@ -96,8 +110,7 @@ class _ListPageState extends State<ListPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Container(
-                            margin: EdgeInsets.fromLTRB(
-                                0 * fem, 0 * fem, 0 * fem, 0.26 * fem),
+                            margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 0.26 * fem),
                             child: Text(
                               'TB Counseling',
                               style: GoogleFonts.poppins(
@@ -112,14 +125,56 @@ class _ListPageState extends State<ListPage> {
                           Container(
                             child: Row(
                               children: [
-                                Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 3.74 * fem, 0 * fem),
-                                  child: Image.asset(
-                                    'assets/page-1/images/profile.png',
-                                    alignment: Alignment.centerRight,
+                                // FutureBuilder<Map<String, dynamic>>(
+                                //   // future: getProfile(),
+                                //   builder: (context, snapshot) {
+                                //     if (snapshot.connectionState ==
+                                //         ConnectionState.done) {
+                                //       if (snapshot.hasError) {
+                                //         return Text(
+                                //             'Error occurred while fetching profile');
+                                //       } else {
+                                //         return InkWell(
+                                //           onTap: () {
+                                //             // Navigate to the Profile page with the fetched data
+                                //             Navigator.push(
+                                //               context,
+                                //               MaterialPageRoute(
+                                //                 builder: (context) => ProfilAkun(
+                                //                   profile: snapshot.data?['data'],
+                                //                 ),
+                                //               ),
+                                //             );
+                                //           },
+                                //           child: Container(
+                                //             margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 3.74 * fem, 0 * fem),
+                                //             child: Image.asset(
+                                //               'assets/page-1/images/profile.png',
+                                //               alignment: Alignment.centerRight,
+                                //             ),
+                                //           ),
+                                //         );
+                                //       }
+                                //     } else {
+                                //       return CircularProgressIndicator();
+                                //     }
+                                //   },
+                                // ),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ProfilePage(),
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    child: Image.asset(
+                                      'assets/page-1/images/profile.png',
+                                    ),
                                   ),
-                                ),
+                                ),      
                                 Container(
                                   child: TextButton(
                                     onPressed: () {},
@@ -135,8 +190,7 @@ class _ListPageState extends State<ListPage> {
                                         height: double.infinity,
                                         decoration: BoxDecoration(
                                           color: Color(0xff4bbbfa),
-                                          borderRadius:
-                                              BorderRadius.circular(10 * fem),
+                                          borderRadius: BorderRadius.circular(10 * fem),
                                         ),
                                         child: Center(
                                           child: Text(
@@ -161,10 +215,8 @@ class _ListPageState extends State<ListPage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.fromLTRB(
-                          0 * fem, 0 * fem, 0 * fem, 25 * fem),
-                      padding: EdgeInsets.fromLTRB(
-                          13 * fem, 12 * fem, 13 * fem, 13 * fem),
+                      margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 25 * fem),
+                      padding: EdgeInsets.fromLTRB(13 * fem, 12 * fem, 13 * fem, 13 * fem),
                       width: double.infinity,
                       height: 159 * fem,
                       decoration: BoxDecoration(
@@ -172,24 +224,21 @@ class _ListPageState extends State<ListPage> {
                         borderRadius: BorderRadius.circular(10 * fem),
                       ),
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(
-                            0 * fem, 5.82 * fem, 3.35 * fem, 5.81 * fem),
+                        padding: EdgeInsets.fromLTRB(0 * fem, 5.82 * fem, 3.35 * fem, 5.81 * fem),
                         width: double.infinity,
                         height: double.infinity,
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              margin: EdgeInsets.fromLTRB(0 * fem, 16.18 * fem,
-                                  27.18 * fem, 19.19 * fem),
+                              margin: EdgeInsets.fromLTRB(0 * fem, 16.18 * fem, 27.18 * fem, 19.19 * fem),
                               width: 147 * fem,
                               height: double.infinity,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    margin: EdgeInsets.fromLTRB(
-                                        0 * fem, 0 * fem, 0 * fem, 4 * fem),
+                                    margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 4 * fem),
                                     width: double.infinity,
                                     height: 56 * fem,
                                     child: Stack(
@@ -202,10 +251,7 @@ class _ListPageState extends State<ListPage> {
                                               width: 147 * fem,
                                               height: 30 * fem,
                                               child: Text(
-                                                // 'Septheaaaaa',
-                                                preferences
-                                                    .getString('namasiswa')
-                                                    .toString(),
+                                                preferences.getString('namasiswa').toString(),
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 20 * ffem,
                                                   fontWeight: FontWeight.w700,
@@ -245,7 +291,7 @@ class _ListPageState extends State<ListPage> {
                                       maxWidth: 134 * fem,
                                     ),
                                     child: Text(
-                                      'Lihat pertemuan mu dengen Pembimbing Konseling.',
+                                      'Lihat pertemuanmu dengan Pembimbing Konseling.',
                                       style: GoogleFonts.poppins(
                                         fontSize: 9 * ffem,
                                         fontWeight: FontWeight.w400,
@@ -273,7 +319,6 @@ class _ListPageState extends State<ListPage> {
                     ),
                     Container(
                       width: 322 * fem,
-                      // margin: EdgeInsets.only(bottom: 50 * fem),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -282,10 +327,9 @@ class _ListPageState extends State<ListPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.fromLTRB(
-                                      0 * fem, 0 * fem, 0 * fem, 18 * fem),
+                                  margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 0 * fem, 18 * fem),
                                   child: Text(
-                                    'Pertemuan mu :',
+                                    'Pertemuanmu :',
                                     style: GoogleFonts.poppins(
                                       fontSize: 15 * ffem,
                                       fontWeight: FontWeight.w700,
@@ -295,34 +339,49 @@ class _ListPageState extends State<ListPage> {
                                     ),
                                   ),
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                JadwalPage()));
+                                FutureBuilder(
+                                  future: createJadwal(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState == ConnectionState.done) {
+                                      if (snapshot.hasError) {
+                                        return Text('Error occurred while fetching profile');
+                                      } else {
+                                        return InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => JadwalPage(
+                                                  jadwal: snapshot.data['data'],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            width: 64 * fem,
+                                            height: 28 * fem,
+                                            alignment: Alignment.center,
+                                            decoration: BoxDecoration(
+                                              color: Color(0xff4bbbfa),
+                                              borderRadius: BorderRadius.circular(10 * fem),
+                                            ),
+                                            child: Text(
+                                              '+ Jadwal',
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 10 * ffem,
+                                                fontWeight: FontWeight.w400,
+                                                height: 1.5 * ffem / fem,
+                                                letterSpacing: 0.2 * fem,
+                                                color: Color(0xffffffff),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
                                   },
-                                  child: Container(
-                                    width: 64 * fem,
-                                    height: 28 * fem,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xff4bbbfa),
-                                      borderRadius:
-                                          BorderRadius.circular(10 * fem),
-                                    ),
-                                    child: Text(
-                                      '+ Jadwal',
-                                      style: GoogleFonts.poppins(
-                                        fontSize: 10 * ffem,
-                                        fontWeight: FontWeight.w400,
-                                        height: 1.5 * ffem / fem,
-                                        letterSpacing: 0.2 * fem,
-                                        color: Color(0xffffffff),
-                                      ),
-                                    ),
-                                  ),
                                 ),
                               ],
                             ),
@@ -330,195 +389,137 @@ class _ListPageState extends State<ListPage> {
                           Container(
                             margin: EdgeInsets.only(top: 5 * fem),
                             width: double.infinity,
-                            // color: Colors.amber,
                             height: MediaQuery.of(context).size.height / 2,
                             child: FutureBuilder(
-                                future: getJadwal(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasData) {
-                                    return ListView.builder(
-                                      physics: const ClampingScrollPhysics(),
-                                      itemCount: snapshot.data['data'].length,
-                                      itemBuilder: (context, index) {
-                                        return InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      DetailPage(
-                                                        jadwal: snapshot
-                                                                .data['data']
-                                                            [index],
-                                                      )),
-                                            );
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.only(bottom: 20),
-                                            width: double.infinity,
-                                            height: 65 * fem,
-                                            child: Stack(
-                                              children: [
-                                                Positioned(
-                                                  left: 0 * fem,
-                                                  top: 21 * fem,
-                                                  child: Container(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            8 * fem,
-                                                            21 * fem,
-                                                            8 * fem,
-                                                            9 * fem),
-                                                    width: 322 * fem,
-                                                    height: 44 * fem,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Color(
-                                                              0xff4bbbfa)),
-                                                      color: Color(0xffffffff),
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        bottomRight:
-                                                            Radius.circular(
-                                                                5 * fem),
-                                                        bottomLeft:
-                                                            Radius.circular(
-                                                                5 * fem),
-                                                      ),
+                              future: getJadwal(),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Center(
+                                    child: Text('Error occurred while fetching data'),
+                                  );
+                                } else {
+                                  List<dynamic> jadwalList = snapshot.data['data'];
+                                  return ListView.builder(
+                                    physics: const ClampingScrollPhysics(),
+                                    itemCount: jadwalList.length,
+                                    itemBuilder: (context, index) {
+                                      var jadwal = jadwalList[index];
+                                      return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => DetailPage(
+                                                jadwal: jadwal,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: Container(
+                                          margin: EdgeInsets.only(bottom: 20),
+                                          width: double.infinity,
+                                          height: 65 * fem,
+                                          child: Stack(
+                                            children: [
+                                              Positioned(
+                                                left: 0 * fem,
+                                                top: 21 * fem,
+                                                child: Container(
+                                                  padding: EdgeInsets.fromLTRB(8 * fem, 21 * fem, 8 * fem, 9 * fem),
+                                                  width: 322 * fem,
+                                                  height: 44 * fem,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(color: Color(0xff4bbbfa)),
+                                                    color: Color(0xffffffff),
+                                                    borderRadius: BorderRadius.only(
+                                                      bottomRight: Radius.circular(5 * fem),
+                                                      bottomLeft: Radius.circular(5 * fem),
                                                     ),
+                                                  ),
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        jadwal['waktu'],
+                                                        style: GoogleFonts.poppins(
+                                                          fontSize: 9 * ffem,
+                                                          fontWeight: FontWeight.w400,
+                                                          height: 1.5 * ffem / fem,
+                                                          letterSpacing: 0.18 * fem,
+                                                          color: Color(0xff115a83),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        ', di ${jadwal['tempat']}',
+                                                        style: GoogleFonts.poppins(
+                                                          fontSize: 9 * ffem,
+                                                          fontWeight: FontWeight.w400,
+                                                          height: 1.5 * ffem / fem,
+                                                          letterSpacing: 0.18 * fem,
+                                                          color: Color(0xff115a83),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                left: 0 * fem,
+                                                top: 0 * fem,
+                                                child: Container(
+                                                  padding: EdgeInsets.fromLTRB(8 * fem, 8 * fem, 8 * fem, 8 * fem),
+                                                  width: 322 * fem,
+                                                  height: 34 * fem,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(color: Color(0xffcad5ea)),
+                                                    color: Color(0xff4bbbfa),
+                                                    borderRadius: BorderRadius.only(
+                                                      topLeft: Radius.circular(5 * fem),
+                                                      topRight: Radius.circular(5 * fem),
+                                                    ),
+                                                  ),
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: double.infinity,
                                                     child: Row(
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                       children: [
                                                         Text(
-                                                          snapshot.data['data']
-                                                              [index]['waktu'],
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 9 * ffem,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            height: 1.5 *
-                                                                ffem /
-                                                                fem,
-                                                            letterSpacing:
-                                                                0.18 * fem,
-                                                            color: Color(
-                                                                0xff115a83),
+                                                          '${jadwal['layanan_bk']['jenis_layanan'] ?? ''}',
+                                                          style: GoogleFonts.poppins(
+                                                            fontSize: 12 * ffem,
+                                                            fontWeight: FontWeight.w600,
+                                                            height: 1.5 * ffem / fem,
+                                                            color: Color(0xffffffff),
                                                           ),
                                                         ),
                                                         Text(
-                                                          ', di ${snapshot.data['data'][index]['tempat']}',
-                                                          style: GoogleFonts
-                                                              .poppins(
-                                                            fontSize: 9 * ffem,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            height: 1.5 *
-                                                                ffem /
-                                                                fem,
-                                                            letterSpacing:
-                                                                0.18 * fem,
-                                                            color: Color(
-                                                                0xff115a83),
+                                                          jadwal['status'],
+                                                          style: GoogleFonts.poppins(
+                                                            fontSize: 12 * ffem,
+                                                            fontWeight: FontWeight.w600,
+                                                            height: 1.5 * ffem / fem,
+                                                            color: Color(0xffffffff),
                                                           ),
                                                         ),
                                                       ],
                                                     ),
                                                   ),
                                                 ),
-                                                Positioned(
-                                                  left: 0 * fem,
-                                                  top: 0 * fem,
-                                                  child: Container(
-                                                    padding:
-                                                        EdgeInsets.fromLTRB(
-                                                            8 * fem,
-                                                            8 * fem,
-                                                            8 * fem,
-                                                            8 * fem),
-                                                    width: 322 * fem,
-                                                    height: 34 * fem,
-                                                    decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: Color(
-                                                              0xffcad5ea)),
-                                                      color: Color(0xff4bbbfa),
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                        topLeft:
-                                                            Radius.circular(
-                                                                5 * fem),
-                                                        topRight:
-                                                            Radius.circular(
-                                                                5 * fem),
-                                                      ),
-                                                    ),
-                                                    child: Container(
-                                                      width: double.infinity,
-                                                      height: double.infinity,
-                                                      child: Row(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        children: [
-                                                          Text(
-                                                            snapshot.data['data']
-                                                                        [index][
-                                                                    'layanan_bk']
-                                                                [
-                                                                'jenis_layanan'],
-                                                            style: GoogleFonts
-                                                                .poppins(
-                                                              fontSize:
-                                                                  12 * ffem,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              height: 1.5 *
-                                                                  ffem /
-                                                                  fem,
-                                                              color: Color(
-                                                                  0xffffffff),
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            snapshot.data[
-                                                                        'data']
-                                                                    [index]
-                                                                ['status'],
-                                                            style: GoogleFonts
-                                                                .poppins(
-                                                              fontSize:
-                                                                  12 * ffem,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w600,
-                                                              height: 1.5 *
-                                                                  ffem /
-                                                                  fem,
-                                                              color: Color(
-                                                                  0xffffffff),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        );
-                                      },
-                                    );
-                                  } else {
-                                    return Center(
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  }
-                                }),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
+                              },
+                            ),
                           ),
                         ],
                       ),

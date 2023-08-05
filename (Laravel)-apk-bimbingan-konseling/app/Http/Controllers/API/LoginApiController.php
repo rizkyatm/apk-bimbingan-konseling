@@ -15,8 +15,6 @@ class LoginApiController extends Controller
         // validasi form email dan password
                 $credentials = $request->only('nisn_nip', 'password');
 
-
-
         // membawa data user bersama relasi table murid dengan kondisi mengambil email dan menjadi $user
         // $user = User::with('murid')->where('email', $request->email)->first();
         $user = User::with("siswa")->where('nisn_nip', $request->nisn_nip)->first();

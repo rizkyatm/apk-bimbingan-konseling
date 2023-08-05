@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\LoginApiController;
+use App\Http\Controllers\API\storeApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth/login',[LoginApiController::class, 'loginApi'])->name('loginApi');
 Route::get('/auth/getdata',[LoginApiController::class, 'jadwal'])->name('jadwal');
 
+
+// Tambah Jadwal 
+Route::get('/createjadwal', [storeApiController::class, 'getDataAkun']);
+Route::post('/createjadwal/storejadwal', [storeApiController::class, 'storeJadwal']);
+
+//Profil Siswa
+Route::get('/profilesiswa', [storeApiController::class, 'profileSiswa']);
