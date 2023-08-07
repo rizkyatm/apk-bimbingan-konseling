@@ -34,20 +34,18 @@ class _ListPageState extends State<ListPage> {
     setState(() {
       isLoading = false;
     });
-
-    // Setelah preferences diinisialisasi, panggil getJadwal di sini.
-    createJadwal();
   }
 
 Future createJadwal() async {
+  preferences = await SharedPreferences.getInstance();
   int userId = preferences?.getInt('user_id') ?? 0;
   print('User ID: $userId'); // Cek nilai userId pada log
   String user = userId.toString();
   final String urlj = 'http://localhost:8000/api/createjadwal?id=$userId';
   var response = await http.get(Uri.parse(urlj));
   var decodedResponse = jsonDecode(response.body);
-  var id = decodedResponse['id'];
-  print(id); // For example, print it
+  // var id = decodedResponse['id'];
+  // print(id); // For example, print it
   return decodedResponse;
 }
 
@@ -63,6 +61,7 @@ Future createJadwal() async {
   }
 
   Future<Map<String, dynamic>> getProfile() async {
+    preferences = await SharedPreferences.getInstance();
     int userId = preferences?.getInt('user_id') ?? 0;
     String user = userId.toString();
     final String urlj = 'http://localhost:8000/api/profilesiswa?id=' + user;
