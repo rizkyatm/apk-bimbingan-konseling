@@ -53,6 +53,7 @@ class storeApiController extends Controller
     
         $profil = [
             'id' => $siswa->id,
+            'nisn' => $siswa->user->nisn_nip,
             'namasiswa' => $siswa->namasiswa,
             'kelas' => $siswa->kelas->kelas,
             'foto' => $siswa->foto,

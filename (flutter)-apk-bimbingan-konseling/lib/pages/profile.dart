@@ -5,10 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/pages/list-view-pertemuan.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
-  // final Map profile;
-
-  // ProfilePage({ super.key, required this.profile});
+  final Map profile;
+  ProfilePage({super.key, required this.profile});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -139,7 +137,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 width: 360 * fem,
                                 height: 470 * fem,
                                 child: Text(
-                                  'Septhea Zisca Aurora',
+                                  // 'Septhea Zisca Aurora',
+                                  widget.profile['namasiswa'],
                                   textAlign: TextAlign.center,
                                   style: GoogleFonts.poppins(
                                       color: Color(0xff4BBBFA),
@@ -187,7 +186,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       width: 1,
                                     ))),
                                     child: Text(
-                                      '333333',
+                                      widget.profile['nisn'],
                                       style: GoogleFonts.poppins(
                                         fontSize: 12 * ffem,
                                         height: 1.5 * ffem / fem,
@@ -236,7 +235,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       width: 1,
                                     ))),
                                     child: Text(
-                                      'XII PPLG 1',
+                                      widget.profile['kelas'],
                                       style: GoogleFonts.poppins(
                                         fontSize: 12 * ffem,
                                         height: 1.5 * ffem / fem,
@@ -285,7 +284,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       width: 1,
                                     ))),
                                     child: Text(
-                                      'Perempuan',
+                                      widget.profile['jeniskelamin'],
                                       style: GoogleFonts.poppins(
                                         fontSize: 12 * ffem,
                                         height: 1.5 * ffem / fem,
@@ -334,7 +333,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       width: 1,
                                     ))),
                                     child: Text(
-                                      'Depok, 2005-07-09',
+                                      '${widget.profile['tempatlahir']}, ${widget.profile['tanggallahir']}',
                                       style: GoogleFonts.poppins(
                                         fontSize: 12 * ffem,
                                         height: 1.5 * ffem / fem,
@@ -357,17 +356,18 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               child: InkWell(
                                 onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ListPage()));
-                              },
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ListPage()));
+                                },
                                 child: Container(
                                   width: 295 * fem,
                                   height: 40 * fem,
                                   decoration: BoxDecoration(
                                     color: Color(0xff4bbbfa),
-                                    borderRadius: BorderRadius.circular(5 * fem),
+                                    borderRadius:
+                                        BorderRadius.circular(5 * fem),
                                   ),
                                   child: Center(
                                     child: Text(

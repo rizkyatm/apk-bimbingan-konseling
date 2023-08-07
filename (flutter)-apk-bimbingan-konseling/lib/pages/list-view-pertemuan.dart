@@ -15,8 +15,9 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  late SharedPreferences preferences;
+  SharedPreferences? preferences;
   bool isLoading = false;
+  String? namaSiswa; 
 
   @override
   void initState() {
@@ -29,25 +30,31 @@ class _ListPageState extends State<ListPage> {
       isLoading = true;
     });
     preferences = await SharedPreferences.getInstance();
+    namaSiswa = preferences?.getString('namasiswa');
     setState(() {
       isLoading = false;
     });
+
+    // Setelah preferences diinisialisasi, panggil getJadwal di sini.
+    createJadwal();
   }
 
-  Future createJadwal() async {
-    int userId = preferences.getInt('user_id') ?? 0;
-    String user = userId.toString();
-    final String urlj = 'http://127.0.0.1:8000/api/createjadwal?id=$userId';
-    var response = await http.get(Uri.parse(urlj));
-    var decodedResponse = jsonDecode(response.body);
-    var id = decodedResponse['id'];
-    print(id); // For example, print it
-    return decodedResponse;
-  }
+Future createJadwal() async {
+  int userId = preferences?.getInt('user_id') ?? 0;
+  print('User ID: $userId'); // Cek nilai userId pada log
+  String user = userId.toString();
+  final String urlj = 'http://localhost:8000/api/createjadwal?id=$userId';
+  var response = await http.get(Uri.parse(urlj));
+  var decodedResponse = jsonDecode(response.body);
+  var id = decodedResponse['id'];
+  print(id); // For example, print it
+  return decodedResponse;
+}
+
 
   Future getJadwal() async {
     preferences = await SharedPreferences.getInstance();
-    int userId = preferences.getInt('user_id') ?? 0;
+    int userId = preferences?.getInt('user_id') ?? 0;
     String id = userId.toString();
     final String urlj = 'http://localhost:8000/api/auth/getdata?id=' + id;
     var response = await http.get(Uri.parse(urlj));
@@ -55,20 +62,20 @@ class _ListPageState extends State<ListPage> {
     return jsonResponse;
   }
 
-  // Future<Map<String, dynamic>> getProfile() async {
-  //   int userId = preferences.getInt('user_id') ?? 0;
-  //   String user = userId.toString();
-  //   final String urlj = 'http://127.0.0.1:8000/api/profilesiswa?id=' + user;
-  //   var response = await http.get(Uri.parse(urlj));
-  //   if (response.statusCode == 200) {
-  //     return jsonDecode(response.body);
-  //   } else {
-  //     throw Exception('Failed to load profile data');
-  //   }
-  // }
+  Future<Map<String, dynamic>> getProfile() async {
+    int userId = preferences?.getInt('user_id') ?? 0;
+    String user = userId.toString();
+    final String urlj = 'http://localhost:8000/api/profilesiswa?id=' + user;
+    var response = await http.get(Uri.parse(urlj));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load profile data');
+    }
+  }
 
   void logout() {
-    preferences.clear();
+    preferences?.clear();
     Navigator.of(context).pushReplacement(MaterialPageRoute(
       builder: (context) => LoginPage(),
     ));
@@ -125,56 +132,56 @@ class _ListPageState extends State<ListPage> {
                           Container(
                             child: Row(
                               children: [
-                                // FutureBuilder<Map<String, dynamic>>(
-                                //   // future: getProfile(),
-                                //   builder: (context, snapshot) {
-                                //     if (snapshot.connectionState ==
-                                //         ConnectionState.done) {
-                                //       if (snapshot.hasError) {
-                                //         return Text(
-                                //             'Error occurred while fetching profile');
-                                //       } else {
-                                //         return InkWell(
-                                //           onTap: () {
-                                //             // Navigate to the Profile page with the fetched data
-                                //             Navigator.push(
-                                //               context,
-                                //               MaterialPageRoute(
-                                //                 builder: (context) => ProfilAkun(
-                                //                   profile: snapshot.data?['data'],
-                                //                 ),
-                                //               ),
-                                //             );
-                                //           },
-                                //           child: Container(
-                                //             margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 3.74 * fem, 0 * fem),
-                                //             child: Image.asset(
-                                //               'assets/page-1/images/profile.png',
-                                //               alignment: Alignment.centerRight,
-                                //             ),
-                                //           ),
-                                //         );
-                                //       }
-                                //     } else {
-                                //       return CircularProgressIndicator();
-                                //     }
-                                //   },
-                                // ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ProfilePage(),
-                                      ),
-                                    );
+                                FutureBuilder<Map<String, dynamic>>(
+                                  future: getProfile(),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.done) {
+                                      if (snapshot.hasError) {
+                                        return Text(
+                                            'Error occurred while fetching profile');
+                                      } else {
+                                        return InkWell(
+                                          onTap: () {
+                                            // Navigate to the Profile page with the fetched data
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => ProfilePage(
+                                                  profile: snapshot.data?['data'],
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Container(
+                                            margin: EdgeInsets.fromLTRB(0 * fem, 0 * fem, 3.74 * fem, 0 * fem),
+                                            child: Image.asset(
+                                              'assets/page-1/images/profile.png',
+                                              alignment: Alignment.centerRight,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    } else {
+                                      return CircularProgressIndicator();
+                                    }
                                   },
-                                  child: Container(
-                                    child: Image.asset(
-                                      'assets/page-1/images/profile.png',
-                                    ),
-                                  ),
-                                ),      
+                                ),
+                                // InkWell(
+                                //   onTap: () {
+                                //     Navigator.push(
+                                //       context,
+                                //       MaterialPageRoute(
+                                //         builder: (context) => ProfilePage(),
+                                //       ),
+                                //     );
+                                //   },
+                                //   child: Container(
+                                //     child: Image.asset(
+                                //       'assets/page-1/images/profile.png',
+                                //     ),
+                                //   ),
+                                // ),      
                                 Container(
                                   child: TextButton(
                                     onPressed: () {},
@@ -251,7 +258,7 @@ class _ListPageState extends State<ListPage> {
                                               width: 147 * fem,
                                               height: 30 * fem,
                                               child: Text(
-                                                preferences.getString('namasiswa').toString(),
+                                                 namaSiswa ?? 'Nama Siswa tidak tersedia',
                                                 style: GoogleFonts.poppins(
                                                   fontSize: 20 * ffem,
                                                   fontWeight: FontWeight.w700,
